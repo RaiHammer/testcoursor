@@ -1,0 +1,271 @@
+{% comment %} отзывы от valektro v1.3 26.12.24 {% endcomment %}
+{% assign reviews-quantity = account.reviews_not_spam_count %}
+{% assign modul = reviews-quantity | modulo: 100 %}
+{% assign current_page_minus = paginate.current_page | to_integer | minus:2 %}
+{% assign current_page_plus = paginate.current_page | to_integer | plus: 2  %}
+
+{% assign pages-quantity = reviews-quantity | divided_by: widget_settings.reviews_limit | round: 0 | plus:1 %}
+{% if modul == 0 %}
+  {% assign pages-quantity = pages-quantity | minus:1 %}
+{% endif %}
+{% assign temp-pages-quantity = pages-quantity | minus:2 %}
+
+{% if account.reviews_enabled? %}
+{% assign reviews_start = paginate.current_page | times:widget_settings.reviews_limit | minus:widget_settings.reviews_limit %}
+
+<div class="reviews" data-review-main-title="{{widget_settings.review-main-title}}" data-review-main-src="{{widget_settings.review-main-src}}">
+ 
+  <div class="reviews-head">
+    <H1 class="reviews__title">{{widget_settings.title | strip_html | editable}}{% if reviews-quantity > 0 %} ({{ reviews-quantity }}){% endif %}</H1>
+    <button class="button button_size-m show-form-btn js-show-form {% if review.errors.size > 0 %}hidden{% endif %}">{{ messages.review_write_new }}</button>
+  </div>
+
+  <div class="review-form-wrapper">
+    <form data-reviews-form-wrapper='{"reviews_moderated": {{ account.reviews_moderated? }} , "url": "/product/shop-reviews" }' class="review-form" method="post" action="/product/shop-reviews/reviews#review_form" enctype="multipart/form-data">
+      {% assign success_message = messages.review_is_added %}
+      {% if account.reviews_moderated? %}
+        {% assign success_message = messages.review_is_added_moderated %}
+      {% endif %}
+
+      <div data-reviews-form-success='{"showTime": 10000, "message": "{{ success_message }}", "reloadPage": false }' class="notice-success"></div>
+
+      <div id="review_form" class="reviews-wrapper {% unless review.errors.size > 0 %}hidden{% endunless%}">
+        <div class="review-form-header">
+          <div class="review-form-title">{{ messages.give_feedback }}</div>
+          <span class="button-link hide-form-btn js-hide-form">{{ messages.close }}</span>
+        </div>
+        <div class="reviews-form">
+          <div class="js-review-wrapper">
+            <div class="form-row star-rating-row">
+              <div data-reviews-form-field-area class="star-rating-wrapper">
+                <div class="star-rating">
+                  {% assign r = 5 %}
+                  {% for i in (1..5) %}
+                  <input
+                    data-reviews-form-field
+                    name="review[rating]"
+                    id="star{{ r }}-{{ product.id }}-{{ widgetDrop.id }}"
+                    type="radio"
+                    class="star-radio"
+                    value="{{ r }}"
+                  />
+                  <label title="{{ r }}" for="star{{ r }}-{{ product.id }}-{{ widgetDrop.id }}" class="star-label icon icon-star"></label>
+                  {% assign r = r | minus: 1 %}
+                  {% endfor %}
+                </div>
+                <div data-reviews-form-field-error class="form__field-error"></div>
+              </div>
+            </div>
+            <div data-reviews-form-field-area class="form-row form-author is-required {% if review.errors contains 'author' %}is-error{% endif %}">
+              <label class="form-label">{{ messages.name }} <span class="text-error">*</span></label>
+              <input
+                data-reviews-form-field='{"isRequired": true, "errorMessage": "{{ messages.name_error | escape }}"}'
+                name="review[author]"
+                placeholder="{{ messages.name }}"
+                value="{{ review.author }}"
+                type="text"
+                class="form-control form-control_size-m"
+              />
+              <div data-reviews-form-field-error class="form__field-error"></div>
+            </div>
+
+            <div data-reviews-form-field-area class="form-row form-email is-required {% if review.errors contains 'email' %}is-error{% endif %}">
+              <label class="form-label">{{ messages.field_email }} <span class="text-error">*</span></label>
+              <input
+                data-reviews-form-field='{"isRequired": true, "errorMessage": "{{ messages.email_error | escape}}"}'
+                name="review[email]"
+                placeholder="{{ messages.field_email }}"
+                value="{{ review.email }}"
+                type="text"
+                class="form-control form-control_size-m"
+              />
+              <div data-reviews-form-field-error class="form__field-error"></div>
+            </div>
+
+            <div data-reviews-form-field-area class="form-row form-comment is-required {% if review.errors contains 'content' %}is-error{% endif %}">
+              <label class="form-label">{{ messages.review }} <span class="text-error">*</span></label>
+              <textarea
+                data-reviews-form-field='{"isRequired": true, "errorMessage": "{{ messages.please_enter_message | escape }}"}'
+                name="review[content]"
+                placeholder="{{ messages.review }}"
+                class="form-control form-control_size-m is-textarea"
+              >{{ review.content }}</textarea>
+              <div data-reviews-form-field-error class="form__field-error"></div>
+            </div>
+
+            {% if account.reviews_images_enabled? %}
+            <div data-reviews-form-field-area class="form-row form-file is-required {% if review.errors contains 'image.image' %} input--error{% endif %}">
+              <label class="form-label">
+                <i class="icon icon-camera"></i>
+                <span class="load-review-image-name">{{ messages.add_photo }}</span>
+                <input
+                  data-reviews-form-image
+                  type="file"
+                  class="js-load-review-image hidden"
+                  name="review[image_attributes][image]"
+                />
+              </label>
+              <div data-reviews-form-field-error class="form__field-error"></div>
+            </div>
+            {% endif %}
+            {% if review.captcha_enabled? %}
+            <div data-reviews-form-field-area class="form-row form-captcha {% if review.errors contains 'captcha_solution' %}is-error{% endif %}">
+              <div
+                data-recaptcha-type="invisible"
+                data-reviews-form-recaptcha='{"isRequired": true, "errorMessage": "{{ messages.recaptcha_error | escape }}"}'
+                id="captcha_challenge"
+                class="captcha-recaptcha"
+              ></div>
+              <div data-reviews-form-field-error class="form__field-error"></div>
+            </div>
+            {% endif %}
+            <div class="form-controls">
+              <button type="submit" class="button button_size-m">{{ messages.give_feedback }}</button>
+            </div>
+          </div>
+          {% if account.reviews_moderated? %}
+          <div class="moderation">
+            <p>{{ messages.reviews_are_moderated }}</p>
+          </div>
+          {% endif %}
+           {%- if editor_mode? -%}
+              <div class="form-row form-data is-required ">
+                <label class="form-label"> Дата отзыва <span class="text-error">*</span></label>
+                <input type="datetime-local" name="review[created_at]" value="">
+              </div>     
+            {%- endif -%}
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+
+  <div class="grid-list masonry-reviews-list">   
+
+        {% prefetch account.reviews_not_spam limit widget_settings.reviews_limit, offset: reviews_start, sort: 'date_desc' %}      
+        {% for review in account.reviews_not_spam %} 
+        <div class="masonry-reviews-item {% if forloop.index > 4 %}masonry-reviews-item-hidden{% endif %}" >
+          <div class="masonry-reviews-item__content">
+            <div class="review-title-container" data-number="{{forloop.index}}" data-json='{{review | json | remove: "'"}}'>
+            </div>
+            <div class="review-header">
+              <div class="author">{{ review.author }}</div>
+              {% if review.rating %}
+              <div class="star-rating-wrapper">
+                <span class="icon icon-star"></span><span class="title">{{ review.rating }}</span>
+              </div>
+              {% endif %}
+            </div>
+            <div class="review-content">{{ review.content }}</div>
+            {% if review.image.medium_url.size > 0 %}
+          
+            <div class="reviews__photo_new">
+              <a  data-fslightbox="review-photos-lightbox-reviews" data-type="image" href="{{ review.image.original_url }}">     
+                  {{ review.image.original_url | webp_picture_tag: 600, loading:"lazy", class:"review-client-photo"}}        
+              </a>
+            </div>
+            
+            {% endif %}
+            <div class="review-footer">
+              {% unless widget_settings.hide-date %}
+                <div class="date">{{ review.created_at | date: "%d.%m.%Y" }}</div>
+              {% endunless %}
+              {% if review.replied? %}
+              <span class="button-link js-show-manager"  {% if widget_settings.hide-date %}style="padding-left:0px"{% endif %}>{{ messages.review_show_comment }}</span>
+              <span class="button-link js-hide-manager hidden" {% if widget_settings.hide-date %}style="padding-left:0px"{% endif %}>{{ messages.review_hide_comment }}</span>
+              {% endif %}
+
+
+
+      
+            </div>
+            {% if review.replied? %}
+            <div class="comments-item hidden">
+              {% if widget_settings.manager-photo != null%}
+                <div class="comment-photo">
+                  <div class="img-ratio img-ratio_cover">
+                    <div class="img-ratio__inner">
+                      {{  widget_settings.manager-photo | webp_picture_tag: 200, loading:"lazy"}}        
+                      
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+              <div class="comment-name">{{ messages.review_manager_name }}</div>
+              <div class="comment-body">
+                {{ review.manager_reply }}
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% endprefetch %}
+    {% if product.reviews_count < 1 %}{{ messages.review_none }}{% endif %}      
+  </div>
+ 
+</div>
+{% endif %}
+
+<div class="pagination_container">
+{% if paginate.current_page < pages-quantity %}
+  <div class="loadmore_wrapper" style="margin: 10px 0px 20px; text-align: center;">
+    <button class="loadmore_button button is-secondary" type="button" data-url="{{ blog.url }}?page={{paginate.current_page | plus:1 }}" style="width: 180px;">
+      Загрузить еще 
+    </button>
+  </div>
+{% endif %}
+
+
+{% if pages-quantity > 1 %}
+  <div class="pagination">
+    {% if paginate.current_page > 1 %}
+      <a href="{{ paginate.previous.url }}" class="button button_size-s pagination-prev hide-mobile">{{ messages.prev }}</a>
+      <a href="{{ paginate.previous.url }}" class="button button_size-s show-mobile pagination-prev icon icon-arrow-left"></a>
+    {% endif %}
+
+    <div class="pagination-items {% if paginate.current_page < pages-quantity %}next{% endif %}">
+      {% for i in (1..pages-quantity) %}
+        {% if i == paginate.current_page %}
+          <span class="button button_size-s pagination-span disabled">
+          {{ i }}
+          </span>
+        {% else %}
+          
+          {% assign show-paginate-button = false %}
+          {% if i >= current_page_minus and i <= current_page_plus %} 
+            {% assign show-paginate-button = true %}
+          {% endif %}
+          {% if forloop.first or forloop.last  %}
+            {% assign show-paginate-button = true %}
+          {% endif %}
+          
+
+          {% if show-paginate-button %}
+   
+            {% if forloop.last and paginate.current_page < temp-pages-quantity %}
+               <span class=" pagination-void"> ...
+               </span>
+            {% endif %}
+            <a href="{{ blog.url }}?page={{i}}" class="button button_size-s  pagination-link">
+              {{ i }}
+            </a>    
+            {% if forloop.first and  paginate.current_page > 4 %}
+              <span class=" pagination-void"> ...
+              </span>
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+
+    {% if paginate.current_page < pages-quantity %}
+      <a href="{{ paginate.next.url }}" class="button button_size-s pagination-next hide-mobile">{{ messages.next }}</a>
+      <a href="{{ paginate.next.url }}" class="button button_size-s pagination-next icon icon-arrow-right show-mobile"></a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+

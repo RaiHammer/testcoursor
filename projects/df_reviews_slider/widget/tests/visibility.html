@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>DanForge Reviews Slider — visibility test</title>
+  <style>
+    .df-reviews--hide-avatar .df-reviews__avatar { display: none !important; }
+    .df-reviews--hide-source .df-reviews__source { display: none !important; }
+    .df-reviews--hide-date .df-reviews__date { display: none !important; }
+    .df-reviews__avatar, .df-reviews__source, .df-reviews__date { display: block; }
+  </style>
+</head>
+<body>
+  <div class="df-reviews">
+    <div
+      class="df-reviews__viewport df-reviews__slider"
+      data-df-reviews-root
+      data-layout="slider"
+      data-hide-avatar="true"
+      data-hide-source="true"
+      data-hide-date="true"
+      data-hide-insales="false"
+      data-hide-yandex="false"
+      data-min-rating="4"
+    >
+      <div class="swiper-wrapper">
+        <div class="swiper-slide df-reviews__slide" data-rating="5" data-source="yandex">
+          <div class="df-reviews__avatar">A</div>
+          <div class="df-reviews__author"><span>Тест</span></div>
+          <time class="df-reviews__date">1 января 2025</time>
+          <span class="df-reviews__source">Яндекс</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../snippet.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      requestAnimationFrame(function () {
+        var avatar = document.querySelector('.df-reviews__avatar');
+        var source = document.querySelector('.df-reviews__source');
+        var date = document.querySelector('.df-reviews__date');
+        var shell = document.querySelector('.df-reviews');
+
+        function visible(el) {
+          return window.getComputedStyle(el).display !== 'none';
+        }
+
+        var errors = [];
+        if (!shell.classList.contains('df-reviews--hide-avatar')) errors.push('missing df-reviews--hide-avatar');
+        if (!shell.classList.contains('df-reviews--hide-source')) errors.push('missing df-reviews--hide-source');
+        if (!shell.classList.contains('df-reviews--hide-date')) errors.push('missing df-reviews--hide-date');
+        if (visible(avatar)) errors.push('avatar still visible');
+        if (visible(source)) errors.push('source still visible');
+        if (visible(date)) errors.push('date still visible');
+
+        document.body.insertAdjacentHTML(
+          'beforeend',
+          '<pre id="result">' + (errors.length ? 'FAIL\n' + errors.join('\n') : 'PASS') + '</pre>'
+        );
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+{% comment %}
+
+Шаблон для предзаказа (поступление товара в наличие)
+
+{% endcomment %}
+
+{% content_for 'title' %}
+{% end_content_for %}
+<h1>Заказ №
+{{ order.number }}<h1>
+
+{% content_for 'top_info' %}
+{% end_content_for %}
+<h3>
+Статус заказа:
+{% capture span_class %}{% if order.fulfillment_status == 'declined' or order.fulfillment_status == 'returned' %}red{% else %}green{% endif %}{% endcapture %}
+{% capture span_color %}{% if order.fulfillment_status == 'declined' or order.fulfillment_status == 'returned' %}#993333{% else %}#339933{% endif %}{% endcapture %}
+{% if order.payment_needed? %}
+    <span _class='red' style="color:#993333">Ожидает оплаты</span>
+{% else %}
+    <span _class='{{ span_class }}' style="color:{{ span_color }}">{{ order.customer_status }}</span>
+{% endif %}
+
+</h3>
+
+
+<div class='set wide_set'>
+<div class='set-title'>Состав заказа</div>
+<div class='set-block'>
+<table class='table'>
+{% if order.order_lines_has_sku? %}
+<col width='100'>
+{% endif %}
+<col width='750'>
+<thead>
+<tr>
+{% if order.order_lines_has_sku? %}
+<th>Артикул</th>
+{% endif %}
+<th>Наименование</th>
+<th class='count'>Кол-во</th>
+
+</tr>
+</thead>
+<tbody>
+{% for item in order.items %}
+<tr class="{% cycle 'highlited_row', '' %}">
+{% if order.order_lines_has_sku? %}
+<td>{{ item.sku }}</td>
+{% endif %}
+<td>{{ item.title }}</td>
+<td class='count'>{{ item.quantity }} {{ item.unit }}</td>
+
+</tr>
+{% endfor %}
+{% capture colspan %}{% if order.order_lines_has_sku? %}2{% else %}1{% endif %}{% endcapture %}
+</tbody>
+</table>
+</div>
+{% assign shipping_address = order.shipping_address %}
+<div class='set-title'>Контактые данные</div>
+<div class='set-block'>
+{% if shipping_address %}
+<div class='field fc'>
+<div class='field-label'>Клиент:</div>
+<div class='field-content'>{{ shipping_address.full_name }}</div>
+</div>
+<div class='field fc'>
+<div class='field-label'>Телефон:</div>
+<div class='field-content'>{{ shipping_address.phone }}</div>
+</div>
+{% endif %}
+{% if order.client and order.client.email != empty %}
+<div class='field fc'>
+<div class='field-label'>E-mail:</div>
+<div class='field-content'>{{ order.client.email }}</div>
+</div>
+{% endif %}
+<div class='field fc'>
+<div class='field-label'>Дополнительная информация</div>
+  </div>
+{% if order.client.type == 'juridical' %}
+  <div class='field fc'>
+  <div class='field-label'>Дата доставки:</div>
+  <div class='field-content'>Дата и время доставки согласуются после оплаты счёта.</div>
+  </div>
+{% else %}
+  {% if order.all_fields['Ожидаемая дата поставки'].value == ''  or order.all_fields['Ожидаемая дата поставки'].value == isEmpty %}
+  {% else %}
+  <div class='field fc'>
+  <div class='field-label'>Ожидаемая дата поставки:</div>
+  <div class='field-content'>{{ order.all_fields['Ожидаемая дата поставки'].value }}</div>
+  </div>
+  {% endif %}
+{% endif %}
+{% if order.all_fields['Номер нового заказа'].value == ''  or order.all_fields['Номер нового заказа'].value == isEmpty %}
+{% else %}
+<div class='field fc'>
+<div class='field-label'>Номер заказа на доставку:</div>
+<div class='field-content'>{{ order.all_fields['Номер нового заказа'].value }}</div>
+</div>
+{% endif %}
+
+ 
+</div>
+</div>
+
+<a class="back_to_shop" href="/">Вернуться в магазин</a>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class='' lang='ru' xml:lang='ru' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  {% include "head" %}
+  
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+  <meta content='noindex, nofollow' name='robots'>
+  <meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  {{ 'checkout2.core' | global_stylesheet_tag }}
+  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+
+  {% assign template = 'checkout' %}
+
+  {% comment %}<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> {% endcomment %}
+  <script src="{{ 'jquery-2.2.4.min.js' | asset_url }}"></script>
+  
+  {% capture template_title %}{% yield 'title' %}{% endcapture %}
+  {% if template_title contains 'Оформление заказа' %}
+  	{% assign template = 'checkout' %}
+  {% endif %}
+</head>
+<body class='adaptive fhg-body checkout_page'>
+  {% include 'preloader' %}
+  
+  {% include "header" %}
+
+  {% include "page_header" %}
+
+  <div class="page-inner">
+
+    <div class="container">
+      <div class="content-wrapper checkout-content">
+
+        <div class='checkout-v2-wrapper co-section--checkout_content' id='do-checkout'>
+          <div class='co-section--checkout_order co-section--checkout_order_sided'>
+            <div class="content-item--no-padd" id="basket">
+              <div class="basket-product-list">
+                <form class="checkout" action="/cart_items" method="post" data-cart-form>
+                  {% for item in cart.items %}
+                      {% include 'cart-item' %}
+                  {% endfor %}
+                </form>
+                <div class="basket-product-list-load"></div>
+              </div>
+              <div class="basket-total basket-total--show-mb">
+                <div class="basket-total__title">Итого:</div>
+                <div class="basket-total__price js-co-items-price"></div>
+              </div>
+            </div>
+            {% yield 'sidebar' %}
+            {% yield %}
+            <section id="checkout-sidebar" class="checkout-sidebar col-xs-12 col-sm-12 col-md-3">
+              <div class="checkout-sidebar-wrapper">
+                <div class="checkout-sidebar-block">
+                  <div class="order-title">
+                    Ваш заказ
+                  </div>
+                  {% if cart.enable_coupon? %}
+                    {% include 'cart_discount', discount_type: 'checkout' %}
+                        <div class="formPromo" id="coupon">
+                            <div class="order-item formPromo__field fieldInput" id="js-coupon-wrapper">
+                              <input class="formPromo__input discount-input" type="text" placeholder="Промокод" name="cart[coupon]" value="{{ cart.coupon }}">
+                              <button type="submit" class="formPromo__submit discount-button button" {% if cart.coupon.size > 0 %} style="display: none;"{% endif %} data-coupon-submit>Применить</button>
+                              <button type="button" class="formPromo__remove discount-button button" {% if cart.coupon.size > 0 %} style="display: block;"{% endif %} data-coupon-remove>Очистить</button>
+                            </div>
+                            <div class="formPromo__title-error">Промокод не верный</div>
+                        </div>
+                  {% endif %}
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% include 'svg' %}
+  {% include "footer" %}
+  {% include "modals" %}
+  {% include "scripts" %}
+  {% include 'analytics' %}
+
+  <script>
+    var coSettings = {
+      {% if client %}
+        isClient: true,
+      {% else %}
+        isClient: false,
+      {% endif %}
+      clientGroupId: "{{ client_group.id }}",
+      
+      paymentCreditId: "{{ settings.co_id_payment_credit }}",
+        
+      enableResidueControl: "{{ settings.co_enable_residue_control }}",
+      enableOmniDates: "{{ settings.co_enable_omni_dates }}",
+
+      // Поднятие на этаж
+        riseFloorEnable: "{{ settings.co_usluga_etaj_enable }}",
+        riseFloorOnlStairs: "{{ settings.co_usluga_etaj_only_stairs }}",
+        riseFloorDeliveryIds: "{{ settings.co_usluga_etaj_delivery_ids }}",
+        riseFloorFieldId: "{{ settings.co_usluga_etaj_field_id }}",
+        riseFloorNumFieldId: "{{ settings.co_usluga_etaj_id_floor_num }}",
+        riseFloorTypeFieldId: "{{ settings.co_usluga_etaj_id_type }}",
+        riseFloorWeightStairsFieldId: "{{ settings.co_usluga_etaj_price_weight_stairs }}",
+        riseFloorWeightElevatorFieldId: "{{ settings.co_usluga_etaj_price_weight_elevator }}",
+        riseFloorPriceFieldId: "{{ settings.co_usluga_etaj_id_price }}",
+        riseFloorMinWeighFieldId: +"{{ settings.co_usluga_etaj_items_weight }}",
+        riseFloorMaxWeighFieldId: +"{{ settings.co_usluga_etaj_items_max_weight }}",
+
+      // Манипуляция со способами доставки
+        availableDeliveryIdsGroups1Enable: "{{ settings.co_availableDelivery_idsGroups_1_enable }}",
+        availableDeliveryIdsGroups1: "{{ settings.co_availableDelivery_idsGroups_1 }}",
+        availableDeliveryHideIdsDelivery1: "{{ settings.co_availableDelivery_hideIdsDelivery_1 }}",
+        availableDeliveryHideAnotherIdsDelivery1: "{{ settings.co_availableDelivery_hideAnotherIdsDelivery_1 }}",
+
+        individualHideDeliveryIds: "{{ settings.co_enable_hidding_pickup_private_person_ids }}",
+        legalHideDeliveryIds: "{{ settings.co_enable_hidding_yd_legal_entities_ids }}",
+        enableHiddingYdLegalEntities: "{{ settings.co_enable_hidding_yd_legal_entities }}",
+        enableHiddingPickupPrivatePerson: "{{ settings.co_enable_hidding_pickup_private_person }}",
+          
+        hide_delivery_cost_ids: "{{ settings.co_hide_delivery_cost_ids }}",
+    
+      // Уценка
+        enableHiddingRegionsForMarkdown: "{{ settings.co_enable_hidding_regions_for_markdown }}",
+        enableHiddingBuyCreditForMarkdown: "{{ settings.co_enable_hidding_buyCredit_for_markdown }}",
+        skuMarkForMarkdown: "{{ settings.co_sku_mark_for_markdown }}",
+        skuMarkForDefective: "{{ settings.co_sku_mark_for_defective }}",
+        hiddingPaymentsForMarkdown: "{{ settings.co_hidding_payments_for_markdown }}",
+
+      // Получатель
+        recipientEnable: '{{ settings.co_recipient_enable }}',
+        fieldRecipientCheckboxId: '{{ settings.co_field_recipient_checkbox_id }}',
+        fieldRecipientNameId: '{{ settings.co_field_recipient_name_id }}',
+        fieldRecipientPhoneId: '{{ settings.co_field_recipient_phone_id }}',
+    }
+
+    var ORDER = {
+      items_price: "",
+      total_price: "",
+      items_weight: "",
+      riseFloor_price: 0,
+      delivery_price: ""
+    }
+
+    // Обработка ошибок
+    var coErrors = $('#checkout_order_errors').html().split('<br>');
+    var coErrorsNew = [];
+    $.each(coErrors, function(index, item){
+    	if(item.indexOf('уже зарегистрирован') != -1){
+            coErrorsNew.push('Пользователь с таким email или номером телефона уже зарегистрирован. Авторизуйтесь, чтобы продолжить покупки под своим логином.')
+        }else{
+            coErrorsNew.push(item)
+        }
+    })
+    var coErrorsNewStr = coErrorsNew.filter(function (value, index, self) { 
+        return self.indexOf(value) === index;
+    }).join('<br>');
+    $('#checkout_order_errors').html(coErrorsNewStr);
+
+    // Каркас
+      $('#order_form').removeClass('co-checkout-block--padded').prepend('<div id="custom_form" class="col-xs-12 col-sm-12 col-md-9"></div>');
+      $('#custom_form').append('<div class="content-item form--basket" id="order_info"><h2 class="block-title">Информация о клиенте</h2></div>');
+      $('#custom_form').append('<div class="content-item form--basket" id="city_info"><h2 class="block-title">Выберите населенный пункт</h2><div class="row"></div>');
+      $('#custom_form').append('<div class="content-item form--basket" id="delivery_info"><h2 class="block-title">Выберите способ доставки</h2><div class="row"></div>');
+      $('#custom_form').append('<div class="form form--basket" id="address_info">');
+      $('#custom_form').append('<div class="content-item form--basket" id="payment_info"><h2 class="block-title">Выберите способ оплаты</h2><div class="row"></div>');
+      $('#checkout-sidebar .order-title').after('<div class="order-items" id="order_complete">');
+    
+      $('#custom_form').prepend($('#basket'));
+      $('#order_form').append($('#checkout-sidebar'));
+      $('#order_complete').append($('#coupon'));
+  
+    // Информация о клиенте
+      {% if client %}
+        $('#order_info').append('<div class="form form--basket" id="client_info"></div>');
+        $('#client_info').append($('.co-client').parent());
+      {% else %}
+        $('#order_info').append('<div class="form form--basket" id="client_info"></div>');
+        $('#client_info').append('<div class="client_name"></div>');
+        $('#client_info .client_name').html($('#tabs-person').parent());
+        $('#client_info .client_name .co-title').hide();
+        $('#order_info').prepend('<div class="co-sing-in"><div class="co-sing-in__description">Войдите в личный кабинет, чтобы воспользоваться бонусами и персональной скидкой</div><a class="co-sing-in__modal link js-modal-toggler" data-target=".co-modal--login" href="">Войти</a></div>');
+        $('.co-modal--login').find('.js-modal-body').append($('.co-social_login-box .co-social_login-list').parent().addClass('co-social_login'))
+    
+        $('#client_info .co-input--name').after($('#order_form [name="client[phone]"]').closest('.co-input'));
+       	$('#order_form [name="client[phone]"]').after('<div class="co-input-notice co-notice--danger">Не заполнен "Телефон"</div>')
+        //$('#client_info .co-input--email').after($('#order_form [name="client[registered]').closest('.co-input'));
+      {% endif %}
+      
+      $('#delivery_info').append('<div class="delivery_list"></div>');
+      $('#payment_info').append('<div class="payment_list"></div>');
+  
+      $('#client_info').after('<span class="co-input-label co-input-label--required">Обязательные поля для заполнения</span>');
+  
+    // Населенный пункт
+      $('#city_info').append('<div class="form form--basket" id="client_city"></div>');
+      $('#city_info #client_city').append($('#delivery_address'));
+      $('#client_city #delivery_address').find('.co-title').hide();
+  
+    // Адрес доставки
+      $('#address_info').html($('#shipping_address').addClass('shipping-address content-item'));
+      $('#shipping_address').find('.co-title').addClass('block-title');
+  
+      $('#shipping_address .co-delivery_adress-form').append('<div class="client_comment"></div>');
+      $('#shipping_address .client_comment').html($('[name="order[comment]"]').parent());
+      $('#order_comment').attr('rows','4').addClass('co-input-comment');
+      $('#shipping_address .co-input-field').attr('value','');
+      $('#shipping_address').find('.co-input--flat').addClass('co-input--required');
+  
+      $('#shipping_address > div').addClass('shipping-address__list');
+      $('#shipping_address .shipping-address__list > div').addClass('shipping-address__list-item');
+  
+      $('#shipping_address').append('<span class="co-input-label co-input-label--required">Обязательные поля для заполнения</span>');
+  
+    // Доставка
+      $('.delivery_list').append($('#delivery_variants'));
+      $('#delivery_variants').append('<div id="deliveries-not-available-for-town">Системе не удалось подобрать способ доставки Вашего заказа автоматически. Пожалуйста, свяжитесь с нашими менеджерами по бесплатному номеру 8-499-990-61-21, чтобы оформить заказ.</div>');
+
+    // Оплата
+      $('.payment_list').append($('#payment_gateways'));
+      $('.payment_list').find('.co-title').hide();
+  
+    // Сайдбар
+      $('#order_complete').append($('.co-basket_subtotal').addClass('order-item'));
+      $('#order_complete').append($('.co-basket_total').addClass('order-item'));
+  
+      $('#order_complete').find('.co-basket_subtotal-price').addClass('order-item__number');
+      $('#order_complete').find('.co-basket_total-price').addClass('order-item__number');
+      $('#order_complete').append('<div class="order-item checkout-sidebar-button"></div>');
+      $('#order_complete .checkout-sidebar-button').append($('#create_order'));
+      $('#order_complete #items_price').parent().before('<div class="co-basket_discount order-item"><div class="co-basket_discount-title">Скидки по товарам</div><div class="co-basket_discount-prices"><div class="co-basket_discount-price co-price--current order-item__number js-co-items-discount-price"></div><div class="co-basket_discount-price-percent co-price-percent--current order-item__number js-co-items-discount-percent"></div></div></div>')
+      $('#order_complete #items_price').parent().find('.co-basket_subtotal-title').html('Товары');
+      $('#order_complete #items_price').hide().before('<div class="co-basket_subtotal-price co-price--current order-item__number js-co-items-price">{{ cart.items_price | money }}</div>');
+      $('#order_complete #items_price').parent().after($('#discounts-block'))
+      $('#order_complete #delivery_price').parent().find('.co-basket_subtotal-title').html('Доставка');
+      $('#order_complete #discount-subtotal-sample').before('<div class="co-basket_subtotal order-item discount_price_new" style="display: none;"></div>');
+      $('#order_complete .co-basket_total').before('<div class="js-uslugiList"></div>');
+      $('#order_complete').find('#discount_price_').closest('.order-item').addClass('discount_price_').remove();
+  
+      $('#order_complete').prepend($('.itemsQuantity'));
+
+    // Остальное
+      $('.checkout-sidebar-button').before($('.consent_to_personal_data_checkbox'));
+
+  </script>
+  <script src="{{ 'globalSettings.js' | asset_url }}"></script>
+  
+  <script src="{{ 'checkout.js' | asset_url }}"></script>
+</body>
+</html>

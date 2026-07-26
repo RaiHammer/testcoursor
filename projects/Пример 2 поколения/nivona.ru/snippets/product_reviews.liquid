@@ -1,0 +1,167 @@
+<div class="tab-reviews__wrapper">
+  <div class="tab-reviews__sidebar__wrapper">
+    <div class="tab-reviews__sidebar">
+      <button type="button" class="button is-bordered is-reviews-toggle is-unchecked js-reviews-toggle">
+        <span class="button-text">
+          {{ messages.button_review }}
+        </span>
+      </button>
+      {% if product.reviews == empty %}
+        <p>Здесь еще никто не оставлял отзывы.<br>Вы можете быть первым!</p>
+      {% else %}
+        {% if product.rating %}
+          {% assign rating5 = '' %}
+          {% assign rating4 = '' %}
+          {% assign rating3 = '' %}
+          {% assign rating2 = '' %}
+          {% assign rating1 = '' %}
+          {% assign rating0 = '' %}
+          {% for review in product.reviews %}
+            {% if review.rating == 5 %}{% capture rating5 %}{{ rating5 }}5{% endcapture %}{% endif %}
+            {% if review.rating == 4 %}{% capture rating4 %}{{ rating4 }}4{% endcapture %}{% endif %}
+            {% if review.rating == 3 %}{% capture rating3 %}{{ rating3 }}3{% endcapture %}{% endif %}
+            {% if review.rating == 2 %}{% capture rating2 %}{{ rating2 }}2{% endcapture %}{% endif %}
+            {% if review.rating == 1 %}{% capture rating1 %}{{ rating1 }}1{% endcapture %}{% endif %}
+            {% unless review.rating %}{% capture rating0 %}{{ rating0 }}0{% endcapture %}{% endunless %}
+          {% endfor %}
+          {% comment %}
+          <div class="rating-title-block">
+            <div class="rating-title">Оценки</div>
+            <div class="rating-rating review-rating">
+              {% for i in (1..5) %}
+                {% if product.rating >= i %}
+                  <i class="fa fa-star"></i>
+                {% else %}
+                  <i class="fa fa-star fa-color-grey"></i>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          {% endcomment %}
+          <ul class="rating-lines">
+            <li>
+              <a href="#" class="js-review-show-rated review-show-rated-{{ rating5 | size }}" data-rate="5" data-rate-size="{{ rating5 | size }}">
+                <span class="rating-line-star review-rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </span>
+                <strong><i style="width: {{ rating5 | size | times: 100 | divided_by: product.reviews_count }}%;"></i></strong>
+                <span class="rating_count">{{ rating5 | size }} отзывов</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="js-review-show-rated review-show-rated-{{ rating4 | size }}" data-rate="4" data-rate-size="{{ rating4 | size }}">
+                <span class="rating-line-star review-rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                </span>
+                <strong><i style="width: {{ rating4 | size | times: 100 | divided_by: product.reviews_count }}%;"></i></strong>
+                <span class="rating_count">{{ rating4 | size }} отзывов</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="js-review-show-rated review-show-rated-{{ rating3 | size }}" data-rate="3" data-rate-size="{{ rating3 | size }}">
+                <span class="rating-line-star review-rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                </span>
+                <strong><i style="width: {{ rating3 | size | times: 100 | divided_by: product.reviews_count }}%;"></i></strong>
+                <span class="rating_count">{{ rating3 | size }} отзывов</span>
+              </li>
+            <li>
+              <a href="#" class="js-review-show-rated review-show-rated-{{ rating2 | size }}" data-rate="2" data-rate-size="{{ rating2 | size }}">
+                <span class="rating-line-star review-rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                </span>
+                <strong><i style="width: {{ rating2 | size | times: 100 | divided_by: product.reviews_count }}%;"></i></strong>
+                <span class="rating_count">{{ rating2 | size }} отзывов</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="js-review-show-rated review-show-rated-{{ rating1 | size }}" data-rate="1" data-rate-size="{{ rating1 | size }}">
+                <span class="rating-line-star review-rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                </span>
+                <strong><i style="width: {{ rating1 | size | times: 100 | divided_by: product.reviews_count }}%;"></i></strong>
+                <span class="rating_count">{{ rating1 | size }} отзывов</span>
+              </a>
+            </li>
+            {% comment %}
+            <li>
+              <a href="#" class="js-review-show-rated review-show-rated-{{ rating0 | size }}" data-rate="0" data-rate-size="{{ rating0 | size }}">
+                <span class="rating-line-star review-rating">
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                  <i class="fa fa-star fa-color-grey"></i>
+                </span>
+                <strong><i style="width: {{ rating0 | size | times: 100 | divided_by: product.reviews_count }}%;"></i></strong>
+                <span class="rating_count">{{ rating0 | size }} отзывов</span>
+              </a>
+            </li>
+            {% endcomment %}
+          </ul>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  <div class="tab-reviews__list__wrapper">
+    <div class="tab-reviews__list">
+      {% for review in product.reviews %}
+        <div class="tab-reviews__list__item">
+          <div class="review{% if forloop.index > 3 %} hidden{% endif %} rating{% if review.rating %}{{ review.rating }}{% else %}0{% endif %}">
+            <div class="review-header">
+              <div class="review-header__left">
+                <span class="review-author" >{{ review.author }}</span>
+                <div class="review-date">{{ review.created_at | date: "%d.%m.%Y в %H:%M" }}</div>
+              </div>
+              {% if review.rating %}
+                <div class="review-rating">
+                  {% for i in (1..5) %}
+                    {% if review.rating >= i %}
+                      <i class="fa fa-star"></i>
+                    {% else %}
+                      <i class="fa fa-star fa-color-grey"></i>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="review-content">{{ review.content | strip_html | newline_to_br }}</div>
+          </div>
+
+          {% if review.replied? %}
+            <div class="answer-item" style="font-size: 90%; padding-left: 1rem;">
+              <div class="answer-body">
+                {{ review.manager_reply }}
+              </div>
+              <div class="answer-footer">
+                <div class="date">
+                  {{ review.created_at | date: "%d.%m.%Y в %H:%M" }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

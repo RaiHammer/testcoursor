@@ -1,0 +1,50 @@
+{% if data.blocks.size > 0 %}
+<div class="reviews-wrapper">
+
+  <div class="reviews-heading">
+    {{ data.name | editable }}
+  </div>
+
+  <div class="reviews-blocks ">
+    {% for block in data.blocks %}
+      {% assign position_block = block.image_position | default: 'left' %}
+
+
+      {% if position_block == 'left' %}
+        {% assign cell_position = 'is-left-cell' %}
+      {% else %}
+        {% assign cell_position = 'is-top-cell' %}
+      {% endif %}
+
+      <div class="review  {{ cell_position }} is-{{ position_block }}">
+        <div class="review-inner is-{{ position_block }}">
+          {% unless block.hide_image %}
+          <div class="review-image">
+            <div class="image-container is-square is-cover is-rounded is-{{ position }}">
+              <img src="{{ block.image }}" title="{{ block.name }}" alt="{{ block.name }}" loading="lazy">
+            </div>
+          </div>
+          {% endunless %}
+            <div class="review-content">
+            {% unless block.name == '' %}
+              <div class="user-name">
+                {{ block.name | editable }}
+              </div>
+            {% endunless %}
+            {% unless block.content == '' %}
+              <div class="review-content ">
+                <div class=" editor">
+                {{ block.content | editable }}
+                </div>
+              </div>
+            {% endunless %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% assign position_block = null  %}
+{% assign cell_position = null %}

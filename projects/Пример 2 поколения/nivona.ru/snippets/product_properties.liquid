@@ -1,0 +1,230 @@
+
+{%- assign arr1 = "avtomaticheskaya,kolichestvo-termoblokov,davlenie-pompy-bar,moschnost-vt,klapan-degazatsii,aktivnyy-podogrev-chashek,podsvetka-rezervuara-dlya-vody,avtoopolaskivatel-kapuchinatora,avtomaticheskaya-programma-ochistki-kofeynyh-masel,semnyy-varochnyy-blok,avtomaticheskaya-programma-dekaltsinatsii,eko-rezhim,avtomaticheskiy-kontrol-urovnya-vody-i-zyoren,zadnie-roliki-dlya-transportirovki,yomkost-konteynera-dlya-zyoren,emkost-dlya-vody-l,kofemolka-s-konicheskimi-zhernovami-iz-zakalyonnoy-stali,nalichie,obyom,yomkost-konteynera-dlya-molotogo-kofe,temperaturnyy-diapazon,sistema-pomola,dozator-kofe,pitayuschee-napryazhenie,tip,upakovka,sostav,sposob-obzharki,stepen-obzharki,konteyner,dlya-uhoda,podhodit-k-modelyam,dolgovechnyy-poddon-dlya-sbora-kapeliz-splava-zamak,sistema-easyclean-i-dvoynaya-trubka,2-soedinitelnyh-shlanga-dlya-moloka" | split: ',' -%} <!-- Особенности -->
+{%- assign arr2 = "tsvetnoy-tft-displey,sensornyy-ekran,nastroyka-vremeni-avtomaticheskogo-vklyucheniya,nastroyka-vremeni-avtomaticheskogo-vyklyucheniya,simvolnyy-displey,upravlenie-shatl,nivona-app-bluetooth,taymer,stepen-pomola" | split: ',' -%} <!-- Управление -->
+{%- assign arr3 = "funktsiya-holodnogo-zavarivaniya-chilled-brew,2-molochnyh-napitka-odnoy-knopkoy-onetouch-spumatore-duo,vozmozhnost-ispolzovaniya-molotogo-kofe,sistema-predvaritelnogo-smachivaniya-kofe,odnovremennoe-prigotovlenie-dvuh-napitkov,podstvetka-dlya-chashek,molochnyy-napitok-odnoy-knopkoy-onetouch-spumatore,avtomaticheskoe-prigotovlenie-kapuchino,sistema-sbalansirovannogo-aromata-aroma-balance-system,programmiruemye-napitki-moy-kofe,regulirovka-temperatury-kofe-etapy,regulirovka-kreposti-kofe-etapy,regulirovka-stepeni-pomola,regulirovka-zhyostkosti-vody,regulirovka-podachi-goryachey-vody-dlya-chaya,regulirovka-nastroek-vo-vremya-prigotovleniya,regulirovka-portsii-vody,regulirovka-dozatora-pod-vysotu-chashki,interaktivnoe-programmirovanie-retseptov,vybor-ocheryodnosti-podachi-moloka-i-kofe,avtomaticheskiy-kapuchinator-onetouch-spumatore-duo-sense-s-datchikom-temperatury-moloka,tehnologiya-americano-connaisseur,tehnologiya-cappuccino-connaisseur-2,vozmozhnost-ukazaniya-tipa-ispolzuemogo-moloka,lattepreselect-garantirovannaya-molochnaya-penka" | split: ',' -%} <!-- Приготовление напитка -->
+{%- assign arr4 = "indikatsiya-dekaltsinatsii,indikator-vklyucheniya,indikator-nalichiya-zyoren,indikator-urovnya-vody,indikator-zameny-filtra,easytemperature-intellektualnaya-funktsiya-podderzhaniya-temperatury-napitkov" | split: ',' -%} <!-- Индикация -->
+{%- assign arr5 = "material-korpusa,tsvet-korpuselementy-upravleniya,innovatsionnaya-shumoizolyatsiya-kofemolki" | split: ',' -%} <!-- Корпус -->
+{%- assign arr6 = "konteyner-dlya-moloka-yomkostyu-1-litr,filtr-dlya-vody,chistyaschie-tabletki,trubka-dlya-moloka,mernaya-lozhka,otdelenie-dlya-hraneniya-shnura,nabor,v-komplekte,test-poloski-dlya-izmereniya-zhestkosti-vody" | split: ',' -%} <!-- Комплектация -->
+{%- assign arr7 = "ves-netto-kg,ves_brutto,ves,razmer-sh-h-v-h-g,strana-proizvoditel,strana-proizrastaniya,garantiya" | split: ',' -%} <!-- Другое -->
+
+<div class="tab-properties__items">
+    <div class="tab-properties__item js-properties-block">
+        <h3 class="tab-properties__item__title">Особенности</h3>
+        <div class="properties-table">
+        {%- for property in product.properties -%}
+            {%- if property.handle != 'is_bundle' -%}          
+            {%- assign prop = property.handle | replace: "PROPERTY_", "" -%}
+            {%- if arr1 contains prop -%} 			 
+                <div class="properties-table__item">
+                    <label class="properties-table__title">
+                    <div>
+                    <span>{{ property.name }}</span>
+                    </div>
+                    <div class="properties-table__dots"></div>
+                    </label>
+                    <div class="properties-table__content">
+                    <span>
+                        {%- for characteristic in property.characteristics -%}
+                        <span class="property-value">{{ characteristic.title }}</span>
+                        {%- endfor -%}
+                    </span>
+                    </div>
+                </div>
+
+            {%- endif -%}
+            {%- endif -%}
+        {%- endfor -%}
+        </div>
+    </div>
+
+    <div class="tab-properties__item js-properties-block">
+        <h3 class="tab-properties__item__title">Управление</h3>
+        <div class="properties-table">
+        {%- for property in product.properties -%}
+            {%- if property.handle != 'is_bundle' -%}          
+            {%- assign prop = property.handle | replace: "PROPERTY_", "" -%}
+            {%- if arr2 contains prop -%} 			 
+                <div class="properties-table__item">
+                    <label class="properties-table__title">
+                    <div>
+                    <span>{{ property.name }}</span>
+                    </div>
+                    <div class="properties-table__dots"></div>
+                    </label>
+                    <div class="properties-table__content">
+                    <span>
+                        {%- for characteristic in property.characteristics -%}
+                        <span class="property-value">{{ characteristic.title }}</span>
+                        {%- endfor -%}
+                    </span>
+                    </div>
+                </div>
+
+            {%- endif -%}
+            {%- endif -%}
+        {%- endfor -%}
+        </div>
+    </div>
+
+    <div class="tab-properties__item js-properties-block">
+        <h3 class="tab-properties__item__title">Приготовление напитка</h3>
+        <div class="properties-table">
+        {%- for property in product.properties -%}
+            {%- if property.handle != 'is_bundle' -%}          
+            {%- assign prop = property.handle | replace: "PROPERTY_", "" -%}
+            {%- if arr3 contains prop -%} 			 
+                <div class="properties-table__item">
+                    <label class="properties-table__title">
+                    <div>
+                    <span>{{ property.name }}</span>
+                    </div>
+                    <div class="properties-table__dots"></div>
+                    </label>
+                    <div class="properties-table__content">
+                    <span>
+                        {%- for characteristic in property.characteristics -%}
+                        <span class="property-value">{{ characteristic.title }}</span>
+                        {%- endfor -%}
+                    </span>
+                    </div>
+                </div>
+
+            {%- endif -%}
+            {%- endif -%}
+        {%- endfor -%}
+        </div>
+    </div>
+
+    <div class="tab-properties__item js-properties-block">
+        <h3 class="tab-properties__item__title">Индикация</h3>
+        <div class="properties-table">
+        {%- for property in product.properties -%}
+            {%- if property.handle != 'is_bundle' -%}          
+            {%- assign prop = property.handle | replace: "PROPERTY_", "" -%}
+            {%- if arr4 contains prop -%} 			 
+                <div class="properties-table__item">
+                    <label class="properties-table__title">
+                    <div>
+                    <span>{{ property.name }}</span>
+                    </div>
+                    <div class="properties-table__dots"></div>
+                    </label>
+                    <div class="properties-table__content">
+                    <span>
+                        {%- for characteristic in property.characteristics -%}
+                        <span class="property-value">{{ characteristic.title }}</span>
+                        {%- endfor -%}
+                    </span>
+                    </div>
+                </div>
+
+            {%- endif -%}
+            {%- endif -%}
+        {%- endfor -%}
+        </div>
+    </div>
+
+    <div class="tab-properties__item js-properties-block">
+        <h3 class="tab-properties__item__title">Корпус</h3>
+        <div class="properties-table">
+        {%- for property in product.properties -%}
+            {%- if property.handle != 'is_bundle' -%}          
+            {%- assign prop = property.handle | replace: "PROPERTY_", "" -%}
+            {%- if arr5 contains prop -%} 			 
+                <div class="properties-table__item">
+                    <label class="properties-table__title">
+                    <div>
+                    <span>{{ property.name }}</span>
+                    </div>
+                    <div class="properties-table__dots"></div>
+                    </label>
+                    <div class="properties-table__content">
+                    <span>
+                        {%- for characteristic in property.characteristics -%}
+                        <span class="property-value">{{ characteristic.title }}</span>
+                        {%- endfor -%}
+                    </span>
+                    </div>
+                </div>
+
+            {%- endif -%}
+            {%- endif -%}
+        {%- endfor -%}
+        </div>
+    </div>
+
+    <div class="tab-properties__item js-properties-block">
+        <h3 class="tab-properties__item__title">Комплектация</h3>
+        <div class="properties-table">
+        {%- for property in product.properties -%}
+            {%- if property.handle != 'is_bundle' -%}          
+            {%- assign prop = property.handle | replace: "PROPERTY_", "" -%}
+            {%- if arr6 contains prop -%} 			 
+                <div class="properties-table__item">
+                    <label class="properties-table__title">
+                    <div>
+                    <span>{{ property.name }}</span>
+                    </div>
+                    <div class="properties-table__dots"></div>
+                    </label>
+                    <div class="properties-table__content">
+                    <span>
+                        {%- for characteristic in property.characteristics -%}
+                        <span class="property-value">{{ characteristic.title }}</span>
+                        {%- endfor -%}
+                    </span>
+                    </div>
+                </div>
+
+            {%- endif -%}
+            {%- endif -%}
+        {%- endfor -%}
+        </div>
+    </div>
+
+    <div class="tab-properties__item js-properties-block">
+        <h3 class="tab-properties__item__title">Другое</h3>
+        <div class="properties-table">
+        {%- for property in product.properties -%}
+            {%- if property.handle != 'is_bundle' -%}          
+            {%- assign prop = property.handle | replace: "PROPERTY_", "" -%}
+            {%- if arr7 contains prop -%} 			 
+                <div class="properties-table__item">
+                    <label class="properties-table__title">
+                    <div>
+                    <span>{{ property.name }}</span>
+                    </div>
+                    <div class="properties-table__dots"></div>
+                    </label>
+                    <div class="properties-table__content">
+                    <span>
+                        {%- for characteristic in property.characteristics -%}
+                        <span class="property-value">{{ characteristic.title }}</span>
+                        {%- endfor -%}
+                    </span>
+                    </div>
+                </div>
+
+            {%- endif -%}
+            {%- endif -%}
+        {%- endfor -%}
+        </div>
+    </div>
+
+    {% if product.fields.Instruktsii.value.size > 0 %}
+        <div class="tab-properties__item">
+            <a href="{{ product.fields.Instruktsii.value }}" class="button is-bordered">
+                <span class="icon">
+                    <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.4067 5.88371C10.9775 5.42513 10.2397 5.45986 9.85553 5.95673L7.00661 9.64104L4.14444 5.94667C3.7598 5.45019 3.02213 5.41602 2.59324 5.87482C2.25136 6.24055 2.22551 6.80036 2.53223 7.19605L5.64872 11.2165C6.39187 12.1406 7.62491 12.1374 8.36996 11.2098L11.4687 7.20443C11.7749 6.80862 11.7486 6.24908 11.4067 5.88371Z" fill="#B51F1F"/>
+                        <path d="M6 1C6 0.447715 6.44772 0 7 0C7.55228 0 8 0.447715 8 1V10.4622H6V1Z" fill="#B51F1F"/>
+                        <path d="M0 14C0 13.4477 0.447715 13 1 13H13C13.5523 13 14 13.4477 14 14C14 14.5523 13.5523 15 13 15H1C0.447716 15 0 14.5523 0 14Z" fill="#B51F1F"/>
+                    </svg>
+                </span>
+                    
+                Скачать инструкцию
+            </a>
+        </div>
+    {% endif %}
+    <div class="property-default-text">Производитель оставляет за собой право изменять характеристики товара, его внешний вид и комплектность без предварительного уведомления продавца. Предложение по продаже товара действительно в течение срока наличия этого товара на складе.</div>
+</div>

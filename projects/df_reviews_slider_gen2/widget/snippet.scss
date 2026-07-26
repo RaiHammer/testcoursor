@@ -1,0 +1,248 @@
+// DanForge Reviews Yandex — gen-2 (slider + list)
+
+// Optional theme wrapper (Bootstrap container themes, e.g. nivona index.liquid patch)
+.section-df-reviews {
+  padding: 2rem 0;
+
+  @media screen and (max-width: 767px) {
+    padding: 1.25rem 0;
+  }
+}
+
+.df-reviews {
+  position: relative;
+  padding: 2rem 1rem;
+  text-align: center;
+  --df-reviews-text-lines: 5;
+  --df-reviews-accent: #f5a623;
+
+  &--title-left {
+    text-align: left;
+
+    .df-reviews__title,
+    .df-reviews__slide {
+      text-align: left;
+    }
+
+    .df-reviews__slide {
+      align-items: flex-start;
+    }
+  }
+
+  &__title {
+    margin: 0 0 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  &__viewport {
+    position: relative;
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  &__slider {
+    padding-bottom: 2.5rem;
+  }
+
+  &__arrow {
+    color: var(--df-reviews-accent, #f5a623);
+
+    &::after {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__slider:not(.df-reviews__slider--arrows) .df-reviews__arrow {
+    display: none;
+  }
+
+  &__slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    height: auto;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+
+    &.is-hidden,
+    &--mode-limited {
+      display: none !important;
+    }
+  }
+
+  &__avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f0eef8;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__avatar--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    color: #888;
+  }
+
+  &__author {
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+
+  &__date {
+    font-size: 0.8125rem;
+    color: #888;
+    line-height: 1.2;
+  }
+
+  &__stars {
+    color: var(--df-reviews-accent, #f5a623);
+    font-size: 1.125rem;
+    letter-spacing: 0.1em;
+    line-height: 1;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: #333;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--df-reviews-text-lines, 5);
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  &__expand {
+    border: 0;
+    background: none;
+    color: var(--df-reviews-accent, #f5a623);
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  &__source {
+    font-size: 0.75rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__empty {
+    margin: 0;
+    color: #666;
+  }
+
+  &__pagination .swiper-pagination-bullet-active {
+    background: var(--df-reviews-accent, #f5a623);
+  }
+
+  &--hide-date .df-reviews__date {
+    display: none !important;
+  }
+
+  &--hide-source .df-reviews__source {
+    display: none !important;
+  }
+
+  &--layout-list .df-reviews__grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  &--layout-list .df-reviews__slide {
+    width: 100%;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  &--layout-list .df-reviews__text {
+    text-align: left;
+  }
+
+  &__modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+
+    &[hidden] {
+      display: none !important;
+    }
+  }
+
+  &__modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  &__modal-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(560px, 100%);
+    max-height: min(85vh, 720px);
+    overflow: auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem 1.5rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  }
+
+  &__modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    border: 0;
+    background: transparent;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+  }
+
+  &__modal-body .df-reviews__text {
+    -webkit-line-clamp: unset;
+    display: block;
+    overflow: visible;
+  }
+}
+
+.df-reviews.is-overlay-open {
+  z-index: 10040;
+}
+
+@media screen and (max-width: 767px) {
+  .df-reviews {
+    padding: 1.25rem 0.75rem;
+  }
+}

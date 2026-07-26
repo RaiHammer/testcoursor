@@ -1,0 +1,165 @@
+{% comment %}
+  Если у нас есть аналогичный товаров с акцией (комплект)
+  Подменяем его в коде, чтобы он попадал в корзину
+{% endcomment %}
+{% if settings.actions_bundle_change_position_enable == '1' and product.fields[settings.actions_bundle_change_position_field_handle].value.size > 0 %}
+  {% assign productIds = product.fields[settings.actions_bundle_change_position_field_handle].value | split: '||' %}
+  {% assign product_id = productIds[0] %}
+  {% assign variant_id = productIds[1] %}
+{% else %}
+  {% assign product_id = product.id %}
+{% endif %}
+
+<form class="product-form" action="{{ cart_url }}" data-product-id="{{ product_id }}" data-main-form
+  data-product-item data-item-sku="{{ product.sku }}" data-item-title="{{ product.title | escape | replace: '"', '&quot;' | replace: "'", "&prime;" }}"
+  data-item-collection="{{ product.collections.first.title | replace: '"', '&quot;' | replace: "'", "&prime;" }}"
+  data-item-brand="{{ product.properties.brend.characteristics.first.title | replace: '"', '&quot;' | replace: "'", "&prime;" }}" data-item-price="{{ product.price }}"
+  data-item-currency="RUB" data-item-variant="{{ product.variants[0].title | replace: '"', '&quot;' | replace: "'", "&prime;" }}" data-item-url="{{ product.url | escape }}"
+  >
+  <div class="product__prices">
+    <span class="product__old-price js-product-old-price">
+      {% if product.old_price > product.price %}
+        {{ product.old_price | money }}
+      {% endif %}
+    </span>
+
+    <span class="product__price js-product-price {% if product.old_price > product.price %}is_discount{% endif %}" data-price="{{ product.price }}" data-price-summ="{{ product.price }}">{{ product.price | money }}</span>
+    {% comment %}
+    {% endcomment %}
+
+    {% if settings.found-cheaper_hidden != '1' %}
+      <a href="#found-cheaper" rel="nofollow" class="popup-modal found-cheaper" data-attr="#found-cheaper">
+        Нашли дешевле?
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="product-option-selectors option-selectors">
+    {% if variant_id.size > 0 %}
+      <input type="hidden" name="variant_id" value="{{ variant_id }}">
+    {% else %}
+      {% if product.show_variants? %}
+        <select name="variant_id" data-product-variants style="display: none;">
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}">{{ variant.title | escape }}</option>
+          {% endfor %}
+        </select>
+      {% else %}
+        <input type="hidden" name="variant_id" value="{{ product.variants.first.id }}">
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <div class="product__actions">
+    <div class="actions__main">
+      {% if product.properties['is_preorder'].characteristics[0].handle != 'true' and product.available %}
+        <div class="actions__quantity">
+          {% include "product_counter" %}
+        </div>
+      {% else %}
+        <input type="hidden" value="1" name="quantity">
+      {% endif %}
+      <div class="actions__buybtn">
+        {% if product.available %}
+          <button class="product__buy button is-primary" type="submit" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit'); return true;" data-item-add {% unless product.available %}disabled="disabled"{% endunless %}>
+            Купить
+          </button>
+        {% else %}
+          <button
+            class="product__buy winbox  button is-primary"
+            data-window="{% if settings.product_order_target == 'mail' %}{% if product.properties['is_preorder'].characteristics[0].handle == 'true' %}preorder{% else %}request{% endif %}{% else %}quickorder|request{% endif %}"
+            data-product-title="{{ product.title | escape }}"
+            data-window-product-url="{{ account.url }}{{ product.canonical_url }}"
+            data-variant-id="{{ product.variants.first.id }}"
+            data-variant-price="{{ product.variants.first.price }}"
+            data-variant-image="{{ product.first_image.original_url }}"
+            data-product-id="{{ product_id }}"
+          >
+            <span class="button-text">{% if product.properties['is_preorder'].characteristics[0].handle == 'true' %}Предзаказ{% else %}{{ settings.product_order_text }}{% endif %}</span>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="actions__second">
+      <div class="actions__buyOneClick">
+        {% if account.quick_checkout.enabled and product.available %}
+          {% if product.properties['is_preorder'].characteristics[0].handle != 'true' %}
+            <button type="button" class="product-button is-quick-checkout button is-bordered-light" data-quick-checkout style="display: none;">
+              Быстрый заказ
+            </button>
+          {% endif %}
+        {% endif %}
+      </div>
+      {% comment %}
+      <div class="actions__buyCredit">
+        <button type="button" class="product-button is-buy-credit button is-bordered-light" data-buy-credit style="display: none;" data-item-add>
+          Купить в кредит
+        </button>
+      </div>
+      {% endcomment %}
+    </div>
+  </div>
+  {% if settings.btn-rassrochka_hidden != '1' %}
+    {% if product.sale_price > 3192 and product.available %}
+      {% if product.canonical_collection.title != 'Запчасти и комплектующие'%}
+          <button type="button" class="button credit-button" data-product-id="{{ product.id }}" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit_v_rassrochku'); return true;" data-variant-title="" data-item-add>Купить в рассрочку</button>
+          <span class="credit-description">от {{ product.price | divided_by: 6 | money }} / месяц</span>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  {% comment %} ❤ иbegin about-skidki ODX-1789 ❤ {% endcomment %}
+  {% assign show_about_skidki = false %}
+  {% assign prop_handle = property | default: 'label' %}
+  {% assign labels_list = product.properties[prop_handle] %}
+
+  {% comment %} ЕСЛИ ЕСТЬ МЕТКА ТО ПОКАЗЫВАТЬ БЛОК СКИДКИ {% endcomment %}
+  {% for item in labels_list.characteristics %}
+    {% if item.handle == 'about-skidki' %}
+      {% assign show_about_skidki = true %}
+    {% endif %}
+  {% endfor %}
+
+  {% if show_about_skidki %}
+    <div class="product__sale">
+      {% for block in block_lists.block-sale-panel.blocks %}
+        {% if block.show-sale %}
+
+          {% comment %} список Категорий, категорий может быть больше чем 1 {% endcomment %}
+          {% for kateigor in block.collection-sale-3 %}
+
+            {% comment %} Сверяем категорию товара с категориями из блока {% endcomment %}
+            {% if product.canonical_collection.handle != 'all' %}
+              {% assign canon = product.canonical_collection.handle %}
+            {% else %}
+              {% comment %} товары заведены "не одинаково", поэтому это второй сценарий обработки категории {% endcomment %}
+              {% for collec in product.collections %}
+                {% unless collec.handle != kateigor.handle %}
+                  {% assign canon = collec.handle %}
+                {% endunless %}
+              {% endfor %}
+            {% endif %}
+
+            {% comment %} вывод текста ПО СООТВЕТСТВИЮ КАТЕГОРИЙ {% endcomment %}
+            {% if kateigor.handle == canon or kateigor.handle == 'all' %}
+              <div class="sale-item">
+                <div class="sale-item__icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.31816 1.19838C9.65577 0.82133 10.0691 0.519716 10.5312 0.313223C10.9932 0.10673 11.4936 0 11.9997 0C12.5058 0 13.0063 0.10673 13.4683 0.313223C13.9304 0.519716 14.3437 0.82133 14.6813 1.19838L15.5212 2.13663C15.6412 2.2709 15.7899 2.37642 15.9563 2.44538C16.1227 2.51433 16.3024 2.54495 16.4822 2.53497L17.742 2.46538C18.2472 2.43763 18.7526 2.5167 19.2251 2.69742C19.6977 2.87814 20.1268 3.15646 20.4846 3.51421C20.8423 3.87196 21.1207 4.30112 21.3014 4.77368C21.4821 5.24624 21.5612 5.7516 21.5334 6.25678L21.4638 7.51658C21.454 7.69619 21.4847 7.87572 21.5537 8.04186C21.6226 8.20801 21.7281 8.35653 21.8622 8.47642L22.8016 9.31629C23.1789 9.6539 23.4807 10.0673 23.6873 10.5295C23.8939 10.9916 24.0007 11.4922 24.0007 11.9985C24.0007 12.5047 23.8939 13.0053 23.6873 13.4675C23.4807 13.9296 23.1789 14.343 22.8016 14.6806L21.8622 15.5205C21.7279 15.6405 21.6224 15.7892 21.5534 15.9556C21.4845 16.122 21.4539 16.3017 21.4638 16.4816L21.5334 17.7414C21.5612 18.2465 21.4821 18.7519 21.3014 19.2244C21.1207 19.697 20.8423 20.1262 20.4846 20.4839C20.1268 20.8417 19.6977 21.12 19.2251 21.3007C18.7526 21.4814 18.2472 21.5605 17.742 21.5328L16.4822 21.4632C16.3026 21.4534 16.1231 21.4841 15.9569 21.553C15.7908 21.622 15.6423 21.7274 15.5224 21.8615L14.6825 22.801C14.3449 23.1782 13.9315 23.48 13.4693 23.6866C13.0072 23.8932 12.5066 24 12.0003 24C11.4941 24 10.9935 23.8932 10.5313 23.6866C10.0692 23.48 9.65577 23.1782 9.31816 22.801L8.47829 21.8615C8.35827 21.7272 8.20956 21.6217 8.04319 21.5528C7.87682 21.4838 7.69706 21.4532 7.51725 21.4632L6.25745 21.5328C5.75227 21.5605 5.24691 21.4814 4.77435 21.3007C4.30179 21.12 3.87263 20.8417 3.51488 20.4839C3.15713 20.1262 2.87881 19.697 2.69809 19.2244C2.51737 18.7519 2.4383 18.2465 2.46605 17.7414L2.53564 16.4816C2.54544 16.3019 2.51473 16.1224 2.44578 15.9563C2.37683 15.7901 2.2714 15.6416 2.1373 15.5217L1.19905 14.6818C0.821803 14.3442 0.520019 13.9308 0.313406 13.4687C0.106794 13.0065 0 12.5059 0 11.9997C0 11.4934 0.106794 10.9928 0.313406 10.5307C0.520019 10.0685 0.821803 9.6551 1.19905 9.31749L2.1373 8.47762C2.27157 8.3576 2.37709 8.20889 2.44605 8.04252C2.515 7.87615 2.54562 7.69639 2.53564 7.51658L2.46605 6.25678C2.4383 5.7516 2.51737 5.24624 2.69809 4.77368C2.87881 4.30112 3.15713 3.87196 3.51488 3.51421C3.87263 3.15646 4.30179 2.87814 4.77435 2.69742C5.24691 2.5167 5.75227 2.43763 6.25745 2.46538L7.51725 2.53497C7.69687 2.54477 7.87639 2.51406 8.04254 2.44511C8.20868 2.37616 8.3572 2.27073 8.4771 2.13663L9.31816 1.19838ZM16.4474 7.55137C16.6724 7.77637 16.7987 8.08149 16.7987 8.39964C16.7987 8.71778 16.6724 9.0229 16.4474 9.2479L9.24857 16.4468C9.02229 16.6653 8.71921 16.7862 8.40463 16.7835C8.09004 16.7808 7.78911 16.6546 7.56666 16.4321C7.3442 16.2097 7.21802 15.9088 7.21529 15.5942C7.21255 15.2796 7.33349 14.9765 7.55204 14.7502L14.7509 7.55137C14.9759 7.32644 15.281 7.20008 15.5992 7.20008C15.9173 7.20008 16.2224 7.32644 16.4474 7.55137ZM9.00021 7.19983C8.5229 7.19983 8.06513 7.38944 7.72762 7.72695C7.39011 8.06446 7.2005 8.52223 7.2005 8.99954V9.01154C7.2005 9.48885 7.39011 9.94662 7.72762 10.2841C8.06513 10.6216 8.5229 10.8113 9.00021 10.8113H9.01221C9.48952 10.8113 9.94729 10.6216 10.2848 10.2841C10.6223 9.94662 10.8119 9.48885 10.8119 9.01154V8.99954C10.8119 8.52223 10.6223 8.06446 10.2848 7.72695C9.94729 7.38944 9.48952 7.19983 9.01221 7.19983H9.00021ZM14.9993 13.1989C14.5219 13.1989 14.0642 13.3885 13.7267 13.726C13.3892 14.0635 13.1995 14.5213 13.1995 14.9986V15.0106C13.1995 15.4879 13.3892 15.9457 13.7267 16.2832C14.0642 16.6207 14.5219 16.8103 14.9993 16.8103H15.0113C15.4886 16.8103 15.9463 16.6207 16.2838 16.2832C16.6214 15.9457 16.811 15.4879 16.811 15.0106V14.9986C16.811 14.5213 16.6214 14.0635 16.2838 13.726C15.9463 13.3885 15.4886 13.1989 15.0113 13.1989H14.9993Z" fill="#E4032E"/>
+                  </svg>
+                </div>
+                <span class="sale-item__text">{{ block.text-sale }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% comment %} ❤ 🦉❤🪿=🐣 иend about-skidki ODX-1789 ❤  {% endcomment %}
+
+  <div class="product__info">
+    {% include "product_info" %}
+  </div>
+</form>

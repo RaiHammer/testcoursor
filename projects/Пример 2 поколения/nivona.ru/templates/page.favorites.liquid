@@ -1,0 +1,24 @@
+<div class="content-wrapper">
+    {% include "page_header" %}
+    <div class="products-list is-favorites">
+      <div class="container products-items products-items_grid active">
+        <div class="row js-favorite">
+            <div class="col-xs-12 col-sm-12 col-md-12"><div class="products_empty">Список избранного пуст!</div></div>
+        </div> 
+      </div>
+    </div>
+    <div class="container">
+        <div class="favorite-actions" style="display: none;">
+            <button class="button is-bordered button-clear js-clear-all">
+                Очистить избранное
+            </button>
+            {% comment %}
+            <button class="button is-primary button-buy js-buy-all">
+                Купить все        
+            </button>
+            {% endcomment %}
+        </div>
+    </div>
+  </div>
+
+  

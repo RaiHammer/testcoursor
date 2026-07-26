@@ -1,0 +1,19 @@
+{
+  "type": "SimpleWidgetType",
+  "handle": "danforge_dynamic_cart",
+  "page_kinds": [
+    "all"
+  ],
+  "widget_list_kinds": [
+    "outside"
+  ],
+  "generation": 4,
+  "name": {
+    "ru": "Динамичная корзина"
+  },
+  "description": {
+    "ru": "Боковая корзина с обновлением без перезагрузки. Автооткрытие при добавлении товара. Адаптив: панель на ПК, bottom sheet на мобильных. Для магазинов одежды и fashion."
+  },
+  "widget_category_handle": "drugie",
+  "libraries": []
+}

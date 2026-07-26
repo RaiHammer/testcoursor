@@ -1,0 +1,44 @@
+<div data-comments-list data-comments-moderated="{{ moderated }}">
+  {% if comments_list.size > 0  %}
+    <div class="comments-list">
+      {% for item in comments_list %}
+        <div class="comments-item">
+          <div class="comment-header"></div>
+
+          <div class="comment-body">
+            {{ item.content }}
+          </div>
+
+          <div class="comment-footer">
+            <div class="date">
+              {{ item.created_at | date: "%d.%m.%Y %H:%M" }}
+            </div>
+
+            <div class="author">
+              {{ item.author }}
+            </div>
+
+            {% if item.rating %}
+              <div data-product-rating="{{ item.rating }}"></div>
+            {% endif %}
+          </div>
+
+          {% if item.replied? %}
+            <div class="comments-item" style="font-size: 90%; padding-left: 1rem;">
+              <div class="comment-body">
+                {{ item.manager_reply }}
+              </div>
+              <div class="comment-footer">
+                <div class="date">
+                  {{ item.replied_at | date: "%d.%m.%Y %H:%M" }}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div><!-- /.list-item -->
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{% assign comments_list = null %}

@@ -1,0 +1,118 @@
+/*==============================
+	Blog
+==============================*/
+.articles-list {
+  .article-preview {
+    &-wrapper {
+      background-color: #fff;
+    }
+    &-image-wrapper {
+      
+    }
+    &-image-inner {
+
+    }
+    &-image {
+      width: 100%;
+    }
+    &-caption {
+      padding: 20px;
+    }
+    &-heading-wrapper {
+
+    }
+    &-heading {
+      a {
+        color: #b00917;
+        font-size: 18px;
+        line-height: 20px;
+        display: block;
+        font-family: 'robotocondensed-bold';
+        height: 60px;
+        overflow: hidden;
+        display: block;
+      }
+    }
+  }
+}
+
+
+.blog-acticle {
+    &__items {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -5px;
+    }
+    &__item {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      height: 400px;
+      display: block;
+      position: relative;
+      border-radius: 4px;
+      &__wrapper {
+        padding: 0 5px;
+        margin-bottom: 10px;
+        &:nth-child(1), &:nth-child(5) {
+            flex: 0 0 66.6%;
+        }
+        &:nth-child(2), &:nth-child(4) {
+          flex: 0 0 33.3%;
+        }
+        &:nth-child(3), &:nth-child(6) {
+          flex: 0 0 100%;
+          .blog-acticle__item {
+            &__content {
+              max-width: 800px;
+            }
+            &__title {
+              font-style: normal;
+              font-weight: 500;
+              font-size: 32px;
+              line-height: 46px;
+            }
+            &__description {
+              font-weight: 400;
+              font-size: 22px;
+              line-height: 34px;
+              max-width: 100%;
+            }
+          }
+        }
+      }
+      &:before {
+        content: '';
+        background: linear-gradient(180deg, rgba(46, 35, 52, 0.7) 0%, rgba(46, 35, 52, 0.28) 100%);
+        height: 100%;
+        width: 100%;
+        display: block;
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        border-radius: 4px;
+      }
+      &__content {
+        display: flex;
+        flex-direction: column;
+        padding: 50px 60px;
+        position: absolute;
+      }
+      &__title {
+        font-weight: 500;
+        font-size: 26px;
+        line-height: 30px;
+        letter-spacing: 1.08333px;
+        color: #FFFFFF;
+        padding-bottom: 20px;
+      }
+      &__description {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: 1px;
+        color: #FFFFFF;
+        max-width: 340px;
+      }
+    }
+  }

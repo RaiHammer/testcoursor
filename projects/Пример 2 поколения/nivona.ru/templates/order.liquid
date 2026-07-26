@@ -1,0 +1,18 @@
+<div class="text text-cabinet">
+{% if order.payment_title == 'Заказ на ALi' %}
+
+   {% include 'order_ali' %}
+
+{% else %}
+    {% if order.payment_title == 'Заявка на поступление товара' %}
+  
+       {% include 'order_pre' %}
+  
+    {% else %}
+
+       {% include 'order_core' %}
+  
+    {% endif %}
+
+{% endif %}
+</div>

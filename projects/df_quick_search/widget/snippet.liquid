@@ -1,0 +1,508 @@
+{% comment %}
+  DanForge Quick Search — виджет inSales gen-4
+  Автор: DanForge · https://danforge.ru
+  Handle: danforge_quick_search
+{% endcomment %}
+
+{% assign df_qs_locale_raw = language.locale | default: 'ru' | downcase %}
+{% assign df_qs_locale = 'ru' %}
+{% if df_qs_locale_raw == 'en' or df_qs_locale_raw contains 'en-' or df_qs_locale_raw contains 'en_' %}
+  {% assign df_qs_locale = 'en' %}
+{% else %}
+  {% assign df_qs_locale = df_qs_locale_raw %}
+{% endif %}
+{% if widget_settings.placeholder != blank %}
+  {% assign placeholder = widget_settings.placeholder %}
+{% elsif df_qs_locale == 'en' %}
+  {% assign placeholder = 'Search the catalog' %}
+{% else %}
+  {% assign placeholder = 'Поиск по каталогу' %}
+{% endif %}
+{% if df_qs_locale == 'en' %}
+  {% assign df_qs_panel_title = 'Search' %}
+  {% assign df_qs_close_label = 'Close search' %}
+{% else %}
+  {% assign df_qs_panel_title = 'Поиск' %}
+  {% assign df_qs_close_label = 'Закрыть поиск' %}
+{% endif %}
+{% assign popular_queries = widget_settings.popular_queries | default: '' | append: '' %}
+{% assign trigger_selectors = widget_settings.trigger_selectors | default: '.header__search, .header__search-form, .header__search-field, .header__search-btn, .js-open-search-panel, .js-show-search' %}
+
+{% assign enabled = 'true' %}
+{% if widget_settings.enabled == false or widget_settings.enabled == 'false' %}
+  {% assign enabled = 'false' %}
+{% endif %}
+
+{% assign show_photos = 'true' %}
+{% if widget_settings.show_photos == false or widget_settings.show_photos == 'false' %}
+  {% assign show_photos = 'false' %}
+{% endif %}
+
+{% assign hover_second_image = 'true' %}
+{% if widget_settings.hover_second_image == false or widget_settings.hover_second_image == 'false' %}
+  {% assign hover_second_image = 'false' %}
+{% endif %}
+
+{% assign show_prices = 'true' %}
+{% if widget_settings.show_prices == false or widget_settings.show_prices == 'false' %}
+  {% assign show_prices = 'false' %}
+{% endif %}
+
+{% assign show_product_sort = 'true' %}
+{% if widget_settings.show_product_sort == false or widget_settings.show_product_sort == 'false' %}
+  {% assign show_product_sort = 'false' %}
+{% endif %}
+
+{% assign show_all_results = 'true' %}
+{% if widget_settings.show_all_results == false or widget_settings.show_all_results == 'false' %}
+  {% assign show_all_results = 'false' %}
+{% endif %}
+
+{% assign show_categories = 'true' %}
+{% if widget_settings.show_categories == false or widget_settings.show_categories == 'false' %}
+  {% assign show_categories = 'false' %}
+{% endif %}
+
+{% assign hide_zero_price = 'false' %}
+{% if widget_settings.hide_zero_price == true or widget_settings.hide_zero_price == 'true' %}
+  {% assign hide_zero_price = 'true' %}
+{% endif %}
+
+{% assign show_articles = 'false' %}
+{% if widget_settings.show_articles == true or widget_settings.show_articles == 'true' %}
+  {% assign show_articles = 'true' %}
+{% endif %}
+
+{% assign show_out_of_stock_badge = 'true' %}
+{% if widget_settings.show_out_of_stock_badge == false or widget_settings.show_out_of_stock_badge == 'false' %}
+  {% assign show_out_of_stock_badge = 'false' %}
+{% endif %}
+
+{% assign articles_lazy_load = 'true' %}
+{% if widget_settings.articles_lazy_load == false or widget_settings.articles_lazy_load == 'false' %}
+  {% assign articles_lazy_load = 'false' %}
+{% endif %}
+
+{% assign article_blog_handles = widget_settings.article_blog_handles | default: 'blog' | append: '' | strip %}
+{% assign articles_blog_url = widget_settings.articles_blog_url | default: '/blog' | append: '' | strip %}
+{% if articles_blog_url == '' %}
+  {% assign articles_blog_url = '/blog' %}
+{% endif %}
+
+{% assign articles_display_limit = widget_settings.articles_display_limit | default: 8 | plus: 0 %}
+{% if articles_display_limit < 1 or articles_display_limit > 100 %}
+  {% assign articles_display_limit = 8 %}
+{% endif %}
+
+{% assign image_ratio = widget_settings.image_ratio | default: 'square' | append: '' | strip | downcase %}
+{% unless image_ratio == 'portrait' or image_ratio == 'portrait-34' or image_ratio == 'landscape' or image_ratio == 'natural' %}
+  {% assign image_ratio = 'square' %}
+{% endunless %}
+
+{% assign results_limit = widget_settings.results_limit | default: 24 | plus: 0 %}
+{% if results_limit < 1 or results_limit > 200 %}
+  {% assign results_limit = 24 %}
+{% endif %}
+
+{% assign cols_mobile = widget_settings.cols_mobile | default: '2' | append: '' | strip %}
+{% assign cols_tablet = widget_settings.cols_tablet | default: '3' | append: '' | strip %}
+{% assign cols_desktop = widget_settings.cols_desktop | default: '4' | append: '' | strip %}
+{% unless cols_mobile == '2' or cols_mobile == '3' or cols_mobile == '4' or cols_mobile == '5' or cols_mobile == '6' %}
+  {% assign cols_mobile = '2' %}
+{% endunless %}
+{% unless cols_tablet == '2' or cols_tablet == '3' or cols_tablet == '4' or cols_tablet == '5' or cols_tablet == '6' %}
+  {% assign cols_tablet = '3' %}
+{% endunless %}
+{% unless cols_desktop == '2' or cols_desktop == '3' or cols_desktop == '4' or cols_desktop == '5' or cols_desktop == '6' %}
+  {% assign cols_desktop = '4' %}
+{% endunless %}
+
+{% assign articles_server_total = 0 %}
+{% assign df_qs_articles_cache_key = 'df_qs_articles' %}
+{% if show_articles == 'true' and article_blog_handles != '' %}
+  {% assign blog_handle_list = article_blog_handles | split: ',' %}
+  {% for handle_raw in blog_handle_list %}
+    {% assign blog_handle = handle_raw | strip %}
+    {% if blog_handle != '' and blogs[blog_handle] %}
+      {% assign articles_server_total = articles_server_total | plus: blogs[blog_handle].articles_count %}
+      {% assign df_qs_articles_cache_key = df_qs_articles_cache_key | append: '_' | append: blog_handle | append: '_' | append: blogs[blog_handle].articles.size %}
+    {% endif %}
+  {% endfor %}
+  {% assign df_qs_articles_cache_key = df_qs_articles_cache_key | append: '_' | append: language.locale %}
+{% endif %}
+
+<div
+  class="df-quick-search df-quick-search--layout-split"
+  data-danforge-widget="danforge_quick_search"
+  data-df-quick-search-root
+  data-ui-locale="{{ df_qs_locale | escape }}"
+  data-placeholder="{{ placeholder | escape }}"
+  data-popular-queries="{{ popular_queries | escape }}"
+  data-trigger-selectors="{{ trigger_selectors | escape }}"
+  data-enabled="{{ enabled }}"
+  data-show-photos="{{ show_photos }}"
+  data-hover-second-image="{{ hover_second_image }}"
+  data-show-prices="{{ show_prices }}"
+  data-show-product-sort="{{ show_product_sort }}"
+  data-show-all-results="{{ show_all_results }}"
+  data-show-categories="{{ show_categories }}"
+  data-hide-zero-price="{{ hide_zero_price }}"
+  data-show-articles="{{ show_articles }}"
+  data-show-out-of-stock-badge="{{ show_out_of_stock_badge }}"
+  data-articles-lazy-load="{{ articles_lazy_load }}"
+  data-article-blog-handles="{{ article_blog_handles | escape }}"
+  data-articles-blog-url="{{ articles_blog_url | escape }}"
+  data-articles-display-limit="{{ articles_display_limit }}"
+  data-articles-server-total="{{ articles_server_total }}"
+  data-articles-cache-key="{{ df_qs_articles_cache_key | escape }}"
+  data-results-limit="{{ results_limit }}"
+  data-image-ratio="{{ image_ratio }}"
+  data-cols-mobile="{{ cols_mobile }}"
+  data-cols-tablet="{{ cols_tablet }}"
+  data-cols-desktop="{{ cols_desktop }}"
+  style="--df-qs-cols-mobile: {{ cols_mobile }}; --df-qs-cols-tablet: {{ cols_tablet }}; --df-qs-cols-desktop: {{ cols_desktop }};"
+>
+  <script type="application/json" data-df-quick-search-collections>
+    [{% for link in collections.root_category.flatten_branch %}{% unless forloop.first %},{% endunless %}{"id":{{ link.id }},"title":{{ link.title | json }},"url":"{{ link.url }}","level":{{ link.level }}}{% endfor %}]
+  </script>
+
+  {% if show_articles == 'true' and article_blog_handles != '' %}
+    {% assign blog_handle_list = article_blog_handles | split: ',' %}
+    {% cache df_qs_articles_cache_key %}
+    <script type="application/json" id="df-qs-articles-index" data-df-quick-search-articles>
+      [{%- assign first_article = true -%}
+      {%- for handle_raw in blog_handle_list -%}
+        {%- assign blog_handle = handle_raw | strip -%}
+        {%- if blog_handle != '' and blogs[blog_handle] -%}
+          {%- assign articles_size = blogs[blog_handle].articles.size -%}
+          {%- for i in (0..articles_size) -%}
+            {%- assign article = blogs[blog_handle].articles[i] -%}
+            {%- if article.title != blank -%}
+              {%- unless first_article -%},{%- endunless -%}
+              {%- assign first_article = false -%}
+              {"id":{{ article.id }},"title":{{ article.title | json }},"url":{{ article.url | json }},"tags":[{%- for tag in article.tags -%}{%- unless forloop.first -%},{%- endunless -%}{{ tag.title | json }}{%- endfor -%}],"related_ids":[{%- for product in article.related_products -%}{%- unless forloop.first -%},{%- endunless -%}{{ product.id }}{%- endfor -%}],"related_titles":[{%- for product in article.related_products -%}{%- unless forloop.first -%},{%- endunless -%}{{ product.title | json }}{%- endfor -%}]}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}]
+    </script>
+    {% endcache %}
+  {% endif %}
+
+  <style>
+    .df-quick-search__overlay {
+      display: none;
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(0, 0, 0, 0.7) !important;
+      z-index: 2147483000 !important;
+    }
+
+    .df-quick-search__overlay.is-open {
+      display: block !important;
+    }
+
+    .df-quick-search__panel {
+      display: none;
+      position: fixed !important;
+      top: 1rem !important;
+      left: 1rem !important;
+      right: 1rem !important;
+      height: 90svh !important;
+      z-index: 2147483646 !important;
+      background: var(--bg, #fff) !important;
+      border-radius: 6px;
+      flex-direction: column;
+      overflow: hidden;
+      color: var(--color-text, #111);
+    }
+
+    .df-quick-search__panel.is-open {
+      display: flex !important;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .df-quick-search__results {
+      position: relative;
+      flex: 1 1 0%;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      box-sizing: border-box;
+    }
+
+    .df-quick-search__results-content {
+      min-height: 0;
+      min-width: 0;
+    }
+
+    .df-quick-search__product-grid {
+      display: grid;
+      grid-template-columns: repeat(var(--df-qs-cols-mobile, 2), minmax(0, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .df-quick-search__results-spinner {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+    }
+
+    .df-quick-search__results-spinner.is-visible {
+      display: flex;
+    }
+
+    .df-quick-search__spinner {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: df-quick-search-spin 0.75s linear infinite;
+    }
+
+    @keyframes df-quick-search-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      .df-quick-search__product-grid {
+        grid-template-columns: repeat(var(--df-qs-cols-tablet, 3), minmax(0, 1fr));
+      }
+
+      .df-quick-search__results {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 0%;
+      }
+
+      .df-quick-search__results-content {
+        flex: 1 1 0%;
+        min-height: 0;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .df-quick-search__layout--split {
+        flex: 1 1 0%;
+        min-height: 0;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .df-quick-search__split-body {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        flex: 1 1 0%;
+        min-height: 0;
+        min-width: 0;
+        gap: 1.5rem;
+        overflow: hidden;
+      }
+
+      .df-quick-search__sidebar {
+        display: flex;
+        flex-direction: column;
+        flex: 0 0 240px;
+        width: 240px;
+        max-width: 280px;
+        align-self: stretch;
+        height: auto;
+        max-height: 100%;
+        min-height: 0;
+        min-width: 0;
+        overflow: hidden;
+        padding-right: 0.5rem;
+        box-sizing: border-box;
+      }
+
+      .df-quick-search__sidebar--with-articles {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .df-quick-search__categories--sidebar {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-right: 0.75rem;
+        box-sizing: border-box;
+      }
+
+      .df-quick-search__sidebar--with-articles .df-quick-search__categories--sidebar {
+        flex: 0 0 auto;
+        max-height: none;
+        min-height: 0;
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .df-quick-search__sidebar--with-articles .df-quick-search__categories--sidebar .df-quick-search__section-title {
+        flex-shrink: 0;
+      }
+
+      .df-quick-search__sidebar--with-articles .df-quick-search__categories--sidebar .df-quick-search__category-list {
+        flex: 1 1 auto;
+        min-height: 0;
+        align-items: flex-start;
+        align-content: flex-start;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .df-quick-search__main {
+        flex: 1 1 0%;
+        min-width: 0;
+        min-height: 0;
+        max-width: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-right: 0.75rem;
+        box-sizing: border-box;
+      }
+
+      .df-quick-search__articles--sidebar {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-right: 0.75rem;
+        box-sizing: border-box;
+      }
+
+      .df-quick-search__sidebar--with-articles .df-quick-search__articles--sidebar {
+        flex: 0 0 auto;
+        min-height: 0;
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .df-quick-search__sidebar--with-articles .df-quick-search__articles--sidebar .df-quick-search__section-title {
+        flex-shrink: 0;
+      }
+
+      .df-quick-search__sidebar--with-articles .df-quick-search__articles--sidebar .df-quick-search__article-list {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .df-quick-search__sidebar--with-articles .df-quick-search__articles--sidebar .df-quick-search__load-more,
+      .df-quick-search__sidebar--with-articles .df-quick-search__articles--sidebar .df-quick-search__all-articles {
+        flex-shrink: 0;
+      }
+
+      .df-quick-search__article-item {
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .df-quick-search__category-list {
+        min-width: 0;
+        max-width: 100%;
+        align-items: flex-start;
+        align-content: flex-start;
+      }
+
+      .df-quick-search__category-item {
+        flex: 0 0 auto;
+        align-self: flex-start;
+        height: auto;
+      }
+
+      .df-quick-search__products {
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+    }
+
+    @media screen and (min-width: 1200px) {
+      .df-quick-search__product-grid {
+        grid-template-columns: repeat(var(--df-qs-cols-desktop, 4), minmax(0, 1fr));
+      }
+    }
+
+    html.df-quick-search-open,
+    body.df-quick-search-open {
+      overflow: hidden !important;
+      overscroll-behavior: none;
+      touch-action: none;
+    }
+
+    @media screen and (max-width: 767px) {
+      .df-quick-search__panel {
+        top: 50px !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: calc(100vh - 50px) !important;
+        max-width: calc(100% - 2rem);
+        margin: 0 1rem 1rem;
+      }
+    }
+  </style>
+
+  <div class="df-quick-search__overlay" data-df-quick-search-overlay aria-hidden="true"></div>
+
+  <div class="df-quick-search__panel" data-df-quick-search-panel role="dialog" aria-modal="true" aria-label="{{ df_qs_panel_title | escape }}" aria-hidden="true">
+    <button class="df-quick-search__close" type="button" data-df-quick-search-close aria-label="{{ df_qs_close_label | escape }}">&#215;</button>
+    <span class="df-quick-search__panel-title">{{ df_qs_panel_title }}</span>
+
+    <form class="df-quick-search__form" action="/search" method="get" role="search">
+      <input
+        class="df-quick-search__input"
+        type="search"
+        name="q"
+        placeholder="{{ placeholder | escape }}"
+        autocomplete="off"
+        aria-label="{{ placeholder | escape }}"
+        data-df-quick-search-input
+        data-search-field
+      >
+      <input type="hidden" name="lang" value="{{ language.locale }}">
+    </form>
+
+    <div class="df-quick-search__results" data-df-quick-search-results>
+      <div class="df-quick-search__sr-only" aria-live="polite" aria-atomic="true" data-df-quick-search-live></div>
+      <div class="df-quick-search__results-content" data-df-quick-search-results-content></div>
+      <div class="df-quick-search__results-spinner" data-df-quick-search-spinner aria-hidden="true" aria-live="polite">
+        <span class="df-quick-search__spinner" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</div>

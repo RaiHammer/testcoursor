@@ -1,0 +1,312 @@
+{% comment %}
+
+Основной шаблон заказа
+
+{% endcomment %}
+
+{% content_for 'title' %}
+{% end_content_for %}
+<h1>Заказ №
+{{ order.number }}<h1>
+
+{% content_for 'top_info' %}
+{% end_content_for %}
+<h3>
+Статус заказа:
+{% capture span_class %}{% if order.fulfillment_status == 'declined' or order.fulfillment_status == 'returned' %}red{% else %}green{% endif %}{% endcapture %}
+{% capture span_color %}{% if order.fulfillment_status == 'declined' or order.fulfillment_status == 'returned' %}#993333{% else %}#339933{% endif %}{% endcapture %}
+{% if order.payment_needed? %}
+    <span _class='red' style="color:#993333">Ожидает оплаты</span>
+{% else %}
+    <span _class='{{ span_class }}' style="color:{{ span_color }}">{{ order.customer_status }}</span>
+{% endif %}
+
+</h3>
+
+
+<div class='set wide_set'>
+<div class='set-title'>Состав заказа</div>
+<div class='set-block'>
+<table class='table'>
+{% if order.order_lines_has_sku? %}
+<col width='100'>
+{% endif %}
+<col width='750'>
+<thead>
+<tr>
+{% if order.order_lines_has_sku? %}
+<th>Артикул</th>
+{% endif %}
+<th>Наименование</th>
+<th class='count'>Кол-во</th>
+<th class='price-field'>Стоимость</th>
+</tr>
+</thead>
+<tbody>
+{% for item in order.items %}
+<tr class="{% cycle 'highlited_row', '' %}">
+{% if order.order_lines_has_sku? %}
+<td>{{ item.sku }}</td>
+{% endif %}
+<td>{{ item.title }}</td>
+<td class='count'>{{ item.quantity }} {{ item.unit }}</td>
+<td class='price-field'>{{ item.total_price.with_margin | money }}</td>
+</tr>
+{% endfor %}
+{% capture colspan %}{% if order.order_lines_has_sku? %}2{% else %}1{% endif %}{% endcapture %}
+{% for discount in order.discounts %}
+<tr>
+<td colspan='{{ colspan }}'>Скидка: {{ discount.description }}</td>
+<td class='count'></td>
+<td class='price-field'>-{{ discount.amount | money }}</td>
+</tr>
+{% endfor %}
+{% unless order.delivery_price == 0 %}
+<tr>
+<td colspan='{{ colspan }}'>Доставка: <!--{{ order.delivery_description }}--></td>
+<td class='count'></td>
+<td class='price-field'>+{{ order.delivery_price | money }}</td>
+</tr>
+{% endunless %}
+{% if order.margin_amount != 0 %}
+<tr>
+<td colspan='{{ colspan }}'>Наценка на способ оплаты (включена в стоимость):</td>
+<td class='count'></td>
+<td class='price-field'>{{ order.margin }} %</td>
+</tr>
+{% endif %}
+</tbody>
+<tfoot>
+<tr>
+<td colspan='{% if order.order_lines_has_sku? %}3{% else %}2{% endif %}'>Итого:</td>
+<td class='price-field'>
+<strong>{{ order.total_price | money }}</strong>
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+{% assign shipping_address = order.shipping_address %}
+<div class='set-title'>Доставка</div>
+<div class='set-block'>
+{% if shipping_address %}
+  {% if order.all_fields['Указать другого получателя'].value == 'Да' %}
+    <div class='field fc'>
+    <div class='field-label'>Получатель (ФИО):</div>
+    <div class='field-content'>{{ order.all_fields['ФИО получателя'].value }}</div>
+    </div>
+    <div class='field fc'>
+    <div class='field-label'>Телефон получателя:</div>
+    <div class='field-content'>{{ order.all_fields['Телефон получателя'].value }}</div>
+    </div>
+  {% else %}
+    <div class='field fc'>
+    <div class='field-label'>Получатель (ФИО):</div>
+    <div class='field-content'>{{ shipping_address.full_name }}</div>
+    </div>
+    <div class='field fc'>
+    <div class='field-label'>Телефон получателя:</div>
+    <div class='field-content'>{{ shipping_address.phone }}</div>
+    </div>
+  {% endif %}
+{% endif %}
+{% if order.client and order.client.email != empty %}
+<div class='field fc'>
+<div class='field-label'>E-mail:</div>
+<div class='field-content'>{{ order.client.email }}</div>
+</div>
+{% endif %}
+<div class='field fc'>
+<div class='field-label'>Способ доставки:</div>
+<div class='field-content'>{{ order.delivery_title }}</div>
+{% if order.delivery_description %}
+<!--<p>
+<small>{{ order.delivery_description }}</small>
+</p>-->
+{% endif %}
+</div>
+{% if shipping_address %}
+<div class='field fc'>
+<div class='field-label'>Адрес доставки:</div>
+<div class='field-content'> <!-- {{   shipping_address.delivery_address }} -->
+  {% if order.delivery_title != 'Самовывоз со склада в Москве (для юридических лиц)' %}
+    {{ shipping_address.delivery_address }}
+      {% else %}
+      г. Москва, Огородный проезд, дом 20, строение 3.
+    {% endif %}</div>
+</div>
+<!--
+ {% for field in shipping_address.client_fields %}
+   {% if field.value and field.value != empty %}
+<div class='field fc'>
+<div class='field-label'>{{ field.client_title }}:</div>
+<div class='field-content'>{{ field.value }}</div>
+</div>
+   {% endif %}
+ {% endfor %}
+{% endif %}
+-->
+
+{% if order.all_fields['Яндекс.Доставка'].value == '' %}
+
+{% assign delivery_date = order.all_fields['Дата доставки'].value | split: '-' | reverse | join: '.' %}
+{% assign new_delivery_date = order.all_fields['Согласованная дата доставки'].value | split: '-' | reverse | join: '.' %}
+
+{% if order.client.type == 'juridical' %}
+  <div class='field fc'>
+  <div class='field-label'>Дата доставки:</div>
+  <div class='field-content'>Дата и время доставки согласуются после оплаты счёта.</div>
+  </div>
+{% else %}
+  {% if delivery_date != new_delivery_date and new_delivery_date !='' %}
+  <div class='field fc'>
+  <div class='field-label'>Дата доставки:</div>
+  <div class='field-content'>{{new_delivery_date}}</div>
+  </div>
+  {% else %}
+  <div class='field fc'>
+  <div class='field-label'>Дата доставки:</div>
+  <div class='field-content'>{{ order.all_fields['Дата доставки'].value | split: '-' | reverse | join: '.' }}</div>
+  </div>
+  <div class='field fc'>
+  <div class='field-label'>Время доставки:</div>
+  <div class='field-content'>{{ order.all_fields['Интервал доставки (начало)'].value | remove_first: ":00" }}{% if order.all_fields['Интервал доставки (конец)'].value.size > 0 %} - {{ order.all_fields['Интервал доставки (конец)'].value | remove_first: ":00" }}{% endif %} </div></div>
+  {% endif %}
+{% endif %}
+{% endif %}
+
+{% if order.comment != empty %}
+<div class='field fc'>
+<div class='field-label'>Комментарии к заказу:</div>
+<div class='field-content'>{{ order.comment | escape | newline_to_br }}</div>
+</div>
+{% endif %}
+</div>
+{% capture additional_info %}{% for field in order.result_fields %}{% if field.value and field.value != empty %}{% if field.title != 'Указать другого получателя' and field.title != 'ФИО получателя' and field.title != 'Телефон получателя' %}
+<div class='field fc'>
+<div class='field-label'>{% if field.client_title == 'Яндекс.Доставка' %}Способ доставки:{% else %}{{ field.client_title }}:{% endif %}</div>
+<div class='field-content'>
+{% if field.is_file? %}
+ <a target="_blank" href="{{ field.value }}">{{ field.file_name }}</a>
+{% else %}
+ {{ field.value }}
+{% endif %}
+</div>
+</div>
+{% endif %}{% endif %}{% endfor %}{% endcapture %}
+{% if additional_info != empty %}
+<div class='set-title'>Дополнительная информация</div>
+<div class='set-block'>
+{{ additional_info }}
+{% if order.all_fields['Яндекс.Доставка'].value == '' %}
+{% else %}
+{% if order.all_fields['Номер заявки в Службе доставки'].value == '' %}
+{% else %}
+  {% comment %}
+<div class='field fc'>
+<div class='field-label'>Номер заказа в службе доставки:</div>
+<div class='field-content'>{{ order.all_fields['Номер заявки в Службе доставки'].value }}</div>
+</div>
+<div class='field fc'>
+<div class='field-label'></div>
+<div class='field-content'>Чтобы отследить путь посылки введите номер заказа в службе доставки в поле ниже и нажмите кнопку "Узнать статус".</div>
+</div>
+<div class='field fc'>
+<div class='field-label'></div>
+<div class='field-content' id="omni_tracking_order_msw" style="overflow: -webkit-paged-x;">
+<meta name="ydWidgetData" id="baf9024728a84eaec28c764c0a387b11" content="" data-sender_id="44552" data-weight="0" data-cost="0" data-height="0" data-length="0" data-width="0" data-city_from="Москва" data-geo_id_from="213" data-css_name="tracking_tpl" data-tpl_name="tracking_tpl" data-container_tag_id="fd692e4ab0e921e3b8c649ec0d033" data-resource_id="44433" data-resource_key="6147285fdbcfe238bc0ec3042f6a9eb8" data-tracking_method_key="e40bbf8c83805b96b2acc67cc70b9dcb" data-autocomplete_method_key="343f22a8a92bd0c4dc710e554c8e6b87"></meta><!--[if lt IE 9]><script>document.createElement("msw");</script><![endif]-->
+<script src="https://delivery.yandex.ru/widget/widgetJsLoader?dataTagID=baf9024728a84eaec28c764c0a387b11" charset="utf-8"></script>
+<div id="msw_data"><msw id="fd692e4ab0e921e3b8c649ec0d033" class="yd-widget-container" style="display: contents;"></msw></div>
+</div>
+</div>
+  {% endcomment %}
+{% endif %}
+{% endif %}
+</div>
+{% endif %}
+<div class='set-title'>Оплата</div>
+<div class='set-block'>
+<div class='field fc'>
+<div class='field-label'>Способ оплаты:</div>
+<div class='field-content'>
+{{ order.payment_title }}
+{% if order.payment_description %}
+<p>
+<small>{{ order.payment_description }}</small>
+</p>
+{% endif %}
+</div>
+</div>
+
+{% if order.all_fields['Счёт'].value %}
+  <div class='field fc'>
+  <div class='field-label'>Счёт:</div>
+  <div class='field-content'>
+    <a target="_blank" href="{{ order.all_fields['Счёт'].value }}">{{ order.all_fields['Счёт'].file_name }}</a>
+  </div>
+  </div>
+{% endif %}
+
+{% if order.payment_needed? or order.paid? %}
+  <div class='field fc'>
+    <div class='field-label'>Статус оплаты:</div>
+    <div class='field-content'>
+      <span class='{% if order.paid? %}green{% else %}red{% endif %}'>
+      {% if order.paid? %}
+      Оплачен
+      {% else %}
+      Не оплачен
+      {% endif %}
+      </span>
+      {% if order.payment_needed? %}
+        {% if order.paid_with_bank_bill? %}
+            <a href="{{ order.pay_url }}">Перейти к оплате (распечатать квитанцию)</a>
+          {% else %}
+            <a href="{{ order.pay_url }}" style="color: #b00917" class="back_to_shop">Оплатить</a>
+        {% endif %}
+      {% endif %}
+
+    </div>
+  </div>
+{% endif %}
+
+{% comment %} ***НАША ДОРАБОТКА*** {% endcomment %}
+
+{% if order.payment_gateway_id == 1354133 %}
+  <div class='field fc'>
+    <div class='field-label'>Статус оплаты:</div>
+    <div class='field-content'>
+      <span class='{% if order.paid? %}green{% else %}red{% endif %}'>
+        {% if order.paid? %}
+        Оплачен
+        {% else %}
+        Не оплачен
+        {% endif %}
+      </span>
+      
+      {% unless order.paid? %}
+        {% comment %} <a href="{{ order.pay_url }}" style="color: #b00917" class="back_to_shop">Оплатить</a> {% endcomment %}
+        <span style="color: #b00917; cursor: pointer;" class="back_to_shop" id="tnkff_pay" onclick="document.querySelector('#tinkoff_create tinkoff-create-button').click();">Оплатить</span>
+      {% endunless %}
+    </div>
+  </div>
+{% endif %}
+
+{% comment %} {% unless order.paid? %}
+  {% if order.payment_gateway_id == 1354133 %}
+    <a href="{{ order.pay_url }}">Перейти к оплате</a>
+  {% endif %}
+{% endunless %} {% endcomment %}
+
+{% comment %} ***НАША ДОРАБОТКА*** {% endcomment %}
+
+
+</div>
+</div>
+<a class="back_to_shop" href="/">Вернуться в магазин</a>
+
+  {% comment %} order >> {% help.order%} <br> {% endcomment %}
+  {% comment %} payment_gateway_id >> {{ order.payment_gateway_id}} <br>
+  order.payment_needed? >> {{ order.payment_needed? }} <br>
+  order.paid? >> {{ order.paid? }} <br> {% endcomment %}
+  {% comment %} first_time_loading_page? >> {{ order.first_time_loading_page?}} {% endcomment %}

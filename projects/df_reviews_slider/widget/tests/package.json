@@ -1,0 +1,12 @@
+{
+  "name": "df-reviews-slider-tests",
+  "private": true,
+  "scripts": {
+    "test:unit": "node settings.test.js && node settings-matrix.test.js && node settings-sync.test.js && node settings-form.test.js && node layouts.test.js && node pagination.test.js && node source-tabs.test.js && node marquee.test.js",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:e2e"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1"
+  }
+}

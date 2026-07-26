@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>DanForge Reviews — layout smoke test</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 1rem; background: #f5f5f5; }
+    h1 { font-size: 1.25rem; }
+    section { margin-bottom: 2rem; background: #fff; padding: 1rem; border-radius: 12px; }
+    section h2 { margin: 0 0 1rem; font-size: 1rem; color: #666; }
+    .df-reviews { padding: 1rem; text-align: center; --df-reviews-text-lines: 3; --df-reviews-accent: #f5a623; --df-reviews-columns: 3; position: relative; }
+    .df-reviews__slide { display: flex; flex-direction: column; align-items: center; gap: .5rem; padding: 1rem; background: #fff; border: 1px solid #eee; border-radius: 12px; box-sizing: border-box; }
+    .df-reviews--layout-masonry .df-reviews__grid { column-count: 3; column-gap: 1rem; }
+    .df-reviews--layout-masonry .df-reviews__slide { break-inside: avoid; margin-bottom: 1rem; display: inline-flex; width: 100%; }
+    .df-reviews--layout-grid .df-reviews__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .df-reviews--layout-list .df-reviews__grid { display: flex; flex-direction: column; gap: 1rem; max-width: 720px; margin: 0 auto; }
+    .df-reviews--layout-list .df-reviews__slide { flex-direction: row; text-align: left; }
+    .df-reviews--layout-marquee .df-reviews__viewport { overflow: hidden; }
+    .df-reviews--layout-marquee .df-reviews__marquee-track { display: flex; width: max-content; animation: df-marquee 20s linear infinite; }
+    .df-reviews--layout-marquee .swiper-wrapper { display: flex; width: max-content; }
+    .df-reviews--layout-marquee .df-reviews__slide { width: 240px; margin-right: 1rem; flex-shrink: 0; }
+    @keyframes df-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .df-reviews--layout-masonry .swiper-slide,
+    .df-reviews--layout-grid .swiper-slide,
+    .df-reviews--layout-list .swiper-slide { width: auto !important; height: auto !important; margin: 0 !important; }
+    #results { padding: 1rem; background: #111; color: #0f0; font-family: monospace; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Layout smoke test</h1>
+  <div id="results">Running…</div>
+
+  <script>
+    function parseLayout(value) {
+      var raw = String(value == null ? 'slider' : value).trim().toLowerCase();
+      var allowed = ['slider', 'masonry', 'grid', 'list', 'spotlight', 'marquee'];
+      for (var i = 0; i < allowed.length; i++) if (raw === allowed[i]) return allowed[i];
+      if (raw.indexOf('masonry') !== -1 || raw.indexOf('mason') !== -1 || raw.indexOf('мансори') !== -1 || raw.indexOf('колон') !== -1) return 'masonry';
+      if (raw.indexOf('grid') !== -1 || raw.indexOf('сетк') !== -1) return 'grid';
+      if (raw.indexOf('list') !== -1 || raw.indexOf('лент') !== -1) return 'list';
+      if (raw.indexOf('spotlight') !== -1 || raw.indexOf('крупн') !== -1 || raw.indexOf('фокус') !== -1) return 'spotlight';
+      if (raw.indexOf('marquee') !== -1 || raw.indexOf('бегущ') !== -1 || raw.indexOf('строк') !== -1) return 'marquee';
+      if (raw.indexOf('slider') !== -1 || raw.indexOf('слайд') !== -1) return 'slider';
+      return 'slider';
+    }
+
+    function slideHtml(n) {
+      return '<div class="swiper-slide df-reviews__slide" data-rating="5" data-source="yandex">' +
+        '<div class="df-reviews__author">Author ' + n + '</div>' +
+        '<p class="df-reviews__text">Sample review text #' + n + '</p></div>';
+    }
+
+    function buildWidget(layout) {
+      var usesSwiper = layout === 'slider' || layout === 'spotlight';
+      var usesMarquee = layout === 'marquee';
+      var slides = [1, 2, 3, 4].map(slideHtml).join('');
+      var wrapperClass = usesSwiper || usesMarquee ? 'swiper-wrapper' : 'df-reviews__grid';
+      var viewportClass = 'df-reviews__viewport' + (usesSwiper ? ' df-reviews__slider' : '') + (usesMarquee ? ' df-reviews__marquee-root' : '');
+      return '<section><h2>' + layout + '</h2><div class="df-reviews df-reviews--layout-' + layout + '">' +
+        '<div class="' + viewportClass + '" data-df-reviews-root data-layout="' + layout + '">' +
+        '<div class="' + wrapperClass + '" data-df-reviews-wrapper>' + slides + '</div></div></div></section>';
+    }
+
+    var layouts = ['slider', 'masonry', 'grid', 'list', 'spotlight', 'marquee'];
+    document.body.insertAdjacentHTML('beforeend', layouts.map(buildWidget).join(''));
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="../snippet.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var lines = [];
+      document.querySelectorAll('[data-df-reviews-root]').forEach(function (root) {
+        var layout = root.getAttribute('data-layout');
+        var parsed = parseLayout(layout);
+        var shell = root.closest('.df-reviews');
+        var hasGrid = !!root.querySelector('.df-reviews__grid');
+        var hasSwiperWrapper = !!root.querySelector('.swiper-wrapper');
+        var swiperInited = !!root.dfReviewsSwiper;
+        var shellClass = shell ? shell.className : '';
+        var ok = shellClass.indexOf('df-reviews--layout-' + parsed) !== -1;
+        if (parsed === 'masonry' || parsed === 'grid' || parsed === 'list') ok = ok && hasGrid && !swiperInited;
+        if (parsed === 'slider' || parsed === 'spotlight') ok = ok && hasSwiperWrapper && swiperInited;
+        if (parsed === 'marquee') ok = ok && hasSwiperWrapper && !swiperInited;
+        lines.push((ok ? 'PASS' : 'FAIL') + ' ' + layout + ' | grid=' + hasGrid + ' swiper=' + swiperInited);
+      });
+      document.getElementById('results').textContent = lines.join('\n');
+    });
+  </script>
+</body>
+</html>

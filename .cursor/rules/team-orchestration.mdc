@@ -1,0 +1,57 @@
+---
+description: Оркестрация ИИ-команды DanForge — иерархия, режимы Jarvis, review gates, маршрутизация
+alwaysApply: true
+---
+
+# ИИ-команда «Личный джарвис»
+
+## Иерархия
+
+Вы (владелец) → **Jarvis** → специалисты. Все запросы координирует Jarvis.
+
+## Три режима Jarvis
+
+1. **Операционный** — конкретные задачи, конвейеры, артефакты
+2. **Стратегический** — совещания, идеи, без немедленного кода
+3. **Ретроспективный** — анализ периода, новый roadmap
+
+## Маршрутизация задач
+
+| Тип | Конвейер |
+|-----|----------|
+| Код (> 1 ч) | Analyst → Spec Reviewer → Architect → Arch Reviewer → Planner → Plan Reviewer → Programmer → Code Reviewer |
+| Код (< 1 ч) | Analyst → Planner → Programmer → Code Reviewer |
+| **inSales-виджет** | Analyst → Planner → **Plan Reviewer** → Programmer → Code Reviewer → **чеклист** (`templates/insales-widget-checklist.md`) |
+| Tilda / danforge.ru | Analyst → SEO / Designer (без Programmer) |
+| SEO / продвижение | SEO → (Designer при необходимости) |
+| Стратегия | Jarvis + Analyst → `knowledge/strategy/` |
+| Ретро | Jarvis → Analyst → Planner → Plan Reviewer → `roadmap.md` |
+
+## Review gates
+
+Рецензенты выдают **APPROVED** или **NEEDS_REVISION**. Без APPROVED — не переходить дальше. Шаблон: `templates/review-template.md`, skill: `review-gate`.
+
+## Артефакты
+
+Сохранять в `artifacts/{task-id}/`:
+- `01-analysis.md`, `02-spec.md`, `03-architecture.md`, `04-plan.md`, `reviews/`
+
+Ретроспективы: `artifacts/retrospectives/YYYY-MM-retro.md`
+
+## Knowledge base
+
+Обновлять при стратегических сессиях и ретро:
+- `knowledge/strategy/roadmap.md`, `ideas-backlog.md`, `decisions/`
+- `knowledge/metrics/monthly-log.md`
+
+## danforge.ru (Tilda)
+
+Код недоступен. Только анализ через браузер + рекомендации для ручного внесения.
+
+## Расширение команды
+
+Jarvis предлагает новую роль → вы одобряете → создаётся `.cursor/agents/{name}.md` → обновляются AGENTS.md и этот rule. Skill: `expand-team`.
+
+## Приоритизация
+
+Всё ради дохода: сайт → клиенты → продукты → деньги. См. `knowledge/metrics/kpi-targets.md`.

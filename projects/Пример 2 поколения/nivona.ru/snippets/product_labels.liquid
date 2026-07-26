@@ -1,0 +1,142 @@
+{% assign show_labels = false %}
+{% assign prop_handle = property | default: 'label' %}
+{% assign labels_list = product.properties[prop_handle] %}
+
+{% if labels_list or product.variants.first.old_price %}
+  {% unless bundle_component %}
+    {% assign show_labels = true %}
+  {% endunless %}
+{% endif %}
+
+{% if product.is_bundle and product.bundle_discount > 0 %}
+  {% assign show_labels = true %}
+{% endif %}
+
+{% unless product.available %}
+  {% assign show_labels = true %}
+{% endunless %}
+
+{% if show_labels %}
+  <div class="product-labels labels-list" data-labels-id="{{ product.id }}">
+    {% if labels_list %}
+      {% for characteristic in labels_list.characteristics %}
+        {% if characteristic.handle == 'gift-coffee' %}
+          {% if settings.actions_bundle_change_position_enable == '1' and product.fields[settings.actions_bundle_change_position_field_handle].value.size > 0 %}
+                <a href="/blogs/actions/kofe-v-podarok" class="label is-{{ characteristic.handle }}">
+                  {{ characteristic.name }}
+                </a>
+          {% endif %}
+        {% comment %} ❤ иbegin about-skidki ODX-1789 ❤ {% endcomment %}
+        {% elsif characteristic.handle == 'about-skidki' %}
+          <span class="label is-{{ characteristic.handle }}">
+            <span class="is-about-skidki__icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.65908 0.599189C4.82788 0.410665 5.03454 0.259858 5.26558 0.156611C5.49661 0.0533649 5.74682 0 5.99987 0C6.25292 0 6.50313 0.0533649 6.73416 0.156611C6.96519 0.259858 7.17185 0.410665 7.34065 0.599189L7.76059 1.06831C7.8206 1.13545 7.89496 1.18821 7.97814 1.22269C8.06133 1.25717 8.15121 1.27248 8.24111 1.26748L8.87101 1.23269C9.1236 1.21882 9.37628 1.25835 9.61256 1.34871C9.84884 1.43907 10.0634 1.57823 10.2423 1.7571C10.4212 1.93598 10.5603 2.15056 10.6507 2.38684C10.7411 2.62312 10.7806 2.8758 10.7667 3.12839L10.7319 3.75829C10.727 3.8481 10.7424 3.93786 10.7768 4.02093C10.8113 4.10401 10.864 4.17826 10.9311 4.23821L11.4008 4.65814C11.5894 4.82695 11.7403 5.03365 11.8436 5.26474C11.9469 5.49582 12.0003 5.7461 12.0003 5.99923C12.0003 6.25236 11.9469 6.50264 11.8436 6.73373C11.7403 6.96482 11.5894 7.17151 11.4008 7.34032L10.9311 7.76025C10.864 7.82027 10.8112 7.89462 10.7767 7.97781C10.7422 8.06099 10.7269 8.15087 10.7319 8.24078L10.7667 8.87068C10.7806 9.12327 10.7411 9.37594 10.6507 9.61222C10.5603 9.84851 10.4212 10.0631 10.2423 10.242C10.0634 10.4208 9.84884 10.56 9.61256 10.6504C9.37628 10.7407 9.1236 10.7802 8.87101 10.7664L8.24111 10.7316C8.1513 10.7267 8.06154 10.742 7.97847 10.7765C7.89539 10.811 7.82114 10.8637 7.76119 10.9307L7.34126 11.4005C7.17245 11.5891 6.96575 11.74 6.73466 11.8433C6.50358 11.9466 6.2533 12 6.00017 12C5.74704 12 5.49676 11.9466 5.26567 11.8433C5.03458 11.74 4.82789 11.5891 4.65908 11.4005L4.23915 10.9307C4.17913 10.8636 4.10478 10.8109 4.0216 10.7764C3.93841 10.7419 3.84853 10.7266 3.75862 10.7316L3.12872 10.7664C2.87613 10.7802 2.62346 10.7407 2.38718 10.6504C2.15089 10.56 1.93632 10.4208 1.75744 10.242C1.57856 10.0631 1.43941 9.84851 1.34905 9.61222C1.25868 9.37594 1.21915 9.12327 1.23302 8.87068L1.26782 8.24078C1.27272 8.15097 1.25737 8.06121 1.22289 7.97813C1.18842 7.89506 1.1357 7.8208 1.06865 7.76085L0.599524 7.34092C0.410901 7.17211 0.260009 6.96542 0.156703 6.73433C0.0533968 6.50324 0 6.25296 0 5.99983C0 5.7467 0.0533968 5.49642 0.156703 5.26534C0.260009 5.03425 0.410901 4.82755 0.599524 4.65875L1.06865 4.23881C1.13578 4.1788 1.18855 4.10444 1.22302 4.02126C1.2575 3.93808 1.27281 3.8482 1.26782 3.75829L1.23302 3.12839C1.21915 2.8758 1.25868 2.62312 1.34905 2.38684C1.43941 2.15056 1.57856 1.93598 1.75744 1.7571C1.93632 1.57823 2.15089 1.43907 2.38718 1.34871C2.62346 1.25835 2.87613 1.21882 3.12872 1.23269L3.75862 1.26748C3.84843 1.27239 3.93819 1.25703 4.02127 1.22256C4.10434 1.18808 4.1786 1.13537 4.23855 1.06831L4.65908 0.599189ZM8.22371 3.77569C8.33618 3.88818 8.39936 4.04074 8.39936 4.19982C8.39936 4.35889 8.33618 4.51145 8.22371 4.62395L4.62429 8.22338C4.51114 8.33266 4.35961 8.39312 4.20231 8.39176C4.04502 8.39039 3.89456 8.3273 3.78333 8.21607C3.6721 8.10485 3.60901 7.95438 3.60764 7.79709C3.60628 7.63979 3.66674 7.48826 3.77602 7.37511L7.37545 3.77569C7.48795 3.66322 7.64051 3.60004 7.79958 3.60004C7.95866 3.60004 8.11122 3.66322 8.22371 3.77569ZM4.50011 3.59991C4.26145 3.59991 4.03257 3.69472 3.86381 3.86348C3.69505 4.03223 3.60025 4.26111 3.60025 4.49977V4.50577C3.60025 4.74443 3.69505 4.97331 3.86381 5.14206C4.03257 5.31082 4.26145 5.40563 4.50011 5.40563H4.5061C4.74476 5.40563 4.97364 5.31082 5.1424 5.14206C5.31116 4.97331 5.40596 4.74443 5.40596 4.50577V4.49977C5.40596 4.26111 5.31116 4.03223 5.1424 3.86348C4.97364 3.69472 4.74476 3.59991 4.5061 3.59991H4.50011ZM7.49963 6.59944C7.26097 6.59944 7.03209 6.69424 6.86333 6.863C6.69458 7.03175 6.59977 7.26064 6.59977 7.49929V7.50529C6.59977 7.74395 6.69458 7.97283 6.86333 8.14159C7.03209 8.31034 7.26097 8.40515 7.49963 8.40515H7.50563C7.74429 8.40515 7.97317 8.31034 8.14192 8.14159C8.31068 7.97283 8.40549 7.74395 8.40549 7.50529V7.49929C8.40549 7.26064 8.31068 7.03175 8.14192 6.863C7.97317 6.69424 7.74429 6.59944 7.50563 6.59944H7.49963Z" fill="white"/>
+              </svg>
+            </span>
+            <span class="is-about-skidki__text">{{ characteristic.name }}</span>
+            <div class="is-about-skidki__popup">
+              {% for block in block_lists.block-sale-panel.blocks %}
+                {% if block.show-sale %}
+
+                  {% comment %} список Категорий, категорий может быть больше чем 1 {% endcomment %}
+                  {% for kateigor in block.collection-sale-3 %}
+
+                    {% comment %} Сверяем категорию товара с категориями из блока {% endcomment %}
+                    {% if product.canonical_collection.handle != 'all' %}
+                      {% assign canon = product.canonical_collection.handle %}
+                    {% else %}
+                    {% comment %} товары заведены "не одинаково", поэтому это второй сценарий обработки категории {% endcomment %}
+                      {% for collec in product.collections %}
+                        {% unless collec.handle != kateigor.handle %}
+                          {% assign canon = collec.handle %}
+                        {% endunless %}
+                      {% endfor %}
+                    {% endif %}
+
+                    {% comment %} вывод текста ПО СООТВЕТСТВИЮ КАТЕГОРИЙ {% endcomment %}
+                    {% if kateigor.handle == canon or kateigor.handle == 'all' %}
+                      <div class="sale-item">
+                        <span class="sale-item__text">{{ block.text-sale }}</span>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+
+                {% endif %}
+              {% endfor %}
+            </div>
+          </span>
+
+        {% comment %} ❤  иend about-skidki ODX-1789 ❤  {% endcomment %}
+        {% else %}
+            <span class="label is-{{ characteristic.handle }}">
+              {{ characteristic.name }}
+            </span>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% comment %}
+      {% assign max_discount = 0 %}
+      {% for variant in product.variants %}
+        {% if variant.old_price and variant.price < variant.old_price %}
+          {% assign discount = variant.price | divided_by: variant.old_price | times: -100 | plus: 100 | round: 0 %}
+          {% if max_discount < discount %}{% assign max_discount = discount %}{% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {% unless max_discount == 0 or bundle_component %}
+        <span class="label is-discount js-label-discount">
+          {% if product.old_price_varies? %}
+            {{ messages.label_to | downcase }}
+          {% endif %}
+          {{ max_discount }}%
+        </span>
+      {% endunless %}
+    {% endcomment %}
+
+    {% if product.is_bundle and template contains 'product' %}
+      <span class="label is-bundle">
+        {{ messages.bundle }}
+      </span>
+    {% endif %}
+
+    {% if product.is_bundle and product.bundle_discount > 0 and max_discount == 0 %}
+      <span class="label is-bundle-discount">
+        {{ messages.label_economy }}
+        {{ product.bundle_discount | money }}
+      </span>
+    {% endif %}
+   {% if discount > 0 %}
+     <span class="label is-discount">
+         -{{ discount }}%
+     </span>
+   {% endif %}
+
+    {% unless product.available %}
+      {% case settings.product_not_available %}
+        {% when 'preorder' %}
+          {% assign label_text = messages.preorder %}
+          {% assign label_class = 'is-preorder' %}
+        {% when 'hidden' %}
+          {% assign label_text = messages.product_not_available %}
+          {% assign label_class = 'not-available' %}
+      {% endcase %}
+
+      {% unless bundle_component or settings.product_not_available == 'shown' %}
+        {% if label_text %}
+          <span class="label {{ label_class }}">
+            {{ label_text }}
+          </span>
+        {% endif %}
+      {% endunless %}
+    {% endunless %}
+  </div>
+{% endif %}
+
+{% assign show_labels = null %}
+{% assign label_text = null %}
+{% assign label_class = null %}
+{% assign max_discount = null %}
+{% assign discount = null %}
+{% assign max_discount = null %}

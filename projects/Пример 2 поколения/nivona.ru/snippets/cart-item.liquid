@@ -1,0 +1,102 @@
+
+
+  <div class="basket-product-item cart-item row" data-product-id="{{ item.product.id }}" data-item-id="{{ item.id }}" data-variant-id="{{ item.variant.id }}" {% if item.product.properties[settings.cart_is_gift_handle].characteristics[0].id.size > 0 %}data-is-gift="true"{% endif %}
+    data-product-item data-item-sku="{{ item.product.sku }}" data-item-title="{{ item.product.title | escape | replace: '"', '&quot;' | replace: "'", "&prime;" }}" data-item-collection="{{ item.product.collections.first.title | replace: '"', '&quot;' | replace: "'", "&prime;" }}" 
+    data-item-brand="{{ item.product.properties.brend.characteristics.first.title | replace: '"', '&quot;' | replace: "'", "&prime;" }}" data-item-price="{{ item.product.price }}" data-item-currency="RUB" data-item-variant="{{ item.product.variants[0].title | replace: '"', '&quot;' | replace: "'", "&prime;" }}" data-item-url="{{ item.product.url | escape }}" data-item-position="{{ forloop.index }}">
+
+    <div at class="basket-product-item__preview-wrapper col-xs-12 col-sm-5 col-md-5">
+      <a href="{{ item.product.url }}" title='{{ item.title }}' data-product-url>
+        <picture class="basket-product-item__preview">
+          {% if item.image %}
+            <source srcset="{{ item.image | image_url: 240, format: 'webp' }}" type="image/webp">
+            <img title='{{ item.title }}' alt='{{ item.title }}' src="{{ item.image | image_url: 240 }}" class="basket-product-item__img" loading="lazy">
+          {% else %}
+            <img title='{{ item.title }}' alt='{{ item.title }}' src="{{ 'no_image.png' | asset_url }}" class="basket-product-item__img">
+          {% endif %}
+        </picture>
+      </a>
+      <div class="basket-product-item__info-wrapper">
+        <div class="basket-product-item__title">
+          <a href="{{ item.product.url }}" data-product-url> {{ item.title }}</a>
+        </div>
+        {% if item.sku %}
+            <div class="basket-product-item__article">{{ messages.label_article }}: {{ item.sku }}</div>
+        {% endif %}
+        <span class="basket-product-item__cost-value basket-product-item--show-mb js-item-total-price">
+          {{ item.total_price | money }}
+        </span>
+        
+        {% if item.product.short_description.size > 0 %}
+          <div class="basket-product-item__descr">
+              {{ item.product.short_description }}
+          </div>
+        {% endif %}
+        
+        {% comment %}
+        <div class="basket-product-item__params">
+          {% assign main_params = settings.product_main_params | split: '||' %}
+          <div class="basket-product-item__params__items">
+            {%- for param in main_params -%}
+              {%- if item.product.properties[param].name.size > 0 -%}
+                <div class="basket-product-item__params__item">
+                  <div class="basket-product-item__params__item__title">{{ item.product.properties[param].title }}: </div>
+                  <div class="basket-product-item__params__item__values">
+                    {%- for characteristic in item.product.properties[param].characteristics -%}
+                      {{ characteristic.name }}{% unless forloop.last %},{% endunless %}
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+        {% endcomment %}
+      </div>
+      
+    </div>
+
+    <div class="basket-product-item__price basket-product-item--hide-mb col-xs-2 col-sm-2 col-md-2">
+      <div class="basket-product-item__price-value js-item-price{% if item.variant.old_price > item.sale_price %} is-discount{% endif %}">
+        {{ item.sale_price | money }}
+      </div>
+      {% if item.variant.old_price > item.sale_price %}
+      <div class="basket-product-item__price-old js-item-old-price">
+        {{ item.variant.old_price | money }}
+      </div>
+      {% endif %}
+    </div>
+
+
+    <div class="basket-product-item__quantity col-xs-6 col-sm-2 col-md-2">
+      <div class="item-counter counter" data-quantity-custom {{ style }}>
+        <button type="button" data-quantity-change-custom="-1" class="counter-button is-count-down count-down">
+          <svg width="12" height="12" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1C0 0.447715 0.447715 0 1 0H11C11.5523 0 12 0.447715 12 1C12 1.55228 11.5523 2 11 2H1C0.447715 2 0 1.55228 0 1Z" fill="#B5ACA7"/>
+          </svg>
+        </button>
+        <input type="text" value="{{ item.quantity }}" min="1" max="{{ item.variant.quantity }}" data-item-id="{{ item.id }}" name="cart[quantity-custom][{{ item.id }}]" class="counter-input js-item-quantity"/>
+        <button type="button" data-quantity-change-custom="1" class="counter-button is-count-up count-up">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 6C0 5.44772 0.447715 5 1 5H11C11.5523 5 12 5.44772 12 6C12 6.55228 11.5523 7 11 7H1C0.447715 7 0 6.55228 0 6Z" fill="#B5ACA7"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C5.44772 12 5 11.5523 5 11V6L5 1C5 0.447715 5.44772 0 6 0V0C6.55228 0 7 0.447715 7 1L7 11C7 11.5523 6.55228 12 6 12V12Z" fill="#B5ACA7"/>
+          </svg> 
+        </button>
+      </div>
+    </div>
+
+    <div class="basket-product-item__cost basket-product-item--hide-mb col-xs-2 col-sm-2 col-md-2">
+        <span class="basket-product-item__cost-value js-item-total-price">
+          {{ item.total_price | money }}
+        </span>
+    </div>
+    <div class="basket-product-item__delete col-xs-6 col-sm-1 col-md-1">
+      <button type="submit" class="button js-item-remove" data-item-url="{{ item.url }}" data-item-target="{{ item.id }}" data-item-delete="{{ item.id }}">
+      {% comment %} <button type="submit" class="button js-item-remove" data-item-url="{{ item.url }}" data-item-target="{{ item.id }}" data-item-delete="{{ item.id }}" onclick="return !ga.loaded;"> {% endcomment %}
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="17.7783" y="19.1924" width="24" height="2" rx="1" transform="rotate(-135 17.7783 19.1924)" fill="#C5B0A2"/>
+          <rect x="19.1924" y="2.22182" width="24" height="2" rx="1" transform="rotate(135 19.1924 2.22182)" fill="#C5B0A2"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>

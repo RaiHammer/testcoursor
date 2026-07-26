@@ -1,0 +1,44 @@
+<style>
+        .preload-animation {
+          width: 51px;
+          display: flex;
+          justify-content: space-between
+        }
+    
+        .preload-animation div {
+          width: 12px;
+          height: 12px;
+          animation: bounce 1.4s ease-in-out 0s infinite both;
+          border-radius: 100%;
+          background-color: #666B6F
+        }
+    
+        .preload-animation div:nth-child(1) {
+          animation-delay: -.32s
+        }
+    
+        .preload-animation div:nth-child(2) {
+          animation-delay: -.16s
+        }
+    
+        @keyframes bounce {
+    
+          0%,
+          100%,
+          80% {
+            transform: scale(0)
+          }
+    
+          40% {
+            transform: scale(1)
+          }
+        }
+</style>
+<div class="js-preloader"
+style="display:none;justify-content:center;align-items:center;height: 100vh;width: 100%;position: fixed;top:0;left:0;z-index: 200;background-color: #fff;transition: opacity 0.5s ease-in-out;opacity: 1;">
+    <div class="preload-animation">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>

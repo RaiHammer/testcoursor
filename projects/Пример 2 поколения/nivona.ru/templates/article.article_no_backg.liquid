@@ -1,0 +1,64 @@
+{% assign hide_image = false %}
+{% if settings.article_image_hide or article.image.large_url contains 'no_image' %}
+  {% assign hide_image = true %}
+{% endif %}
+<div class="article-page">
+  <div class="heading-image" style="background-image: url({{ article.image.original_url }})">
+    <div class="container">
+      <h1 class="heading-image__title">{{ article.title | editable }}</h1>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    {% include "page_header" %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="article-body article-section editor">
+
+            {{ article.content | editable }}
+          </div>
+
+          {% if article.tags.size > 0 %}
+            <div class="article-tags-wrapper">
+              <p class="article-tags-header">
+                {{ messages.tags_title }}
+              </p>
+
+              <ul class="tag-list">
+                {% for tag in article.tags %}
+                <li class="tag ">
+                  <a href="{{ tag.url }}" title="{{ tag.title }}" class="tag-link">
+                  <span href="{{ tag.url }}"  class="tag-text ">
+                    {{ tag.title }}
+                </span>  <span class="tag-count">{{ tag.articles_count }}</span></a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if article.related_products.size > 0 %}
+            {% include "product_slider", slider_products: article.related_products, slider_class: 'article-related-products', slider_heading: messages.article_related_products %}
+          {% endif %}
+
+          {% if blog.comments_enabled? %}
+            <div id="comments-block" class="comments-wrapper">
+
+              <div class="comments-heading-wrapper">
+                <p class="comments-heading">
+                  {{ messages.comments }}
+                </p>
+              </div>
+
+              {% include 'comment_list', comments_list: article.comments, moderated: blog.moderated? %}
+
+              {% include 'article_comments' %}
+            </div>
+
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

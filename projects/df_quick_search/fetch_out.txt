@@ -1,0 +1,2 @@
+fetch.test.js: all 18 checks passed
+EXIT:0

@@ -1,0 +1,25 @@
+<div class="comments-wrapper">
+  <button type="button" class="button is-comments-toggle is-unchecked js-comments-toggle">
+    <span class="button-text">
+      {{ messages.comment_add }}
+    </span>
+  </button>
+
+  <div class="comments-form">
+    <div class="notice is-success js-comments-notice-success hidden">
+      {% if blog.moderated? %}
+        {{ messages.comment_is_added_moderated }}
+      {% else %}
+        {{ messages.comment_is_added }}
+      {% endif %}
+    </div>
+
+    {% if blog.moderated? %}
+      <div class="notice is-info js-comments-toggle-notice">
+        {{ messages.comments_are_moderated }}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+

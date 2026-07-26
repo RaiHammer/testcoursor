@@ -1,0 +1,143 @@
+{% content_for 'title' %}
+Кабинет покупателя. Заказы и скидки
+{% end_content_for %}
+<div class='set wide_set'>
+{% if account.enable_group_discounts? and client_group.discount > 0 %}
+ {% if account.enable_client_discounts? == false or client.discount == nil or client_group.discount > client.discount.discount %}
+<div class='set-title'>
+{% if client_group.discount_description != empty %}
+ {{ client_group.discount_description }}
+{% else %}
+Персональная скидка
+{% endif %}
+</div>
+<div class='set-block'>
+<div class='field fc'>
+<p>
+Скидка:
+<b>{{ client_group.discount }}%</b>
+</p>
+</div>
+</div>
+ {% endif %}
+{% endif %}
+{% if account.enable_client_discounts? %}
+ {% if client.discount or client.next_level_discount %}
+<div class='set-title'>Накопленная скидка</div>
+<div class='set-block'>
+<div class='field fc'>
+{% if client.discount %}
+<p>
+Текущая накопленная скидка:
+<b>{{ client.discount.discount }}%</b>
+</p>
+{% endif %}
+{% if client.next_level_discount %}
+<p class='_fix_it'>
+Ближайший уровень
+<b>{{ client.next_level_discount.discount }}%</b>
+<br>
+при  достижении суммы
+<small>{{ client.next_level_discount.orders_price | money }}</small>
+</p>
+{% endif %}
+</div>
+</div>
+ {% endif %}
+{% endif %}
+{% if account.enable_bonus_system? and client.bonus_system_transactions != empty %}
+<div class='set-title'>Бонусы</div>
+<div class='set-block'>
+<table class='table' id='orders_history'>
+<thead>
+<tr>
+<th>Дата</th>
+<th>Описание</th>
+<th>Основание</th>
+</tr>
+</thead>
+<tbody>
+{% for transaction in client.bonus_system_transactions %}
+<tr class="{% cycle 'highlited_row', '' %}">
+<td>{{ transaction.created_at | date: '%d.%m.%Y %H:%M' }}</td>
+<td>{{ transaction.text_status }}</td>
+<td>
+{% if transaction.description == blank %}
+{{ transaction.text_initiator }}
+{% else %}
+{{ transaction.description }}
+{% endif %}
+</td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot>
+<tr class='total'>
+<th class='order_amount' colspan='3'>
+Итого: {{ client.bonus_points }}
+</th>
+</tr>
+</tfoot>
+</table>
+</div>
+{% endif %}
+<div class='set-title'>История заказов</div>
+<div class='set-block'>
+{% if orders == empty %}
+<p>Вы не сделали ещё ни одного заказа</p>
+{% else %}
+<table class='table' id='orders_history'>
+<thead>
+<tr>
+<th>Номер заказа</th>
+<th>Дата оформления</th>
+<th>Статус</th>
+<th>Оплата</th>
+<th class='order_amount'>Сумма заказа</th>
+</tr>
+</thead>
+<tbody>
+{% for order in orders %}
+ {% capture status_class %}
+   {% if order.fulfillment_status == 'delivered' and order.paid? %}
+     green_status
+   {% elsif order.fulfillment_status == 'declined' or order.fulfillment_status == 'returned' %}
+     grey_status
+   {% endif %}
+ {% endcapture %}
+<tr class="{% cycle 'highlited_row', '' %} {{ status_class | strip_newlines | replace:' ','' }}">
+<td><a href="{{ order.url }}"><div>{{ order.number }}</div></a></td>
+<td><a href="{{ order.url }}"><div>{{ order.creation_date | date: '%d.%m.%Y %H:%M' }}</div></a></td>
+<td><a href="{{ order.url }}"><div>{{ order.customer_status }}</div></a></td>
+<td>
+<a href="{{ order.url }}"><div>
+<span class='{% if order.paid? %}green{% else %}red{% endif %}'>
+{% if order.paid? %}
+Оплачен
+{% else %}
+Не оплачен
+{% endif %}
+</span>
+{% if order.payment_needed? %}
+ {% if order.paid_with_bank_bill? %}
+<a href="{{ order.pay_url }}">Перейти к оплате (распечатать квитанцию)</a>
+ {% else %}
+<a href="{{ order.pay_url }}">Перейти к оплате</a>
+ {% endif %}
+{% endif %}
+</div>
+</a></td>
+<td><a href="{{ order.url }}"><div>{{ order.total_price | money }}</div></a></td>
+</tr>
+{% endfor %}
+</tbody>
+<tfoot>
+<tr class='total'>
+<th colspan='4'>Сумма выполненных заказов</th>
+<th class='order_amount'>{{ client.turnover | money }}</th>
+</tr>
+</tfoot>
+</table>
+{% endif %}
+</div>
+</div>

@@ -1,0 +1,1 @@
+Shop.money count=3\nShop.money.set=0\nsamples=[]\nconfig.get=0

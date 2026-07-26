@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class='' lang='ru' xml:lang='ru' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  {% include "head" %}
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+  <meta content='noindex, nofollow' name='robots'>
+  <meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  {{ 'checkout2.core' | global_stylesheet_tag }}
+
+  {% if template.size > 0 %}{% else %}
+    {% assign template = 'account' %}
+  {% endif %}
+</head>
+<body class='adaptive fhg-body' data-template="{{ template }}">
+    {% include 'preloader' %}
+  
+    {% include "no_js_alert" %}
+    {% include "header" %}
+
+    {% include "page_header" %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-12}">
+          <div class="account_content form--cabinet">
+            {% yield %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include 'svg' %}
+    {% include "footer" %}
+    {% include "modals" %}
+    {% include "scripts" %}
+  	{% include 'analytics' %}
+
+    {% include 'popup_prod-registr' %}
+    <script src="{{ 'page.js' | asset_url }}" charset="utf-8"></script>
+</body>
+</html>

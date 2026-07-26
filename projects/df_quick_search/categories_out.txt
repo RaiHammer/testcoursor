@@ -1,0 +1,2 @@
+categories.test.js: OK
+EXIT:0

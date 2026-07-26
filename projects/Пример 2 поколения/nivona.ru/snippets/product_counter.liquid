@@ -1,0 +1,36 @@
+{% assign start_quantity = start_quantity | default: 1 %}
+{% assign input_name = is_item | default: 'quantity' | replace: 'true', 'cart[quantity][id]' | replace: 'id', variant_id %}
+
+{% if input_name == 'quantity' %}
+  {% assign style = 'style="display: none"' %}
+{% endif %}
+
+{% comment %}
+  {% if template contains 'cart' %}
+    {% assign hidden_counter = 'hidden-counter'  %}
+  {% endif %}
+{% endcomment %}
+
+<div class="counter js-variant-counter" data-quantity {{ style }}>
+
+  <button type="button" data-quantity-change="-1" class="counter-button is-count-down ">
+    <svg width="12" height="12" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1C0 0.447715 0.447715 0 1 0H11C11.5523 0 12 0.447715 12 1C12 1.55228 11.5523 2 11 2H1C0.447715 2 0 1.55228 0 1Z" fill="#B5ACA7"/>
+    </svg>
+  </button>
+
+  <input type="text" value="{{ start_quantity }}" name="{{ input_name }}" data-item-id="{{ item.id }}" class="counter-input js-item-quantity"/>
+
+  <button type="button" data-quantity-change="1" class="counter-button is-count-up ">
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M0 6C0 5.44772 0.447715 5 1 5H11C11.5523 5 12 5.44772 12 6C12 6.55228 11.5523 7 11 7H1C0.447715 7 0 6.55228 0 6Z" fill="#B5ACA7"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C5.44772 12 5 11.5523 5 11V6L5 1C5 0.447715 5.44772 0 6 0V0C6.55228 0 7 0.447715 7 1L7 11C7 11.5523 6.55228 12 6 12V12Z" fill="#B5ACA7"/>
+    </svg> 
+  </button>
+</div>
+
+{% assign start_quantity = null %}
+{% assign is_item = null %}
+{% assign variant_id = null %}
+
+{% assign input_name = null %}

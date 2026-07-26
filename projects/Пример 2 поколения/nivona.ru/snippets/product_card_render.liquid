@@ -1,0 +1,112 @@
+<script type="text/template" hidden data-template-id="product_card">
+    <% var product = obj; %>
+
+    <% var min_price = '0'; %>
+    <% var min_price_old = '0'; %>
+  
+    <% if (product.variants.length > 1) { %>
+      <% var price_varies = true; %>
+    <% }else{ %>
+      <% var price_varies = false; %>
+    <% } %>
+  
+    <% for (var i = 0; i < 25; i++) { %>
+      <% if (product.variants[i]) { %>
+          <% var price = Math.round(product.variants[i].price); %>
+          <% var price_old = Math.round(product.variants[i].old_price); %>
+          <% if(price < min_price || min_price == '0') { %>
+            <% if(price) { %>
+              <% var min_price = price; %>
+              <% var min_price_old = price_old; %>
+            <% } %>
+          <% } %>
+      <% } else { %>
+        <% break; %>
+      <% } %>
+    <% } %>
+
+    <form class="product-cart-control {{ hidden_form }}" method="post" action="{{ cart_url }}" data-product-id="<%= product.id %>" data-main-form
+       data-product-item data-item-sku="<%= product.sku %>" data-item-title="<%= product.title.replace('"', '&quot;').replace("'", "&prime;") %>" 
+       data-item-collection="" data-item-brand="hoover" data-item-price="{{ product.price }}" data-item-currency="RUB" 
+       data-item-variant="<%= product.variants[0].title.replace('"', '&quot;').replace("'", "&prime;") %>" data-item-url="<%= product.url %>">
+       
+      <input type="hidden" name="variant_id" value="<%= product.variants[0].id %>">
+      <input type="hidden" name="quantity" class="counter-input input-number input-field" value="1"/>
+      <div class="product-card">
+        <div class="product-card__actions">
+          <button type="button" class="product-card__favorites_trigger" data-favorites-trigger="<%= product.id %>">
+            <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.75 1C11.8818 1 11.0858 1.27512 10.3842 1.81775C9.7115 2.33797 9.26366 3.00056 9 3.48237C8.73634 3.00053 8.2885 2.33797 7.61584 1.81775C6.91422 1.27512 6.11822 1 5.25 1C2.82713 1 1 2.98178 1 5.60981C1 8.449 3.27947 10.3915 6.73028 13.3322C7.31628 13.8317 7.9805 14.3977 8.67088 15.0014C8.76188 15.0811 8.87875 15.125 9 15.125C9.12125 15.125 9.23813 15.0811 9.32913 15.0015C10.0196 14.3977 10.6838 13.8316 11.2701 13.3319C14.7205 10.3915 17 8.449 17 5.60981C17 2.98178 15.1729 1 12.75 1Z" stroke="#B5ACA7" stroke-width="2"/>
+            </svg>
+          </button>
+
+          <button class="product-card__add js-compare-add" data-toggle="tooltip" data-placement="bottom" title="Сравнить" data-compare-add="<%= product.id %>">
+            <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 6H13V17H19V6Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+              <path d="M7 10H1V17H7V10Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+              <path d="M13 1H7V17H13V1Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+            </svg>
+          </button>
+          <button class="product-card__delete js-compare-delete" data-toggle="tooltip" data-placement="bottom" title="Удалить из сравнения" data-compare-delete="<%= product.id %>" style="display: none;">
+            <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 6H13V17H19V6Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+              <path d="M7 10H1V17H7V10Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+              <path d="M13 1H7V17H13V1Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+            </svg>
+          </button>
+        </div>
+
+          <a href="<%= product.url %>" class="image-container is-square is-cover" data-product-url>
+            <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-original="<%= product.first_image.original_url %>" alt="">
+          </a>
+          <div class="product-card__meta">
+              <div class="product-card__meta__content">
+                <a href="<%= product.url %>" data-product-url><span class="product-card__title"><%= product.title %></span></a>
+                <% if(product.short_description){ %>
+                  <div class="product-card__meta__descr">
+                    <%= product.short_description %>
+                  </div>
+                <% } %>
+              </div>
+
+              <div class="product-card__prices">
+                <% var is_discount = ''; %>
+                <% if(product.old_price > product.price){ %>
+                  <span class="product-card__old_price"><%= Shop.money.format(product.old_price) %></span>
+                  <% is_discount = 'is_discount'; %>
+                <% } %>
+
+                <% var availableParam = ''; %>
+                <% if(product.available){ %>
+                <% }else{ %>
+                  <% var availableParam = 'disabled="disabled" title="Нет в наличии"'; %>
+                <% } %>
+                <span class="product-card__price <%= is_discount %>"><%= Shop.money.format(product.price) %></span>
+              </div>
+              
+              <!-- Если больше 1 модификации -->
+              <% if(product.variants.length > 1){ %>
+                <a class="button is-primary product-card__btn" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit'); return true;" href="<%= product.url %>" title='<%= product.title %>' data-product-url><span class="button-text">Купить</span></a>
+
+              <!-- product.quantity больше 0 -->
+              <% }else if(product.available){ %>
+                <button class="button is-primary product-card__btn {% unless product.available %}is_disabled{% endunless %}" type="submit" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit'); return true;" data-item-add <%= availableParam %>><span class="button-text">Купить</span></button>
+
+              <!-- product.quantity == 0 -->
+              
+              <% }else{ %>
+                {% if settings.product_not_available contains 'shown' %}
+                  <button class="product-card__btn winbox  button is-primary" data-window="{% if settings.product_order_target == 'mail' %}request{% else %}quickorder|request{% endif %}" data-product-title="<%= product.title %>" data-window-product-url="{{ account.url }}<%= product.url %>" data-variant-id="<%= product.variants[0].id %>" data-variant-price="<%= product.price %>" data-variant-image="<%= product.images[0].original_url %>" data-product-id="<%= product.id %>">
+                                                  <span class="button-text">{% if product.properties['is_preorder'].characteristics[0].handle == 'true' %}Предзаказ{% else %}{{ settings.product_order_text }}{% endif %}</span>
+                   </button>
+                {% else %}
+                  <a class="product-card__btn" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit'); return true;" href="<%= product.url %>" title='<%= product.title %>' data-product-url>Купить</a>
+                {% endif %}
+              <% } %>
+          </div>
+      </div>
+    </form>
+ 
+
+  </script>
+  

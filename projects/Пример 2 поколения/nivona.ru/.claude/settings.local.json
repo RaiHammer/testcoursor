@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"D:\\\\Важное\\\\Claude\\\\nivona.ru\" -Force)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(grep -E \"\\\\.\\(js|css|scss\\)$\")",
+      "Bash(grep -E \"\\\\.\\(png|jpg|jpeg|gif|svg|ico\\)$\")",
+      "Bash(grep -E \"\\\\.js$\")",
+      "WebFetch(domain:nivona.ru)",
+      "Bash(dir \"D:\\\\Важное\\\\Claude\\\\nivona.ru\\\\Как загрузило\" /b)"
+    ]
+  }
+}

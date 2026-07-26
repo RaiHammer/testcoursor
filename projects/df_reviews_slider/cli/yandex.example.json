@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Юрий",
+    "text": "Отличный магазин, быстрая доставка. Рекомендую!",
+    "stars": 5,
+    "icon_href": "https://avatars.mds.yandex.net/get-yapic/islands-middle"
+  },
+  {
+    "name": "Марина",
+    "text": "Качественные товары, помогли с выбором размера.",
+    "stars": 5,
+    "icon_href": null
+  }
+]

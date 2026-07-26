@@ -1,0 +1,288 @@
+=== FETCH /?lang=en ===
+status 200 ctype text/html; charset=utf-8 len 828302
+html_lang None
+locales []
+default-locale en
+account_ids []
+product_ids ['490265387', '490265398', '490265410', '490265454', '490265480', '490265509', '490265526', '490265540', '490265564', '490271473', '490265568', '490534236', '490264638', '490264826', '490264828']
+shop-config head {"money_with_currency_format":{"delimiter":" ","separator":".","format":"%n %u","unit":"тВ╜","show_price_without_cents":0},"currency_code":"RUR","currency_iso_code":"RUB","default_currency":{"title":"╨а╨╛╤Б╤Б╨╕╨╣╤Б╨║╨╕╨╣ ╤А╤Г╨▒╨╗╤М","code":"RUR","rate":1.0,"format_string":"%n %u","unit":"тВ╜","price_separator":"","is_default":true,"price_delimiter":"","show_price_with_delimiter":true,"show_price_without_cents":false},"facebook":{"pixelActive":false,"currency_code":"RUB","use_variants":null},"vk":{"pixel_active":nu
+shop-config locale/account en 5760494 None
+AjaxSearch None
+
+=== suggestions q='book' locale=en status=200 ===
+[
+  {
+    "id": null,
+    "title": "LiftтАСtheтАСFlap Book: How It Works!",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "Good Habits Adventure: LiftтАСtheтАСFlap book",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "Double-Flap Book: My First Discoveries",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "LiftтАСtheтАСFlap Book: Dinosaurs!",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "My First Year: Interactive Baby Memory Book",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "Double-Flap Book: Dinosaurs",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "LiftтАСtheтАСFlap Book: Space",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "BabyтАЩs First Sound Adventure: A Cardboard Book",
+    "fields_title": null
+  }
+]
+
+=== suggestions q='book' locale=ru status=200 ===
+[
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨Ъ╨Р╨Ъ ╨н╨в╨Ю ╨г╨б╨в╨а╨Ю╨Х╨Э╨Ю",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨╛╤В╨▓╨╛╤А╨╛╤В╨╛╨╝ ╨╕ ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨Я╨Ю╨Ы╨Х╨Ч╨Э╨л╨Х ╨Я╨а╨Ш╨Т╨л╨з╨Ъ╨Ш",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨┤╨▓╨╛╨╣╨╜╤Л╨╝╨╕ ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨Ь╨Ю╨Ш ╨Я╨Х╨а╨Т╨л╨Х ╨Ю╨в╨Ъ╨а╨л╨в╨Ш╨п",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨Ф╨Ш╨Э╨Ю╨Ч╨Р╨Т╨а╨л",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ш╨╜╤В╨╡╤А╨░╨║╤В╨╕╨▓╨╜╨░╤П ╨║╨╜╨╕╨│╨░-╨░╨╗╤М╨▒╨╛╨╝ ╨Ь╨╛╨╣ ╨┐╨╡╤А╨▓╤Л╨╣ ╨│╨╛╨┤",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨┤╨▓╨╛╨╣╨╜╤Л╨╝╨╕ ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨Ф╨Ш╨Э╨Ю╨Ч╨Р╨Т╨а╨л",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨Ъ╨Ю╨б╨Ь╨Ю╨б",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨│╨░ ╨Ь╨Ю╨Ш ╨Я╨Х╨а╨Т╨л╨Х ╨б╨Ы╨Ю╨Т╨Р. ╨Ч╨Т╨г╨Ъ╨Ю╨Я╨Ю╨Ф╨а╨Р╨Ц╨Р╨Э╨Ш╨Х",
+    "fields_title": null
+  }
+]
+
+=== suggestions q='╤Б╨║╨░╨╖' locale=en status=200 ===
+[
+  {
+    "id": null,
+    "title": "╨Ь╨░╨║╤Б╨╕╨Я╨░╨╖╨╗╤Л ╨Ь╨╛╨╕ ╨┐╨╡╤А╨▓╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕, ╨╜╨░╨▒╨╛╤А ╨╕╨╖ 9 ╨║╨░╤А╤В╨╕╨╜╨╛╨║",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": null,
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": null,
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": null,
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Т╨╛╨╗╤И╨╡╨▒╨╜╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕. ╨Я╨╕╤Б╤М╨╝╨╛ ╨Ф╨╡╨┤╤Г ╨Ь╨╛╤А╨╛╨╖╤Г ╨Ф╨╡╨┤ ╨Ь╨╛╤А╨╛╨╖ ╨▓ ╤Б╨╕╨╜╨╡╨╝",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Т╨╛╨╗╤И╨╡╨▒╨╜╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕. ╨Я╨╕╤Б╤М╨╝╨╛ ╨Ф╨╡╨┤╤Г ╨Ь╨╛╤А╨╛╨╖╤Г ╨б╨╜╨╡╨│╨╛╨▓╨╕╨║",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Т╨╛╨╗╤И╨╡╨▒╨╜╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕. ╨Я╨╕╤Б╤М╨╝╨╛ ╨Ф╨╡╨┤╤Г ╨Ь╨╛╤А╨╛╨╖╤Г ╨Ф╨╡╨┤ ╨Ь╨╛╤А╨╛╨╖ ╨╕ ╨║╨╛╨╜╤Д╨╡╤В╤В╨╕",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Т╨╛╨╗╤И╨╡╨▒╨╜╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕. ╨Я╨╕╤Б╤М╨╝╨╛ ╨Ф╨╡╨┤╤Г ╨Ь╨╛╤А╨╛╨╖╤Г ╨Ъ╤А╨░╤Б╨╜╤Л╨╣ ╨Ф╨╡╨┤ ╨╝╨╛╤А╨╛╨╖",
+    "fields_title": null
+  }
+]
+
+=== suggestions q='╤Б╨║╨░╨╖' locale=ru status=200 ===
+[
+  {
+    "id": null,
+    "title": "╨Ь╨░╨║╤Б╨╕╨Я╨░╨╖╨╗╤Л ╨Ь╨╛╨╕ ╨┐╨╡╤А╨▓╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕, ╨╜╨░╨▒╨╛╤А ╨╕╨╖ 9 ╨║╨░╤А╤В╨╕╨╜╨╛╨║",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Э╨░╨▒╨╛╤А ╨Ь╨╛╨╕ ╨┐╨╡╤А╨▓╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕ ╨╜╨░ ╤Б╨║╨╛╨▒╨╡",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨│╨░ ╨Ь╨╛╨╕ ╨╗╤О╨▒╨╕╨╝╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨│╨░ ╨┤╨╗╤П ╤А╨░╤Б╨║╤А╨░╤И╨╕╨▓╨░╨╜╨╕╤П. ╨С╨╗╨╛╨║╨╜╨╛╤В ╤О╨╜╨╛╨│╨╛ ╨▓╨╕╨╖╨░╨╢╨╕╤Б╤В╨░ ╨╗╨╕╤Ж╨╡╨╜╨╖╨╕╤П \"╨б╨║╨░╨╖╨╛╤З╨╜╤Л╨╣ ╨┐╨░╤В╤А╤Г╨╗╤М\" 50 ╨╗╨╕╤Б╤В╨╛╨▓",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Т╨╛╨╗╤И╨╡╨▒╨╜╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕. ╨Я╨╕╤Б╤М╨╝╨╛ ╨Ф╨╡╨┤╤Г ╨Ь╨╛╤А╨╛╨╖╤Г ╨Ф╨╡╨┤ ╨Ь╨╛╤А╨╛╨╖ ╨▓ ╤Б╨╕╨╜╨╡╨╝",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Т╨╛╨╗╤И╨╡╨▒╨╜╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕. ╨Я╨╕╤Б╤М╨╝╨╛ ╨Ф╨╡╨┤╤Г ╨Ь╨╛╤А╨╛╨╖╤Г ╨б╨╜╨╡╨│╨╛╨▓╨╕╨║",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Т╨╛╨╗╤И╨╡╨▒╨╜╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕. ╨Я╨╕╤Б╤М╨╝╨╛ ╨Ф╨╡╨┤╤Г ╨Ь╨╛╤А╨╛╨╖╤Г ╨Ф╨╡╨┤ ╨Ь╨╛╤А╨╛╨╖ ╨╕ ╨║╨╛╨╜╤Д╨╡╤В╤В╨╕",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Т╨╛╨╗╤И╨╡╨▒╨╜╤Л╨╡ ╤Б╨║╨░╨╖╨║╨╕. ╨Я╨╕╤Б╤М╨╝╨╛ ╨Ф╨╡╨┤╤Г ╨Ь╨╛╤А╨╛╨╖╤Г ╨Ъ╤А╨░╤Б╨╜╤Л╨╣ ╨Ф╨╡╨┤ ╨╝╨╛╤А╨╛╨╖",
+    "fields_title": null
+  }
+]
+
+=== suggestions q='╨░╨╖╨▒╤Г╨║' locale=en status=200 ===
+[
+  {
+    "id": null,
+    "title": "LiftтАСtheтАСFlap Book: ABC",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "Fun RhymeтАСandтАСLearn ABC Book",
+    "fields_title": null
+  }
+]
+
+=== suggestions q='╨░╨╖╨▒╤Г╨║' locale=ru status=200 ===
+[
+  {
+    "id": null,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨Р╨Ч╨С╨г╨Ъ╨Р",
+    "fields_title": null
+  },
+  {
+    "id": null,
+    "title": "╨Ш╨╜╤В╨╡╤А╨░╨║╤В╨╕╨▓╨╜╨░╤П ╨║╨╜╨╕╨│╨░ ╨Т╨Х╨б╨Х╨Ы╨Р╨п ╨б╨в╨Ш╨е╨Р╨Ч╨С╨г╨Ъ╨Р",
+    "fields_title": null
+  }
+]
+
+=== products_by_id (none) status=200 ===
+[
+  {
+    "id": 490265387,
+    "title": "╨Ь╨╜╨╛╨│╨╛╤А╨░╨╖╨╛╨▓╨░╤П ╤В╨╡╤В╤А╨░╨┤╤М ╨Я╨Ш╨и╨Ш-╨б╨в╨Ш╨а╨Р╨Щ ╨┤╨╗╤П ╨┤╨╡╤В╨╡╨╣ 2-3 ╨╗╨╡╤В"
+  },
+  {
+    "id": 490265398,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨┤╨▓╨╛╨╣╨╜╤Л╨╝╨╕ ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨з╨в╨Ю ╨Я╨Ю╨Ф ╨Ч╨Х╨Ь╨Ы╨Х╨Щ?"
+  },
+  {
+    "id": 490265410,
+    "title": "╨Ь╨╜╨╛╨│╨╛╤А╨░╨╖╨╛╨▓╨░╤П ╤А╨░╨╖╨▓╨╕╨▓╨░╤О╤Й╨░╤П ╤В╨╡╤В╤А╨░╨┤╤М ╨┤╨╗╤П ╨┤╨╡╤В╨╡╨╣ 3-5 ╨╗╨╡╤В"
+  }
+]
+
+=== products_by_id ?lang=en status=200 ===
+[
+  {
+    "id": 490265387,
+    "title": "Reusable Write & Wipe Notebook for Toddlers Ages 2тАУ3"
+  },
+  {
+    "id": 490265398,
+    "title": "DoubleтАСFlap Book: WhatтАЩs under the ground?"
+  },
+  {
+    "id": 490265410,
+    "title": "Reusable Write & Wipe Workbook for Ages 4тАУ5"
+  }
+]
+
+=== products_by_id ?locale=en status=200 ===
+[
+  {
+    "id": 490265387,
+    "title": "╨Ь╨╜╨╛╨│╨╛╤А╨░╨╖╨╛╨▓╨░╤П ╤В╨╡╤В╤А╨░╨┤╤М ╨Я╨Ш╨и╨Ш-╨б╨в╨Ш╨а╨Р╨Щ ╨┤╨╗╤П ╨┤╨╡╤В╨╡╨╣ 2-3 ╨╗╨╡╤В"
+  },
+  {
+    "id": 490265398,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨┤╨▓╨╛╨╣╨╜╤Л╨╝╨╕ ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨з╨в╨Ю ╨Я╨Ю╨Ф ╨Ч╨Х╨Ь╨Ы╨Х╨Щ?"
+  },
+  {
+    "id": 490265410,
+    "title": "╨Ь╨╜╨╛╨│╨╛╤А╨░╨╖╨╛╨▓╨░╤П ╤А╨░╨╖╨▓╨╕╨▓╨░╤О╤Й╨░╤П ╤В╨╡╤В╤А╨░╨┤╤М ╨┤╨╗╤П ╨┤╨╡╤В╨╡╨╣ 3-5 ╨╗╨╡╤В"
+  }
+]
+
+=== products_by_id ?lang=en&locale=en status=200 ===
+[
+  {
+    "id": 490265387,
+    "title": "Reusable Write & Wipe Notebook for Toddlers Ages 2тАУ3"
+  },
+  {
+    "id": 490265398,
+    "title": "DoubleтАСFlap Book: WhatтАЩs under the ground?"
+  },
+  {
+    "id": 490265410,
+    "title": "Reusable Write & Wipe Workbook for Ages 4тАУ5"
+  }
+]
+
+=== search.json lang=en status=None ===
+[]
+
+=== search.json lang=ru status=None ===
+[]
+
+=== FETCH /?lang=ru shop-config ===
+html_lang None locales []
+ru shop locale ru account 5760494

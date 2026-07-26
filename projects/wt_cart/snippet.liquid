@@ -1,0 +1,171 @@
+{% comment %}
+  DanForge Dynamic Cart — виджет inSales
+  Автор: DanForge · https://danforge.ru
+  Handle: danforge_dynamic_cart
+{% endcomment %}
+{% include "system_bnpl-modal" %}
+<div class="cart__modal hide" data-cart-modal data-danforge-widget="danforge_dynamic_cart">
+  <div class="cart__overlay"></div>
+  <div class="cart__modal-content">
+    <form 
+    action="{{ cart_url }}" 
+    method="post" 
+    data-cart-form 
+    data-shop-title="{{ account.title }}"
+    data-shop-host="{{ account.main_host }}"
+    data-items-in-cart="{{- widget_messages.items_in_cart -}}"
+    data-share-items="{{- widget_messages.shared_cart -}}"
+    data-reload-on-coupon="false"
+    class="cart"
+    >
+    <div class="top">
+      <div class="cart__header">
+
+        <div class="cart__title cart__title-base-message c-popin__title">
+          {{ widget_settings['cart-title'] }} ({{ cart.items_count }})
+        </div>
+        <div style="display: none;" class="cart__title cart__title-add-item c-popin__title">
+          {{ widget_settings['cart-add-message'] }}
+        </div>
+
+        <div class="cart__close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <g clip-path="url(#clip0_72_816)">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M19.4604 7.4707L20.5205 8.5307L8.52045 20.5307L7.46045 19.4707L19.4604 7.4707Z" fill="black"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M8.52045 7.4707L20.5205 19.4707L19.4604 20.5307L7.46045 8.5307L8.52045 7.4707Z" fill="black"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_72_816">
+          <rect width="28" height="28" fill="white" transform="translate(-0.00976562)"/>
+          </clipPath>
+          </defs>
+          </svg>
+        </div>
+
+      </div>
+      <div class="cart__body">
+        <div class="cart__line" data-cart-line>
+
+          {% for item in cart.items %}
+
+            <div 
+            class="cart__item"
+            data-product-id="{{ item.product.id }}"
+            data-product-updated-at="{{ item.product.updated_at }}"
+            data-item-id="{{ item.id }}"
+            >
+              {% assign img = item.image %}
+              <a class="cart__item-link" href="{{ item.product.url }}">
+                <img src="{% if img %} {{ img.medium_url }} {% else %} '' {% endif %}" class="cart__item-img" />
+              </a>
+              <div class="cart__item-data">
+                <div class="cart__item-data-top">
+                  <div class="cart__item-title">{{ item.product.title }}</div>
+                  
+                  <div class="cart__item-info">
+                    {% for i in item.variant.option_values %}
+                      <div class="cart__item-option">
+                      {{ i.option_name.title }}:
+                      {{ i.title }}
+                      </div>
+                    {% endfor %}
+
+                  
+                    
+                    <div data-quantity class="c-lineitem__qty">
+                      <div class="c-form__row c-inputqty">
+                          <label class="c-form__label c-inputqty__label">
+                              Количество:
+                          </label>
+                          <span data-quantity-change="-1" type="button" class="c-inputqty__button c-inputqty__button--less"> - </span>
+                          <span aria-live="polite">
+                          <input class="c-inputqty__input" type="text" name="cart[quantity][{{ item.id }}]" value="{{ item.quantity }}">
+                          </span>
+                          <span type="button" data-quantity-change="1" class="c-inputqty__button c-inputqty__button--more"> + </span>
+                      </div>
+                  
+                    </div>
+
+                    <div class="cart__item-price">
+                      {{ item.sale_price | money }}
+                    </div>
+                  
+                  </div>
+                </div>
+                
+                <div class="cart__item-data-bottom">  
+                  <span data-item-delete="{{ item.id }}" class="c-lineitem__removebtn">
+                      <span class="c-lineitem__removelabel">
+                          Удалить
+                      </span>
+                  </span>
+                </div>  
+              </div>
+            </div>
+          {% endfor %}
+          
+        </div>
+      </div>
+    </div>
+      <div class="footer">
+      <div class="cart__box">
+
+        <div class="cart__coupon">
+          <div class="cart__coupon-header">У вас есть персональный код?</div>
+          <div class="cart__coupon-body">
+            <div class="cart__coupon-body-header">Закрыть</div>
+            <div class="cart__coupon-body-content">
+              <input type="text" name="cart[coupon]" value="{{ cart.coupon }}" />
+              <input type="button" value="Применить" data-coupon-submit2/>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart__prices">
+          <!-- <div class="cart__prices-item">
+            <div class="cart__prices-item-title">Стоимость Доставки</div>
+            <div class="cart__prices-item-value">0</div>
+          </div> -->
+          <div class="cart__prices-item" data-cart-discounts-ajax="true">
+            <div class="cart__prices-item-title">Скидка</div>
+            <div class="cart__prices-item-value">0</div>
+          </div>
+          <div class="cart__prices-item">
+            <div class="cart__prices-item-title">Итого</div>
+            <div class="cart__prices-item-value" data-cart-total-price>0</div>
+          </div>
+        </div>
+        
+        <span class="cart__message">{{ widget_settings['cart-message'] }}</span>
+
+
+      </div>
+      <div class="cart__footer">
+        <!-- <input type="submit" class="cart__button btn-animate" value="{{ widget_settings['cart-btn'] }}" data-cart-submit> -->
+        <button type="submit" class="cart__button btn-animate"  data-cart-submit>
+          <span>{{ widget_settings['cart-btn'] }}</span>
+        </button>
+        
+      </div>
+
+
+      
+      <div class="cart__box">
+        <div class="cart__copi">{{ widget_settings['cart-copirite'] }}</div>
+      </div>
+      </div>
+      <input
+      type="hidden"
+      name="_method"
+      value="put">
+    <input
+      type="hidden"
+      name="make_order"
+      value="">
+    <input
+      type="hidden"
+      name="lang"
+      value="{{ language.locale }}" />
+    </form>
+  </div>
+</div>

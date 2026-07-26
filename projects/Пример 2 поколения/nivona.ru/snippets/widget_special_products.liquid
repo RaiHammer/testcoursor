@@ -1,0 +1,49 @@
+{% assign blocksCount = 0 %}
+{% for block in block_lists.widget-special-products.blocks %}
+  {% if block.hide == false %}
+    {% assign blocksCount = blocksCount | plus: 1 %}
+  {% endif %}
+{% endfor %}
+
+{% if block_lists.widget-special-products.blocks.size > 0 %}
+
+  <div class="special-products-tab tab">
+    <div class="special-products-tab__header">
+      <div class="container">
+        {% for block in block_lists.widget-special-products.blocks %}
+          {% if block.hide == false %}
+            {% assign tabHeaderWidth = 100 | divided_by: forloop.length | round: 2 %}
+            <button class="tab-toggle product-slider-heading tab-index" style="flex: 1 0 {{ tabHeaderWidth }}%;" data-target="#product-{{ block.handle }}" data-toggle="tabs">
+              <p class="tab-toggle-caption">{% if block.title == '' %}{{ block.collection.title | editable }}{% else %}{{ block.title | editable }}{% endif %}</p>
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="special-products-tab__content">
+      {% for block in block_lists.widget-special-products.blocks %}
+        {% if block.hide == false %}
+          <div class="special-products-tab__title">{% if block.title == '' %}{{ block.collection.title | editable }}{% else %}{{ block.title | editable }}{% endif %}</div>
+          <div class="tab-block" id="product-{{ block.handle }}">
+            <div class="container">
+              <div class="products-items products-items_grid">
+                <div class="products-list is-collection row">
+                  {% for product in block.collection.products %}
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                      {% include 'product_card' %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% assign blocksCount = null %}
+{% assign block_name = null %}
+

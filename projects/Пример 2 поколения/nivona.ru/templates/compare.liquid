@@ -1,0 +1,120 @@
+  {% include "page_header" %}
+
+	<div class="container">
+		<div class="table-responsive content-block content-block__compare">
+          <ul class="tabs__nav clearfix" role="tablist">
+            <li role="presentation" data-action="all" class="active js-same-toggle"><a href="#all" class="button is-primary">все характеристики</a></li>
+            <li role="presentation" data-action="differences" class="js-same-toggle"><a href="#differences" class="button is-primary">различающиеся</a></li>
+          </ul>
+
+          <div id="js-compare-wrapper" class="compares">
+
+            {% if products.size > 0 %}
+
+              <div id="js-compare-inner">
+
+                <div class="compare-table-wrapper">
+
+                  <div class="table-compare table-striped table-bordered js-compare-table">
+                    <div class="table-row">
+                      <div class="table-cell table-row-title param-title">Товары для списка сравниваемых товаров</div>
+
+                      {% for product in products %}
+                        <div class="table-cell param-value table-cell-product" data-compared-id="{{ product.id }}">
+                          <form class="compare-controls form " action="{{ cart_url }}" data-product-id="{{ product.id }}" data-main-form>
+                            <input type="hidden" name="variant_id" value="{{ product.variants.first.id }}">
+                            <input type="hidden" name="quantity" class="counter-input input-number input-field" value="1"/>
+                            <div class="product-card">
+                              <button class="product-card__delete" class="compare-delete" data-compare-delete="{{ product.id }}">
+                                <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <g opacity="0.5">
+                                  <rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"></rect>
+                                  <rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"></rect>
+                                  </g>
+                                </svg>
+                              </button>
+                              <a href="{{ product.url }}" class="image-container is-square is-cover"><img src="{{ product.first_image.large_url }}" alt=""></a>
+                              <div class="product-card__meta">
+                                <a href="{{ product.url }}" class="product-card__title">{{ product.title }}</a>
+                                <span class="product-card__prices compare_price">
+                                	{% if product.old_price > product.price %}
+                                	  <span class="product-card__old_price compare_price">{{ product.old_price | money }}</span>
+                                  {% endif %}
+									                <span class="product-card__price compare_price{% if product.old_price > product.price %} is-discount{% endif %}">{{ product.price | money }}</span>
+
+                                </span>
+
+                                {% if product.variants.size > 1 %}
+
+                                  <a class="product-button button is-primary compare-more product-card__btn" href="{{ product.url }}" title='{{ product.title }}'>
+                                    <span class="button-text">{{ messages.button_more }}</span>
+
+                                  </a>
+                                {% else %}
+                                  {% if product.available %}
+                                  <!-- больше 0 -->
+                                    <div class="buy text-right-xl more-info">
+                                      <button class="product-button button is-primary compare-more product-card__btn" type="submit" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit'); return true;" data-item-add>Купить</button>
+                                    </div><!-- /.buy -->
+
+                                  {% else %}
+                                      <button
+                                        class="product__buy winbox  button is-primary"
+                                        data-window="{% if settings.product_order_target == 'mail' %}{% if product.properties['is_preorder'].characteristics[0].handle == 'true' %}preorder{% else %}request{% endif %}{% else %}quickorder|request{% endif %}"
+                                        data-product-title="{{ product.title | escape }}"
+                                        data-window-product-url="{{ account.url }}{{ product.canonical_url }}"
+                                        data-variant-id="{{ product.variants.first.id }}"
+                                        data-variant-price="{{ product.variants.first.price }}"
+                                        data-variant-image="{{ product.first_image.original_url }}"
+                                        data-product-id="{{ product_id }}"
+                                      >
+                                        <span class="button-text">{% if product.properties['is_preorder'].characteristics[0].handle == 'true' %}Предзаказ{% else %}{{ settings.product_order_text }}{% endif %}</span>
+                                      </button>
+                                        <!-- не больше 0 -->
+                                      {% comment %} {% if settings.product_not_available contains 'shown' %}
+                                        <button class="product-button button is-primary compare-more product-card__btn" type="submit" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit'); return true;" data-item-add>Купить</button>
+                                      {% else %}
+                                        <a class="product-button button is-primary compare-more product-card__btn" href="{{ product.url }}" title='{{ product.title }}'>
+                                          <span class="button-text">
+                                            {{ messages.button_more }}
+                                          </span>
+                                        </a>
+                                      {% endif %} {% endcomment %}
+                                  {% endif %}
+                                {% endif %}
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      {% endfor %}
+                    </div>
+
+                    {% for property in properties %}
+
+                      <div class="table-row {% unless property.differ? %}same-row{% endunless %}">
+
+                        <div class="table-cell table-row-title param-title">{{ property.title }}</div>
+
+                        {% for product in products %}
+                          <div class="table-cell param-value" data-compared-id="{{ product.id }}">
+                            {% for characteristic in product.properties[property.handle].characteristics %}
+                              {{ characteristic.title }}{% unless forloop.last %},{% endunless %}
+                            {% endfor %}
+                          </div>
+                        {% endfor %}
+                      </div>
+
+                    {% endfor %}
+                  </div>
+
+                </div>
+
+              </div>
+
+              {% assign compare_is_empty = 'hidden' %}
+            {% else %}
+              <div class="notice notice-info text-center">{{ messages.comparison_is_empty }}</div>
+            {% endif %}
+          </div>
+      </div>
+	</div>

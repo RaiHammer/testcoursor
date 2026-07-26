@@ -1,0 +1,10 @@
+D:\╨Т╨░╨╢╨╜╨╛╨╡\╨Ы╨╕╤З╨╜╤Л╨╣ ╨┤╨╢╨░╤А╨▓╨╕╤Б\projects\df_quick_search\widget\snippet.js:1745
+  function handleLoadMoreArticles(state, query, event) {
+  ^^^^^^^^
+
+SyntaxError: Unexpected token 'function'
+    at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+    at checkSyntax (node:internal/main/check_syntax:78:3)
+
+Node.js v22.15.0
+EXIT=1

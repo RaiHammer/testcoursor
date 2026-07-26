@@ -1,0 +1,21 @@
+{
+  "client_name": "Мой магазин",
+  "shop": "your-shop.myinsales.ru",
+  "api_key": "YOUR_API_KEY",
+  "password": "YOUR_API_PASSWORD",
+  "theme_id": null,
+  "yandex_org_url": "https://yandex.ru/maps/org/your-company/1234567890/",
+  "yandex_reviews_file": null,
+  "yandex_limit": 0,
+  "sample_count": 0,
+  "min_text_length": 10,
+  "min_rating": 1,
+  "source_mode": "yandex",
+  "prefer_with_avatar": false,
+  "client_mode": "api",
+  "upload_to_theme": true,
+  "dry_run": false,
+  "use_playwright": false,
+  "output_dir": "output",
+  "upload_avatars": false
+}

@@ -1,0 +1,266 @@
+/*==============================
+	Profile
+==============================*/
+.account_content {
+    margin-bottom: 40px;
+    background: #F7F7F7;
+    border-radius: 8px;
+    padding: 40px 30px 30px 30px;
+    &.profile_login {
+      max-width: 500px;
+      padding: 30px;
+      .textfield:not([type="checkbox"]) {
+        width: 100%!important;
+      }
+    }
+    &.profile_register {
+      max-width: 500px;
+      padding: 30px;
+      .textfield:not([type="checkbox"]) {
+        width: 100%!important;
+      }
+    }
+  }
+  
+  .profile {
+    margin-bottom: 40px;
+    background: #F7F7F7;
+    border-radius: 8px;
+  }
+  .profile__head {
+    display: block;
+    width: 100%;
+    height: 80px;
+    position: relative;
+    border-bottom: 1px solid #ededed;
+  }
+  .profile__img {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 50px;
+    height: 50px;
+    display: block;
+    overflow: hidden;
+  }
+  .profile__img img {
+    width: 100%;
+  }
+  .profile__img:empty {
+    background: url("avatar.png") no-repeat center/50px 50px;
+  }
+  .profile__name {
+    display: block;
+    color: #b00917;
+    font-size: 15px;
+    padding: 15px 30px 0 80px;
+    line-height: 24px;
+    text-decoration: underline;
+  }
+  .profile__nav a {
+    -webkit-transition: 0s;
+    -moz-transition: 0s;
+    -o-transition: 0s;
+    transition: 0s;
+    display: block;
+    line-height: 52px;
+    font-size: 15px;
+    color: #000;
+    border-bottom: 1px solid #F7F7F7;
+    letter-spacing: 0.4px;
+    padding-left: 80px;
+  }
+  .profile__nav a.active,
+  .profile__nav a:hover {
+    background-color: #b00917;
+    color: #fff;
+  }
+  .profile__nav li:first-child a {
+    background: url("profile.png") no-repeat top 11px left 25px #F7F7F7;
+  }
+  .profile__nav li:first-child a:hover,
+  .profile__nav li:first-child a.active {
+    background: url("profile--hover.png") no-repeat top 11px left 25px #b00917;
+  }
+  .profile__nav li:nth-child(2) a {
+    background: url("orders.png") no-repeat top 11px left 25px #F7F7F7;
+  }
+  .profile__nav li:nth-child(2) a:hover,
+  .profile__nav li:nth-child(2) a.active {
+    background: url("orders--hover.png") no-repeat top 11px left 25px #b00917;
+  }
+  .profile__nav li:nth-child(3) a {
+    background: url("address.png") no-repeat top 11px left 25px #F7F7F7;
+  }
+  .profile__nav li:nth-child(3) a:hover,
+  .profile__nav li:nth-child(3) a.active {
+    background: url("address--hover.png") no-repeat top 11px left 25px #b00917;
+  }
+  .profile__nav li:nth-child(4) a {
+    background: url("feedback.png") no-repeat top 11px left 25px #F7F7F7;
+  }
+  .profile__nav li:nth-child(4) a:hover,
+  .profile__nav li:nth-child(4) a.active {
+    background: url("feedback--hover.png") no-repeat top 11px left 25px #b00917;
+  }
+  
+  .profile {
+    .co-sidebar--menu {
+      .co-menu {
+        padding: 0;
+        .co-menu-item {
+          &+.co-menu-item {
+            margin-top: 0;
+          }
+          .co-menu-link {
+            -webkit-transition: 0s;
+            -moz-transition: 0s;
+            -o-transition: 0s;
+            transition: 0s;
+            display: block;
+            line-height: 52px;
+            font-size: 15px;
+            color: #000;
+            border-bottom: 1px solid #ededed;
+            letter-spacing: 0.4px;
+            padding-left: 80px;
+            &:hover {
+              background-color: #b00917;
+              color: #fff;
+            }
+            &.co-link--active {
+              color: #fff;
+            }
+            &[href="/client_account/orders"] {
+              background: url(orders.png) no-repeat top 11px left 25px #F7F7F7;
+              &.co-link--active, &:hover {
+                background: url(orders--hover.png) no-repeat top 11px left 25px #b00917;
+              }
+            }
+            &[href="/client_account/addresses"] {
+              background: url(address.png) no-repeat top 11px left 25px #F7F7F7;
+              &.co-link--active, &:hover {
+                background: url(address--hover.png) no-repeat top 11px left 25px #b00917;
+              }
+            }
+            &[href="/client_account/contacts"] {
+              background: url(profile.png) no-repeat top 11px left 25px #F7F7F7;
+              &.co-link--active, &:hover {
+                background: url(profile--hover.png) no-repeat top 11px left 25px #b00917;
+              }
+            }
+            &[href="/client_account/discounts"] {
+              background: url(bonuses.png) no-repeat top 11px left 25px #F7F7F7;
+              &.co-link--active, &:hover {
+                background: url(bonuses--hover.png) no-repeat top 11px left 25px #b00917;
+              }
+            }
+            &[href="/client_account/exit"] {
+              background: url(exit.png) no-repeat top 11px left 25px #F7F7F7;
+              &.co-link--active, &:hover {
+                background: url(exit--hover.png) no-repeat top 11px left 25px #b00917;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+/*==============================
+	Orders table
+==============================*/
+.orders-table {
+    border: none;
+    min-width: 100%;
+    margin-bottom: 40px;
+    background-color: #fff;
+  }
+  .orders-table thead {
+    border-bottom: 1px solid #ededed;
+  }
+  .orders-table thead td {
+    font-size: 14px;
+    color: #a6a6a6;
+    padding: 15px 10px 15px 25px;
+  }
+  .orders-table tbody td {
+    color: #000;
+    font-size: 14px;
+    padding: 35px 10px 35px 25px;
+    border-top: 1px solid #ededed;
+  }
+  .orders-table tbody .price {
+    position: relative;
+  }
+  .orders-table tbody .price:before {
+    content: 'Р';
+    position: absolute;
+    left: 100%;
+    margin-left: 5px;
+    top: -1px;
+  }
+  .orders-table tbody .price:after {
+    content: '=';
+    position: absolute;
+    left: 100%;
+    margin-left: 3px;
+    top: 1px;
+  }
+  .orders-table tbody .performed {
+    font-size: 15px;
+    color: #b00917;
+    position: relative;
+    line-height: 20px;
+    padding-left: 30px;
+  }
+  .orders-table tbody .performed:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url("performed.png") no-repeat center;
+  }
+  .orders-table tbody .delivered {
+    font-size: 15px;
+    color: #a6a6a6;
+    position: relative;
+    line-height: 20px;
+    padding-left: 30px;
+  }
+  .orders-table tbody .delivered:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url("delivered.png") no-repeat center;
+  }
+  .orders-table tbody .performed-tr td {
+    margin-left: 10px;
+    padding: 15px 10px 15px 25px;
+  }
+  .orders-table tbody .performed-tr td:last-child {
+    border-top: none;
+  }
+  .orders-table tbody .performed-tr--first td {
+    padding: 35px 10px 15px 25px;
+    border-top: none;
+  }
+  .orders-table tbody .performed-tr--last td {
+    padding: 15px 10px 35px 25px;
+  }
+  @media (min-width: 768px) {
+    .orders-table {
+      margin-bottom: 100px;
+    }
+  }
+  .table-responsive {
+    border: none;
+    margin-bottom: 0;
+  }

@@ -1,0 +1,20 @@
+  {% if blog.articles.size > 0 %}
+
+    <div class="sidebar-block news-feed-wrapper">
+      <div class="news-feed-inner">
+        <div class="news-feed">
+          <div class="product-slider-heading-wrapper">
+              <a href="{{ blog.url }}" class="product-slider-heading">
+                {{ blog.title }}
+              </a>
+          </div>
+            {% for article in blog.articles limit: 3 %}
+              <div class="blog-slide special-products" >
+                  {% include "article_preview", show_readmore: false, use_truncate: true, show_author: false, show_comments: false %}
+              </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  {% endif %}

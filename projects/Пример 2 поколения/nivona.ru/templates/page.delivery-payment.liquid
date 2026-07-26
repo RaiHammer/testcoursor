@@ -1,0 +1,46 @@
+<div class="content-wrapper">
+  {% include "page_header" %}
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="editor page-delivery-payment">
+          {{ page.content | editable }}
+
+          {% for block in block_lists.delivery-payment.blocks %}
+            {% if block.title contains '(текст)' %}
+            <div class="page-content_text">
+              {{ block.content }}
+            </div>
+            {% else %}
+            <div class="spoiler {% if block.title contains ' # раскрыто' %}active{% endif %}">
+              <div class="spoiler_button">
+                {{ block.title | split: ' # ' | first }}
+                <i class="fa fa-angle-down"></i>
+              </div>
+              <div class="spoiler_content">{{ block.content }}</div>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(() => {
+    $(document).on('click', '.spoiler_button', function() {
+      const $spoiler = $(this).closest('.spoiler');
+
+      if ($spoiler.hasClass('active')) {
+        $spoiler.removeClass('active');
+      } else {
+        $('.spoiler').removeClass('active');
+        $spoiler.addClass('active');
+        $([document.documentElement, document.body]).animate({
+          scrollTop: $spoiler.offset().top
+        }, 500);
+      }
+    });
+  });
+</script>

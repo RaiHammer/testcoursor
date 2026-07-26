@@ -1,0 +1,53 @@
+{% assign product_limit = product_limit | default: 100 %}
+{% assign is_bundle = is_bundle | default: false %}
+
+{% if slider_products.size > 0 %}
+
+<div class="products-list">
+<div class="products-items_grid">
+  <div class="product-slider is-{{ slider_class }}" data-slider="{{ slider_class }}">
+
+    <div class="product-slider-heading-wrapper">
+      <p class="product-slider-heading">{{ slider_heading }}</p>
+
+      {% if slider_products.size > 1 %}
+        <div class="product-slider-controls" data-slider-controls>
+          <button class="product-slider-prev  product-slider-btn button is-action md-btn" data-slider-prev aria-label="Предыдущий товар">
+			<svg width="10" height="17" viewBox="0 0 10 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M9.41414 1.00005C9.77462 1.36053 9.80235 1.92776 9.49733 2.32005L9.41414 2.41426L3.12203 8.70715L9.41414 15C9.77462 15.3605 9.80235 15.9278 9.49733 16.3201L9.41414 16.4143C9.05365 16.7747 8.48642 16.8025 8.09413 16.4974L7.99992 16.4143L0.292818 8.70715L7.99992 1.00005C8.39045 0.609522 9.02361 0.609522 9.41414 1.00005Z" fill="#B5ACA7"/>
+			</svg>
+          </button>
+          <button class="product-slider-next product-slider-btn button is-action md-btn" data-slider-next aria-label="Следующий товар">
+			<svg width="10" height="17" viewBox="0 0 10 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M0.585862 16.4143C0.225378 16.0538 0.197648 15.4865 0.502673 15.0943L0.585862 15L6.87797 8.70715L0.585862 2.41426C0.225378 2.05378 0.197648 1.48654 0.502673 1.09425L0.585862 1.00005C0.946346 0.639563 1.51358 0.611834 1.90587 0.916858L2.00008 1.00005L9.70718 8.70715L2.00008 16.4143C1.60955 16.8048 0.976386 16.8048 0.585862 16.4143Z" fill="#B5ACA7"/>
+			</svg>
+          </button>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if is_bundle %}
+      {% for component in slider_products limit:product_limit %}
+        <div class="{{ slider_class }} product-card-wrapper" data-slider-slide>
+          {% include 'product_card', card_class: 'is-bundle-product', bundle_component: component %}
+        </div>
+      {% endfor %}
+
+    {% else %}
+      {% for product in slider_products limit:product_limit %}
+        <div class="{{ slider_class }} product-card-wrapper" data-slider-slide>
+          {% include 'product_card', card_class: slider_class %}
+        </div>
+      {% endfor %}
+
+    {% endif %}
+  </div>
+</div>
+</div>
+{% endif %}
+
+{% assign product_limit = null %}
+{% assign slider_products = null %}
+{% assign slider_class = null %}
+{% assign slider_heading = null %}
+{% assign is_bundle = null %}

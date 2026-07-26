@@ -1,0 +1,44 @@
+---
+description: Frontend coding standards for TypeScript, React, Vue, JavaScript
+globs: "**/*.{ts,tsx,js,jsx,vue}"
+alwaysApply: false
+---
+
+# Frontend Standards
+
+## TypeScript / JavaScript
+
+```typescript
+// ❌ BAD
+try {
+  await fetchData();
+} catch (e) {}
+
+// ✅ GOOD
+try {
+  await fetchData();
+} catch (e) {
+  logger.error('Failed to fetch', { error: e });
+  throw new DataFetchError('Unable to retrieve data', { cause: e });
+}
+```
+
+## React
+
+- Functional components only
+- Custom hooks for reusable logic
+- Colocate related files
+
+## General
+
+- Minimal diff — no drive-by refactors
+- No secrets in code (.env for credentials)
+- Input validation on user-facing boundaries
+- Match existing project style
+
+## InSales widgets
+
+- Liquid + JS separation
+- Document widget setup in project README
+
+See `knowledge/stack-preferences.md` for full preferences.

@@ -1,0 +1,28 @@
+
+{% include "page_header" %}
+<div class="container">
+  {% comment %}
+  <div class="search-results-toolbar toolbar at-top">
+    <div class="toolbar-inner">
+      <div class="search-widget-wrapper flex-end">
+        {% include "search_widget", widget_class: 'in-page' %}
+      </div>
+    </div>
+  </div>
+  {% endcomment %}
+  
+  {% paginate search.results by 12 %}
+
+    {% include "search_results" %}
+
+    {% if paginate.parts.size > 0 %}
+      <div class="search-results-toolbar toolbar at-bottom">
+        <div class="toolbar-inner">
+          <div class="pagination-wrapper">
+            {% include "pagination" %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endpaginate %}
+</div>

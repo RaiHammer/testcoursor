@@ -1,0 +1,1292 @@
+{% comment %}
+
+  DanForge Reviews Slider — виджет inSales
+
+  Автор: DanForge · https://danforge.ru
+
+  Handle: danforge_reviews_slider
+
+{% endcomment %}
+
+
+
+{% assign _title_align_raw = widget_settings['title-align'] | default: widget_settings.title_align | default: 'center' | append: '' | strip | downcase %}
+
+{% assign title_align = 'center' %}
+
+{% if _title_align_raw == 'left' or _title_align_raw contains 'left' or _title_align_raw contains 'лев' %}
+
+  {% assign title_align = 'left' %}
+
+{% endif %}
+
+
+
+{% assign accent = widget_settings['accent-color'] | default: widget_settings.accent_color | default: '#f5a623' %}
+
+
+
+{% assign _layout_raw = widget_settings.display_mode | default: widget_settings['display-mode'] | default: widget_settings.layout_mode | default: 'slider' | append: '' | strip | downcase %}
+
+{% assign df_layout = 'slider' %}
+
+{% if _layout_raw == 'masonry' or _layout_raw contains 'masonry' or _layout_raw contains 'mason' or _layout_raw contains 'мансори' or _layout_raw contains 'колон' %}
+
+  {% assign df_layout = 'masonry' %}
+
+{% elsif _layout_raw == 'grid' or _layout_raw contains 'grid' or _layout_raw contains 'сетк' %}
+
+  {% assign df_layout = 'grid' %}
+
+{% elsif _layout_raw == 'list' or _layout_raw contains 'list' or _layout_raw contains 'лент' %}
+
+  {% assign df_layout = 'list' %}
+
+{% elsif _layout_raw == 'spotlight' or _layout_raw contains 'spotlight' or _layout_raw contains 'крупн' or _layout_raw contains 'фокус' %}
+
+  {% assign df_layout = 'spotlight' %}
+
+{% elsif _layout_raw == 'marquee' or _layout_raw contains 'marquee' or _layout_raw contains 'бегущ' or _layout_raw contains 'строк' %}
+
+  {% assign df_layout = 'marquee' %}
+
+{% elsif _layout_raw == 'slider' or _layout_raw contains 'slider' or _layout_raw contains 'слайд' %}
+
+  {% assign df_layout = 'slider' %}
+
+{% endif %}
+
+
+
+{% assign df_columns = widget_settings['layout-columns'] | default: widget_settings.layout_columns | default: 3 | plus: 0 %}
+
+{% if df_columns < 1 %}{% assign df_columns = 1 %}{% endif %}
+
+{% if df_columns > 4 %}{% assign df_columns = 4 %}{% endif %}
+
+{% assign df_columns_tablet = widget_settings['layout-columns-tablet'] | default: widget_settings.layout_columns_tablet | default: 2 | plus: 0 %}
+
+{% if df_columns_tablet < 1 %}{% assign df_columns_tablet = 1 %}{% endif %}
+
+{% if df_columns_tablet > 4 %}{% assign df_columns_tablet = 4 %}{% endif %}
+
+{% assign df_columns_mobile = widget_settings['layout-columns-mobile'] | default: widget_settings.layout_columns_mobile | default: 1 | plus: 0 %}
+
+{% if df_columns_mobile < 1 %}{% assign df_columns_mobile = 1 %}{% endif %}
+
+{% if df_columns_mobile > 2 %}{% assign df_columns_mobile = 2 %}{% endif %}
+
+{% assign df_page_size = widget_settings['page-size'] | default: widget_settings.page_size | default: widget_settings['max-visible'] | default: widget_settings.max_visible | default: 12 | plus: 0 %}
+
+{% if df_page_size < 1 %}{% assign df_page_size = 1 %}{% endif %}
+
+{% if df_page_size > 50 %}{% assign df_page_size = 50 %}{% endif %}
+
+{% assign df_page_size_mobile = widget_settings['page-size-mobile'] | default: widget_settings.page_size_mobile | default: 6 | plus: 0 %}
+
+{% if df_page_size_mobile < 1 %}{% assign df_page_size_mobile = 1 %}{% endif %}
+
+{% if df_page_size_mobile > 20 %}{% assign df_page_size_mobile = 20 %}{% endif %}
+
+
+
+{% assign df_list_limit = widget_settings['list-limit'] | default: widget_settings.list_limit | default: 10 | plus: 0 %}
+
+{% if df_list_limit < 1 %}{% assign df_list_limit = 1 %}{% endif %}
+
+{% if df_list_limit > 100 %}{% assign df_list_limit = 100 %}{% endif %}
+
+
+
+{% assign df_slider_limit = widget_settings['slider-limit'] | default: widget_settings.slider_limit | default: 10 | plus: 0 %}
+
+{% if df_slider_limit < 3 %}{% assign df_slider_limit = 3 %}{% endif %}
+
+{% if df_slider_limit > 50 %}{% assign df_slider_limit = 50 %}{% endif %}
+
+
+
+{% assign df_spotlight_limit = widget_settings['spotlight-limit'] | default: widget_settings.spotlight_limit | default: 5 | plus: 0 %}
+
+{% if df_spotlight_limit < 2 %}{% assign df_spotlight_limit = 2 %}{% endif %}
+
+{% if df_spotlight_limit > 20 %}{% assign df_spotlight_limit = 20 %}{% endif %}
+
+
+
+{% assign df_source_tabs = 'false' %}
+
+{% if widget_settings.source_tabs == true or widget_settings.source_tabs == 'true' or widget_settings['source-tabs'] == true or widget_settings['source-tabs'] == 'true' %}
+
+  {% assign df_source_tabs = 'true' %}
+
+{% endif %}
+
+
+
+{% comment %} hide_* — только явный true скрывает элемент {% endcomment %}
+
+{% assign df_hide_source = 'false' %}
+
+{% if widget_settings.hide_source == true or widget_settings.hide_source == 'true' or widget_settings['hide-source'] == true or widget_settings['hide-source'] == 'true' %}
+
+  {% assign df_hide_source = 'true' %}
+
+{% endif %}
+
+
+
+{% assign df_hide_date = 'false' %}
+
+{% if widget_settings.hide_date == true or widget_settings.hide_date == 'true' or widget_settings['hide-date'] == true or widget_settings['hide-date'] == 'true' %}
+
+  {% assign df_hide_date = 'true' %}
+
+{% endif %}
+
+
+
+{% assign df_hide_write_btn = false %}
+
+{% if widget_settings.hide_write_btn == true or widget_settings.hide_write_btn == 'true' or widget_settings['hide-write-btn'] == true or widget_settings['hide-write-btn'] == 'true' %}
+
+  {% assign df_hide_write_btn = true %}
+
+{% endif %}
+
+
+
+{% assign df_show_write = account.reviews_enabled? %}
+
+{% if df_hide_write_btn %}
+
+  {% assign df_show_write = false %}
+
+{% endif %}
+
+
+
+{% assign df_on_product_page = false %}
+
+{% if product.id != blank %}
+
+  {% assign df_on_product_page = true %}
+
+{% endif %}
+
+
+
+{% assign df_insales_tab_name = 'Сайт' %}
+
+{% if df_on_product_page %}
+
+  {% assign df_insales_tab_name = 'Товар' %}
+
+{% endif %}
+
+
+
+{% assign df_floating_offset = widget_settings['floating-offset'] | default: widget_settings.floating_offset | default: 1.5 | plus: 0 %}
+
+{% assign df_product_bg = widget_settings['product-bg-color'] | default: widget_settings.product_bg_color | default: 'rgba(0,0,0,0.04)' %}
+
+{% assign df_product_color = widget_settings['product-text-color'] | default: widget_settings.product_text_color | default: '#333333' %}
+
+{% assign df_product_ratio = widget_settings['product-thumb-ratio'] | default: widget_settings.product_thumb_ratio | default: '1/1' %}
+
+{% assign df_product_ratio_css = df_product_ratio %}
+
+{% unless df_product_ratio == 'auto' %}
+
+  {% assign df_product_ratio_css = df_product_ratio | replace: '/', ' / ' %}
+
+{% endunless %}
+
+
+
+{% assign df_hide_insales = 'false' %}
+
+{% if widget_settings.hide_insales == true or widget_settings.hide_insales == 'true' or widget_settings['hide-insales'] == true or widget_settings['hide-insales'] == 'true' %}
+
+  {% assign df_hide_insales = 'true' %}
+
+{% endif %}
+
+
+
+{% assign df_hide_yandex = 'false' %}
+
+{% if widget_settings.hide_yandex == true or widget_settings.hide_yandex == 'true' or widget_settings['hide-yandex'] == true or widget_settings['hide-yandex'] == 'true' %}
+
+  {% assign df_hide_yandex = 'true' %}
+
+{% endif %}
+
+
+
+{% assign df_hide_avatar = 'false' %}
+
+{% if widget_settings.hide_avatar == true or widget_settings.hide_avatar == 'true' or widget_settings['hide-avatar'] == true or widget_settings['hide-avatar'] == 'true' %}
+
+  {% assign df_hide_avatar = 'true' %}
+
+{% endif %}
+
+
+
+{% assign df_autoplay = 'false' %}
+
+{% if widget_settings.autoplay == true or widget_settings.autoplay == 'true' %}
+
+  {% assign df_autoplay = 'true' %}
+
+{% endif %}
+
+
+
+{% assign df_show_arrows = 'true' %}
+
+{% if widget_settings.show_arrows == false or widget_settings.show_arrows == 'false' or widget_settings['show-arrows'] == false or widget_settings['show-arrows'] == 'false' %}
+
+  {% assign df_show_arrows = 'false' %}
+
+{% endif %}
+
+
+
+{% assign df_schema = 'true' %}
+
+{% if widget_settings.schema_markup == false or widget_settings.schema_markup == 'false' or widget_settings['schema-markup'] == false or widget_settings['schema-markup'] == 'false' %}
+
+  {% assign df_schema = 'false' %}
+
+{% endif %}
+
+
+
+{% assign _min_rating_raw = widget_settings.min_rating | default: widget_settings['min-rating'] | default: '0' | append: '' | strip %}
+
+{% assign df_min_rating = 0 %}
+
+{% if _min_rating_raw contains '5' %}
+
+  {% assign df_min_rating = 5 %}
+
+{% elsif _min_rating_raw contains '4' %}
+
+  {% assign df_min_rating = 4 %}
+
+{% endif %}
+
+
+
+{% assign df_marquee_speed = widget_settings['marquee-speed'] | default: widget_settings.marquee_speed | default: 40 | plus: 0 %}
+
+{% assign df_marquee_speed_mobile = widget_settings['marquee-speed-mobile'] | default: widget_settings.marquee_speed_mobile | default: df_marquee_speed | plus: 0 %}
+
+{% assign df_marquee_limit = widget_settings['marquee-limit'] | default: widget_settings.marquee_limit | default: 20 | plus: 0 %}
+
+{% if df_marquee_limit < 2 %}{% assign df_marquee_limit = 2 %}{% endif %}
+
+{% if df_marquee_limit > 50 %}{% assign df_marquee_limit = 50 %}{% endif %}
+
+{% assign df_insales_limit = widget_settings['insales-prefetch-limit'] | default: widget_settings.insales_prefetch_limit | default: 20 | plus: 0 %}
+
+{% if df_insales_limit < 1 %}{% assign df_insales_limit = 1 %}{% endif %}
+
+{% if df_insales_limit > 50 %}{% assign df_insales_limit = 50 %}{% endif %}
+
+{% assign df_insales_ajax_url = widget_settings['insales-ajax-url'] | default: widget_settings.insales_ajax_url | default: '' | strip %}
+{% assign df_insales_ajax_url_lower = df_insales_ajax_url | downcase %}
+{% if df_insales_ajax_url_lower == '/product/shop-reviews' or df_insales_ajax_url_lower contains '/product/shop-reviews?' %}
+  {% assign df_insales_ajax_url = '' %}
+{% endif %}
+{% assign df_insales_ajax_use_page = false %}
+{% if df_insales_ajax_url == blank %}
+  {% assign df_insales_ajax_use_page = true %}
+{% endif %}
+{% if df_insales_ajax_use_page %}
+  {% assign df_page_url = page.url | default: '' | strip %}
+  {% assign df_blog_url = blog.url | default: '' | strip %}
+  {% assign df_blog_url_lower = df_blog_url | downcase %}
+  {% assign df_page_url_lower = df_page_url | downcase %}
+  {% if df_blog_url_lower contains 'shop-reviews' %}
+    {% assign df_insales_ajax_url = df_blog_url %}
+  {% elsif df_page_url_lower contains 'shop-reviews' %}
+    {% assign df_insales_ajax_url = df_page_url %}
+  {% elsif df_page_url != blank and df_page_url != '/' %}
+    {% assign df_insales_ajax_url = df_page_url %}
+  {% elsif df_page_url == '/' or df_page_url == blank %}
+    {% assign df_insales_ajax_url = '/blogs/shop-reviews' %}
+  {% elsif df_blog_url != blank %}
+    {% assign df_insales_ajax_url = df_blog_url %}
+  {% elsif collection.url != blank %}
+    {% assign df_insales_ajax_url = collection.url %}
+  {% elsif product.url != blank %}
+    {% assign df_insales_ajax_url = product.url %}
+  {% else %}
+    {% assign df_insales_ajax_url = '/blogs/shop-reviews' %}
+  {% endif %}
+{% endif %}
+
+{% assign df_insales_count = account.reviews_not_spam_count | default: 0 | plus: 0 %}
+
+{% if df_on_product_page %}
+
+  {% assign df_insales_count = product.reviews_count | default: 0 | plus: 0 %}
+
+{% endif %}
+{% assign reviews_start = 0 %}
+{% if paginate.current_page %}
+  {% assign reviews_start = paginate.current_page | times: df_insales_limit | minus: df_insales_limit %}
+{% endif %}
+{% if reviews_start < 0 %}{% assign reviews_start = 0 %}{% endif %}
+
+{% assign df_insales_batch_page = 1 %}
+{% if paginate.current_page %}
+  {% assign df_insales_batch_page = paginate.current_page %}
+{% endif %}
+{% assign df_insales_next_page = df_insales_batch_page | plus: 1 %}
+{% assign df_insales_loadmore_url = df_insales_ajax_url | append: '?page=' | append: df_insales_next_page %}
+
+{% assign df_insales_mod100 = df_insales_count | modulo: 100 %}
+{% assign df_insales_page_count = df_insales_count | divided_by: df_insales_limit | plus: 1 %}
+{% if df_insales_mod100 == 0 and df_insales_count >= 100 %}
+  {% assign df_insales_page_count = df_insales_count | divided_by: df_insales_limit %}
+{% endif %}
+{% if df_insales_page_count < 1 %}{% assign df_insales_page_count = 1 %}{% endif %}
+
+{% assign df_insales_server_pagination = 'false' %}
+{% if df_on_product_page == false and df_layout == 'masonry' and df_insales_count > df_insales_limit and df_hide_insales != 'true' and account.reviews_enabled? %}
+  {% assign df_insales_server_pagination = 'true' %}
+{% endif %}
+
+{% assign df_use_legacy_slides = false %}
+{% assign df_has_slide_content = false %}
+{% assign df_yandex_markup = '' %}
+{% assign df_legacy_markup = '' %}
+
+{% unless df_hide_yandex == 'true' %}
+  {% capture df_yandex_markup %}{% include 'danforge_reviews_yandex' %}{% endcapture %}
+  {% assign df_yandex_trimmed = df_yandex_markup | strip %}
+  {% if df_yandex_trimmed == blank %}
+    {% capture df_legacy_markup %}{% include 'danforge_reviews_slides' %}{% endcapture %}
+    {% assign df_legacy_trimmed = df_legacy_markup | strip %}
+    {% if df_legacy_trimmed != blank %}
+      {% assign df_use_legacy_slides = true %}
+    {% endif %}
+  {% endif %}
+{% endunless %}
+
+{% assign df_default_tab = 'yandex' %}
+{% if df_hide_yandex == 'true' %}
+  {% if df_hide_insales != 'true' and account.reviews_enabled? and df_insales_count > 0 %}
+    {% assign df_default_tab = 'insales' %}
+  {% endif %}
+{% endif %}
+
+{% if df_on_product_page %}
+  {% assign df_form_wrapper_url = product.url %}
+  {% assign df_form_action = product.url | append: '/reviews#review_form' %}
+{% else %}
+  {% assign df_form_wrapper_url = '/product/shop-reviews' %}
+  {% assign df_form_action = '/product/shop-reviews/reviews#review_form' %}
+{% endif %}
+
+{% assign _review_text_align_raw = widget_settings['review-text-align'] | default: widget_settings.review_text_align | default: 'center' | append: '' | strip | downcase %}
+
+{% assign review_text_align = 'center' %}
+
+{% if _review_text_align_raw == 'left' or _review_text_align_raw contains 'left' or _review_text_align_raw contains 'лев' %}
+
+  {% assign review_text_align = 'left' %}
+
+{% elsif _review_text_align_raw == 'right' or _review_text_align_raw contains 'right' or _review_text_align_raw contains 'прав' %}
+
+  {% assign review_text_align = 'right' %}
+
+{% endif %}
+
+{% assign df_shop_avatar_url = '' %}
+
+{% assign df_shop_avatar_file = widget_settings['insales-shop-avatar'] | default: widget_settings.insales_shop_avatar %}
+
+{% if df_shop_avatar_file != blank %}
+
+  {% assign df_shop_avatar_url = df_shop_avatar_file | img_url: '144x144', crop: 'center' %}
+
+  {% if df_shop_avatar_url == blank %}
+
+    {% assign df_shop_avatar_url = df_shop_avatar_file | img_url: 'compact' %}
+
+  {% endif %}
+
+{% endif %}
+
+<div
+
+  class="df-reviews df-reviews--layout-{{ df_layout }} df-reviews--cols-{{ df_columns }} df-reviews--title-{{ title_align }}{% if df_hide_avatar == 'true' %} df-reviews--hide-avatar{% endif %}{% if df_hide_source == 'true' %} df-reviews--hide-source{% endif %}{% if df_hide_date == 'true' %} df-reviews--hide-date{% endif %}{% if df_product_ratio == 'auto' %} df-reviews--product-thumb-auto{% endif %}{% if df_on_product_page %} df-reviews--product-page{% endif %}"
+
+  data-danforge-widget="danforge_reviews_slider"
+
+  data-df-product-page="{% if df_on_product_page %}true{% else %}false{% endif %}"
+
+  data-df-layout="{{ df_layout }}"
+
+  data-df-columns="{{ df_columns }}"
+
+  data-df-columns-tablet="{{ df_columns_tablet }}"
+
+  data-df-columns-mobile="{{ df_columns_mobile }}"
+
+  data-df-title-align="{{ title_align }}"
+
+  data-df-page-size="{{ df_page_size }}"
+
+  data-df-page-size-mobile="{{ df_page_size_mobile }}"
+
+  data-df-list-limit="{{ df_list_limit }}"
+
+  data-df-slider-limit="{{ df_slider_limit }}"
+
+  data-df-spotlight-limit="{{ df_spotlight_limit }}"
+
+  data-df-marquee-speed="{{ df_marquee_speed }}"
+
+  data-df-marquee-speed-mobile="{{ df_marquee_speed_mobile }}"
+
+  data-df-marquee-limit="{{ df_marquee_limit }}"
+
+  data-df-shop-avatar-url="{{ df_shop_avatar_url | escape }}"
+
+  data-df-floating-offset="{{ df_floating_offset }}"
+
+  data-df-product-thumb-ratio="{{ df_product_ratio | escape }}"
+
+  data-df-review-text-align="{{ review_text_align }}"
+
+  style="--df-reviews-text-lines: {{ widget_settings['text-lines'] | default: widget_settings.text_lines | default: 5 }}; --df-reviews-accent: {{ accent }}; --df-marquee-duration: {{ df_marquee_speed }}s; --df-reviews-floating-top: {{ df_floating_offset }}rem; --df-reviews-product-bg: {{ df_product_bg }}; --df-reviews-product-color: {{ df_product_color }}; --df-reviews-text-align: {{ review_text_align }};{% unless df_product_ratio == 'auto' %} --df-reviews-product-thumb-ratio: {{ df_product_ratio_css }};{% endunless %}"
+
+>
+
+  {% if widget_settings.title != blank %}
+
+    <h2 class="df-reviews__title">{{ widget_settings.title }}</h2>
+
+  {% endif %}
+
+
+
+  {% capture df_tabs_buttons %}
+
+    {% unless df_hide_insales == 'true' %}
+
+      {% if account.reviews_enabled? %}
+
+        <button type="button" class="df-reviews__tab{% if df_default_tab == 'insales' %} is-active{% endif %}" data-source-tab="insales"><span class="df-reviews__tab-name">{{ df_insales_tab_name }}</span></button>
+
+      {% endif %}
+
+    {% endunless %}
+
+    {% unless df_hide_yandex == 'true' %}
+
+      <button type="button" class="df-reviews__tab{% if df_default_tab == 'yandex' %} is-active{% endif %}" data-source-tab="yandex"><span class="df-reviews__tab-name">Яндекс</span></button>
+
+    {% endunless %}
+
+  {% endcapture %}
+
+
+
+  {% capture df_tabs_buttons_masonry %}
+
+    {% unless df_hide_insales == 'true' %}
+
+      {% if account.reviews_enabled? %}
+
+        <button type="button" class="df-reviews__tab{% if df_default_tab == 'insales' %} is-active{% endif %}" data-source-tab="insales"><span class="df-reviews__tab-name">{{ df_insales_tab_name }}</span> <span class="df-reviews__tab-count" data-df-tab-count="insales">{{ df_insales_count }}</span></button>
+
+      {% endif %}
+
+    {% endunless %}
+
+    {% unless df_hide_yandex == 'true' %}
+
+      <button type="button" class="df-reviews__tab{% if df_default_tab == 'yandex' %} is-active{% endif %}" data-source-tab="yandex"><span class="df-reviews__tab-name">Яндекс</span> <span class="df-reviews__tab-count" data-df-tab-count="yandex">0</span></button>
+
+    {% endunless %}
+
+  {% endcapture %}
+
+
+
+  {% if df_source_tabs == 'true' and df_layout != 'masonry' %}
+
+    <div class="df-reviews__tabs" data-df-reviews-tabs>
+
+      {{ df_tabs_buttons }}
+
+    </div>
+
+  {% endif %}
+
+
+
+  <div class="df-reviews__shell-inner">
+
+    {% if df_source_tabs == 'true' and df_layout == 'masonry' %}
+
+      <div class="df-reviews__tabs df-reviews__tabs--side" data-df-reviews-tabs>
+
+        {{ df_tabs_buttons_masonry }}
+
+      </div>
+
+    {% endif %}
+
+
+
+    <div class="df-reviews__main">
+
+      <div
+
+        class="df-reviews__viewport{% if df_layout == 'slider' or df_layout == 'spotlight' %} df-reviews__slider swiper{% endif %}{% if df_layout == 'marquee' %} df-reviews__marquee-root{% endif %}"
+
+        data-df-reviews-root
+
+        data-layout="{{ df_layout }}"
+
+        data-autoplay="{{ df_autoplay }}"
+
+        data-autoplay-delay="{{ widget_settings['autoplay-delay'] | default: widget_settings.autoplay_delay | default: 5000 }}"
+
+        data-slides-mobile="{{ widget_settings['slides-mobile'] | default: widget_settings.slides_mobile | default: 1 }}"
+
+        data-slides-tablet="{{ widget_settings['slides-tablet'] | default: widget_settings.slides_tablet | default: 2 }}"
+
+        data-slides-desktop="{{ widget_settings['slides-per-view'] | default: widget_settings.slides_per_view | default: 3 }}"
+
+        data-speed="{{ widget_settings.speed | default: 400 }}"
+
+        data-min-rating="{{ df_min_rating }}"
+
+        data-hide-insales="{{ df_hide_insales }}"
+
+        data-hide-yandex="{{ df_hide_yandex }}"
+
+        data-hide-source="{{ df_hide_source }}"
+
+        data-hide-date="{{ df_hide_date }}"
+
+        data-show-arrows="{{ df_show_arrows }}"
+
+        data-hide-avatar="{{ df_hide_avatar }}"
+
+        data-schema="{{ df_schema }}"
+
+        data-columns="{{ df_columns }}"
+
+        data-columns-tablet="{{ df_columns_tablet }}"
+
+        data-columns-mobile="{{ df_columns_mobile }}"
+
+        data-page-size="{{ df_page_size }}"
+
+        data-page-size-mobile="{{ df_page_size_mobile }}"
+
+        data-list-limit="{{ df_list_limit }}"
+
+        data-slider-limit="{{ df_slider_limit }}"
+
+        data-spotlight-limit="{{ df_spotlight_limit }}"
+
+        data-source-tabs="{{ df_source_tabs }}"
+
+        data-marquee-speed="{{ df_marquee_speed }}"
+
+        data-marquee-speed-mobile="{{ df_marquee_speed_mobile }}"
+
+        data-marquee-limit="{{ df_marquee_limit }}"
+
+        data-insales-count="{{ df_insales_count }}"
+
+        data-insales-prefetch-limit="{{ df_insales_limit }}"
+
+        data-insales-total-pages="{{ df_insales_page_count }}"
+
+        data-insales-ajax-url="{{ df_insales_ajax_url }}"
+
+        data-insales-batch-page="{{ df_insales_batch_page }}"
+
+        data-insales-server-pagination="{{ df_insales_server_pagination }}"
+
+        data-insales-ajax-enabled="true"
+
+        data-default-source-tab="{{ df_default_tab }}"
+
+      >
+
+        {% if df_layout == 'slider' or df_layout == 'spotlight' %}
+
+          <div class="swiper-button-prev df-reviews__arrow df-reviews__arrow--prev" aria-label="Предыдущий отзыв"></div>
+
+        {% endif %}
+
+
+
+        <div
+
+          class="{% if df_layout == 'slider' or df_layout == 'spotlight' or df_layout == 'marquee' %}swiper-wrapper{% else %}df-reviews__grid{% endif %}"
+
+          data-df-reviews-wrapper
+
+          {% if df_layout == 'masonry' %}
+
+            style="display: grid; grid-template-columns: repeat({{ df_columns }}, minmax(0, 1fr)); grid-auto-rows: 10px; gap: 1.25rem;"
+
+          {% elsif df_layout == 'grid' %}
+
+            style="display: grid; grid-template-columns: repeat({{ df_columns }}, minmax(0, 1fr)); gap: 1.25rem;"
+
+          {% elsif df_layout == 'list' %}
+
+            style="display: flex; flex-direction: column; gap: 1rem; max-width: 720px; margin: 0 auto;"
+
+          {% endif %}
+
+        >
+
+          {% if df_use_legacy_slides %}
+
+            {{ df_legacy_markup }}
+
+            {% assign df_has_slide_content = true %}
+
+          {% else %}
+
+          {% unless df_hide_insales == 'true' %}
+
+            {% if account.reviews_enabled? %}
+
+              {% if df_on_product_page %}
+
+                {% for review in product.reviews %}
+
+                  {% assign review_rating = review.rating | default: 5 | plus: 0 %}
+
+                  {% if review_rating >= df_min_rating %}
+
+                    {% assign df_has_slide_content = true %}
+
+                    {% assign df_review_sort_ts = review.created_at | date: '%s' %}
+
+                    {% assign df_review_stars = '' %}
+
+                    {% for i in (1..5) %}
+
+                      {% if i <= review_rating %}
+
+                        {% assign df_review_stars = df_review_stars | append: '★' %}
+
+                      {% else %}
+
+                        {% assign df_review_stars = df_review_stars | append: '☆' %}
+
+                      {% endif %}
+
+                    {% endfor %}
+
+                    {% assign df_review_meta = review | json | replace: '"', '&quot;' %}
+
+                    <div class="swiper-slide df-reviews__slide" data-rating="{{ review_rating }}" data-source="insales" data-sort-ts="{{ df_review_sort_ts }}" data-df-review-meta="{{ df_review_meta }}"{% if review.id %} data-review-id="{{ review.id }}"{% endif %}{% if review.image.original_url %} data-photo-urls="[&quot;{{ review.image.original_url }}&quot;]"{% if review.image.medium_url.size > 0 %} data-photo-previews="[&quot;{{ review.image.medium_url }}&quot;]"{% endif %}{% endif %} itemprop="review" itemscope itemtype="http://schema.org/Review">
+
+                      <div class="df-reviews__avatar df-reviews__avatar--placeholder">{{ review.author | strip | slice: 0, 1 | default: '?' }}</div>
+
+                      <div class="df-reviews__author" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ review.author }}</span></div>
+
+                      {% unless df_hide_date == 'true' %}
+
+                        <time class="df-reviews__date" datetime="{{ review.created_at }}">{{ review.created_at | date: '%d.%m.%Y' }}</time>
+
+                      {% endunless %}
+
+                      <div class="df-reviews__stars" aria-label="{{ review_rating }} из 5" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"><meta itemprop="ratingValue" content="{{ review_rating }}"><meta itemprop="bestRating" content="5">{{ df_review_stars }}</div>
+
+                      <p class="df-reviews__text" itemprop="reviewBody">{{ review.content }}</p>
+
+                      {% unless df_hide_source == 'true' %}<span class="df-reviews__source">InSales</span>{% endunless %}
+
+                    </div>
+
+                  {% endif %}
+
+                {% endfor %}
+
+              {% else %}
+
+              {% prefetch account.reviews_not_spam limit df_insales_limit, offset: reviews_start, sort: 'date_desc' %}
+
+              {% for review in account.reviews_not_spam %}
+
+                {% assign review_rating = review.rating | default: 5 | plus: 0 %}
+
+                {% if review_rating >= df_min_rating %}
+
+                  {% assign df_has_slide_content = true %}
+
+                  {% assign df_review_sort_ts = review.created_at | date: '%s' %}
+
+                  {% assign df_review_stars = '' %}
+
+                  {% for i in (1..5) %}
+
+                    {% if i <= review_rating %}
+
+                      {% assign df_review_stars = df_review_stars | append: '★' %}
+
+                    {% else %}
+
+                      {% assign df_review_stars = df_review_stars | append: '☆' %}
+
+                    {% endif %}
+
+                  {% endfor %}
+
+                  {% assign df_review_meta = review | json | replace: '"', '&quot;' %}
+
+                  <div class="swiper-slide df-reviews__slide" data-rating="{{ review_rating }}" data-source="insales" data-sort-ts="{{ df_review_sort_ts }}" data-df-review-meta="{{ df_review_meta }}"{% if review.id %} data-review-id="{{ review.id }}"{% endif %}{% if review.image.original_url %} data-photo-urls="[&quot;{{ review.image.original_url }}&quot;]"{% if review.image.medium_url.size > 0 %} data-photo-previews="[&quot;{{ review.image.medium_url }}&quot;]"{% endif %}{% endif %} itemprop="review" itemscope itemtype="http://schema.org/Review">
+
+                    <div class="df-reviews__avatar df-reviews__avatar--placeholder">{{ review.author | strip | slice: 0, 1 | default: '?' }}</div>
+
+                    <div class="df-reviews__author" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ review.author }}</span></div>
+
+                    {% unless df_hide_date == 'true' %}
+
+                      <time class="df-reviews__date" datetime="{{ review.created_at }}">{{ review.created_at | date: '%d.%m.%Y' }}</time>
+
+                    {% endunless %}
+
+                    <div class="df-reviews__stars" aria-label="{{ review_rating }} из 5" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"><meta itemprop="ratingValue" content="{{ review_rating }}"><meta itemprop="bestRating" content="5">{{ df_review_stars }}</div>
+
+                    <p class="df-reviews__text" itemprop="reviewBody">{{ review.content }}</p>
+
+                    {% unless df_hide_source == 'true' %}<span class="df-reviews__source">InSales</span>{% endunless %}
+
+                  </div>
+
+                {% endif %}
+
+              {% endfor %}
+
+              {% endprefetch %}
+
+              {% endif %}
+
+            {% endif %}
+
+          {% endunless %}
+
+          {% unless df_hide_yandex == 'true' %}
+
+            {% if df_yandex_trimmed != blank %}
+
+              {{ df_yandex_markup }}
+
+              {% assign df_has_slide_content = true %}
+
+            {% endif %}
+
+          {% endunless %}
+
+          {% endif %}
+
+          {% if df_has_slide_content == false %}
+
+            <div class="swiper-slide df-reviews__slide df-reviews__slide--empty{% if df_on_product_page %} df-reviews__slide--product-empty{% endif %}">
+
+              {% if df_on_product_page %}
+
+                {% assign df_empty_msg = widget_settings['product-empty-message'] | default: widget_settings.product_empty_message | default: 'Пока нет отзывов на этот товар. Станьте первым — поделитесь впечатлениями!' %}
+
+              {% else %}
+
+                {% assign df_empty_msg = widget_settings['empty-message'] | default: widget_settings.empty_message %}
+
+              {% endif %}
+
+              <p class="df-reviews__empty">{{ df_empty_msg }}</p>
+
+              {% if df_on_product_page and df_show_write %}
+
+                <button type="button" class="df-reviews__write-btn df-reviews__write-btn--empty" data-df-reviews-write-btn>
+
+                  {{ messages.review_write_new | default: 'Оставить отзыв' }}
+
+                </button>
+
+              {% endif %}
+
+            </div>
+
+          {% endif %}
+
+        </div>
+
+
+
+        {% if df_layout == 'slider' or df_layout == 'spotlight' %}
+
+          <div class="swiper-button-next df-reviews__arrow df-reviews__arrow--next" aria-label="Следующий отзыв"></div>
+
+          <div class="swiper-pagination df-reviews__pagination"></div>
+
+        {% endif %}
+
+      </div>
+
+
+
+      {% if df_layout == 'masonry' %}
+
+        <button type="button" class="df-reviews__more" data-df-reviews-more hidden>Показать ещё</button>
+
+      {% endif %}
+
+      {% if account.reviews_enabled? and df_hide_insales != 'true' and df_use_legacy_slides == false and df_layout == 'masonry' and df_insales_server_pagination == 'true' and df_insales_batch_page < df_insales_page_count %}
+
+        <div class="df-reviews__insales-pagination" data-df-insales-pagination>
+
+          <button type="button" class="df-reviews__insales-loadmore" data-df-insales-loadmore data-url="{{ df_insales_loadmore_url }}">Загрузить ещё</button>
+
+        </div>
+
+      {% endif %}
+
+
+
+      {% if df_layout == 'masonry' or df_layout == 'grid' or df_layout == 'list' %}
+
+        <nav class="df-reviews__pages" data-df-reviews-pages{% if df_layout == 'masonry' and df_insales_server_pagination != 'true' %} hidden{% elsif df_layout == 'grid' or df_layout == 'list' %} hidden{% endif %} aria-label="Страницы отзывов">
+
+          <button type="button" class="df-reviews__page-arrow" data-df-page-prev aria-label="Предыдущая страница">‹</button>
+
+          <div class="df-reviews__pages-list" data-df-pages-list></div>
+
+          <button type="button" class="df-reviews__page-arrow" data-df-page-next aria-label="Следующая страница">›</button>
+
+        </nav>
+
+      {% endif %}
+
+      {% assign cta_text = widget_settings['cta-text'] | default: widget_settings.cta_text %}
+
+      {% assign cta_url = widget_settings['cta-url'] | default: widget_settings.cta_url %}
+
+      {% assign df_actions_floating = false %}
+
+      {% if df_layout == 'masonry' or df_layout == 'grid' %}
+
+        {% assign df_actions_floating = true %}
+
+      {% endif %}
+
+      {% if df_show_write or cta_text != blank and cta_url != blank %}
+
+        {% unless df_actions_floating %}
+
+          <div class="df-reviews__actions df-reviews__actions--inline">
+
+            {% if df_show_write %}
+
+              <button type="button" class="df-reviews__write-btn" data-df-reviews-write-btn>
+
+                {{ messages.review_write_new | default: 'Оставить отзыв' }}
+
+              </button>
+
+            {% endif %}
+
+
+
+            {% if cta_text != blank and cta_url != blank %}
+
+              <a class="df-reviews__cta" href="{{ cta_url }}">{{ cta_text }}</a>
+
+            {% endif %}
+
+          </div>
+
+        {% endunless %}
+
+      {% endif %}
+
+    </div>
+
+
+
+    {% if df_show_write or cta_text != blank and cta_url != blank %}
+
+      {% if df_actions_floating %}
+
+        <div class="df-reviews__actions df-reviews__actions--floating">
+
+          {% if df_show_write %}
+
+            <button type="button" class="df-reviews__write-btn" data-df-reviews-write-btn>
+
+              {{ messages.review_write_new | default: 'Оставить отзыв' }}
+
+            </button>
+
+          {% endif %}
+
+
+
+          {% if cta_text != blank and cta_url != blank %}
+
+            <a class="df-reviews__cta df-reviews__cta--floating" href="{{ cta_url }}">{{ cta_text }}</a>
+
+          {% endif %}
+
+        </div>
+
+      {% endif %}
+
+    {% endif %}
+
+  </div>
+
+
+
+  {% if df_show_write %}
+
+    <div class="df-reviews__form-modal" data-df-reviews-form-modal hidden>
+
+      <div class="df-reviews__form-backdrop" data-df-form-close></div>
+
+      <div class="df-reviews__form-dialog" role="dialog" aria-modal="true" aria-label="{{ messages.give_feedback | default: 'Оставить отзыв' }}">
+
+        <button type="button" class="df-reviews__form-close" data-df-form-close aria-label="Закрыть">×</button>
+
+        <div class="df-reviews__form-header">
+
+          <div class="df-reviews__form-title">{{ messages.give_feedback | default: 'Оставить отзыв' }}</div>
+
+        </div>
+
+        <form data-reviews-form-wrapper='{"reviews_moderated": {{ account.reviews_moderated? }} , "url": "{{ df_form_wrapper_url }}" }' class="df-reviews__form" method="post" action="{{ df_form_action }}" enctype="multipart/form-data">
+
+          {% if df_on_product_page %}
+
+            <input type="hidden" name="review[product_id]" value="{{ product.id }}">
+
+          {% endif %}
+
+          {% assign success_message = messages.review_is_added %}
+
+          {% if account.reviews_moderated? %}
+
+            {% assign success_message = messages.review_is_added_moderated %}
+
+          {% endif %}
+
+          <div data-reviews-form-success='{"showTime": 10000, "message": "{{ success_message }}", "reloadPage": false }' class="df-reviews__form-success"></div>
+
+          <div id="review_form" class="df-reviews__form-body">
+
+            <div class="df-reviews__form-fields">
+
+              <div class="df-reviews__form-row df-reviews__form-row--rating">
+
+                <div data-reviews-form-field-area class="df-reviews__star-rating-wrap">
+
+                  <div class="df-reviews__star-rating">
+
+                    {% assign r = 5 %}
+
+                    {% for i in (1..5) %}
+
+                      <input
+
+                        data-reviews-form-field
+
+                        name="review[rating]"
+
+                        id="df-star{{ r }}-{{ widgetDrop.id }}"
+
+                        type="radio"
+
+                        class="df-reviews__star-radio"
+
+                        value="{{ r }}"
+
+                      />
+
+                      <label title="{{ r }}" for="df-star{{ r }}-{{ widgetDrop.id }}" class="df-reviews__star-label">★</label>
+
+                      {% assign r = r | minus: 1 %}
+
+                    {% endfor %}
+
+                  </div>
+
+                  <div data-reviews-form-field-error class="df-reviews__field-error"></div>
+
+                </div>
+
+              </div>
+
+
+
+              <div data-reviews-form-field-area class="df-reviews__form-row {% if review.errors contains 'author' %}is-error{% endif %}">
+
+                <label class="df-reviews__form-label">{{ messages.name }} <span class="df-reviews__required">*</span></label>
+
+                <input
+
+                  data-reviews-form-field='{"isRequired": true, "errorMessage": "{{ messages.name_error | escape }}"}'
+
+                  name="review[author]"
+
+                  placeholder="{{ messages.name }}"
+
+                  value="{{ review.author }}"
+
+                  type="text"
+
+                  class="df-reviews__form-input"
+
+                />
+
+                <div data-reviews-form-field-error class="df-reviews__field-error"></div>
+
+              </div>
+
+
+
+              <div data-reviews-form-field-area class="df-reviews__form-row {% if review.errors contains 'email' %}is-error{% endif %}">
+
+                <label class="df-reviews__form-label">{{ messages.field_email }} <span class="df-reviews__required">*</span></label>
+
+                <input
+
+                  data-reviews-form-field='{"isRequired": true, "errorMessage": "{{ messages.email_error | escape}}"}'
+
+                  name="review[email]"
+
+                  placeholder="{{ messages.field_email }}"
+
+                  value="{{ review.email }}"
+
+                  type="text"
+
+                  class="df-reviews__form-input"
+
+                />
+
+                <div data-reviews-form-field-error class="df-reviews__field-error"></div>
+
+              </div>
+
+
+
+              <div data-reviews-form-field-area class="df-reviews__form-row {% if review.errors contains 'content' %}is-error{% endif %}">
+
+                <label class="df-reviews__form-label">{{ messages.review }} <span class="df-reviews__required">*</span></label>
+
+                <textarea
+
+                  data-reviews-form-field='{"isRequired": true, "errorMessage": "{{ messages.please_enter_message | escape }}"}'
+
+                  name="review[content]"
+
+                  placeholder="{{ messages.review }}"
+
+                  class="df-reviews__form-input df-reviews__form-textarea"
+
+                >{{ review.content }}</textarea>
+
+                <div data-reviews-form-field-error class="df-reviews__field-error"></div>
+
+              </div>
+
+
+
+              {% if account.reviews_images_enabled? %}
+
+                <div data-reviews-form-field-area class="df-reviews__form-row {% if review.errors contains 'image.image' %}is-error{% endif %}">
+
+                  <label class="df-reviews__form-label df-reviews__form-file-label">
+
+                    <span data-df-review-file-name data-default-label="{{ messages.add_photo }}">{{ messages.add_photo }}</span>
+
+                    <input
+
+                      data-reviews-form-image
+
+                      type="file"
+
+                      class="df-reviews__form-file-input"
+
+                      name="review[image_attributes][image]"
+
+                    />
+
+                  </label>
+
+                  <div data-reviews-form-field-error class="df-reviews__field-error"></div>
+
+                </div>
+
+              {% endif %}
+
+
+
+              {% if account.captcha_type == 'google' %}
+
+                <div data-reviews-form-field-area class="df-reviews__form-row {% if review.errors contains 'captcha_solution' %}is-error{% endif %}">
+
+                  <div
+
+                    data-recaptcha-type="invisible"
+
+                    data-reviews-form-recaptcha='{"isRequired": true, "errorMessage": "{{ messages.recaptcha_error | escape }}"}'
+
+                    id="df-captcha-google-{{ widgetDrop.id }}"
+
+                    class="df-reviews__form-captcha"
+
+                  ></div>
+
+                  <div data-reviews-form-field-error class="df-reviews__field-error"></div>
+
+                </div>
+
+              {% elsif account.captcha_type == 'yandex' %}
+
+                <div data-reviews-form-field-area class="df-reviews__form-row {% if review.errors contains 'captcha_solution' %}is-error{% endif %}">
+
+                  <div
+
+                    data-yandex-captcha-type="invisible"
+
+                    data-reviews-form-yandex-captcha='{"isRequired": true, "errorMessage": "{{ widget_messages.yandex_captcha_error | escape }}"}'
+
+                    id="df-captcha-yandex-{{ widgetDrop.id }}"
+
+                    class="df-reviews__form-captcha df-reviews__form-yandex-captcha"
+
+                  ></div>
+
+                  <div data-reviews-form-field-error class="df-reviews__field-error"></div>
+
+                </div>
+
+              {% endif %}
+
+
+
+              <div class="df-reviews__form-controls">
+
+                <button type="submit" class="df-reviews__form-submit">{{ messages.give_feedback | default: 'Отправить' }}</button>
+
+              </div>
+
+            </div>
+
+
+
+            {% if account.reviews_moderated? %}
+
+              <p class="df-reviews__form-moderation">{{ messages.reviews_are_moderated }}</p>
+
+            {% endif %}
+
+
+
+            {%- if editor_mode? -%}
+
+              <div data-reviews-form-field-area class="df-reviews__form-row">
+
+                <label class="df-reviews__form-label">Дата отзыва</label>
+
+                <input type="datetime-local" name="review[created_at]" value="" class="df-reviews__form-input">
+
+              </div>
+
+            {%- endif -%}
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  {% endif %}
+
+  <div class="df-reviews__modal" data-df-reviews-modal hidden>
+
+    <div class="df-reviews__modal-backdrop" data-df-modal-close></div>
+
+    <div class="df-reviews__modal-dialog" role="dialog" aria-modal="true" aria-label="Отзыв">
+
+      <button type="button" class="df-reviews__modal-close" data-df-modal-close aria-label="Закрыть">×</button>
+
+      <div class="df-reviews__modal-head">
+
+        <div class="df-reviews__modal-avatar"></div>
+
+        <div class="df-reviews__modal-author"></div>
+
+      </div>
+
+      <div class="df-reviews__modal-meta">
+
+        <span class="df-reviews__modal-date"></span>
+
+        <span class="df-reviews__modal-stars"></span>
+
+        <div class="df-reviews__modal-product"></div>
+
+      </div>
+
+      <div class="df-reviews__modal-photos"></div>
+
+      <p class="df-reviews__modal-text"></p>
+
+      <span class="df-reviews__modal-source"></span>
+
+    </div>
+
+  </div>
+
+  <div class="df-reviews__lightbox" data-df-reviews-lightbox hidden>
+
+    <div class="df-reviews__lightbox-backdrop" data-df-lightbox-close></div>
+
+    <div class="df-reviews__lightbox-dialog" role="dialog" aria-modal="true" aria-label="Просмотр фото">
+
+      <button type="button" class="df-reviews__lightbox-close" data-df-lightbox-close aria-label="Закрыть">×</button>
+
+      <div class="df-reviews__lightbox-swiper swiper">
+
+        <div class="swiper-wrapper df-reviews__lightbox-wrapper"></div>
+
+        <div class="swiper-button-prev df-reviews__lightbox-prev"></div>
+
+        <div class="swiper-button-next df-reviews__lightbox-next"></div>
+
+        <div class="swiper-pagination df-reviews__lightbox-pagination"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+

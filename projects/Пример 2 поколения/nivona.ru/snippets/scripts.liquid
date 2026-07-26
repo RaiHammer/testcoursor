@@ -1,0 +1,465 @@
+{% comment %}
+{% if template != 'checkout' and template != 'account' %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% endif %}
+{% endcomment %}
+
+{% comment %} {% include_insales_scripts "common-js@v2" %} {% endcomment %}
+
+{% comment %} {% include "render_templates" %} {% endcomment %}
+{% include "product_card_render" %}
+
+
+<script type="text/javascript">
+  	var domen = "{{ account.url | remove: 'https://' | remove: 'http://' | remove: 'www.' }}";
+	var cv_currency_format = "{{ money_with_currency_format }}";
+	//var cv_currency_title = "{{ 0 | money | remove: ' ' | remove: '0' | remove: '.' }}";
+	var geo_url = '{{ settings.geo_url }}';
+	var account_phone = "{{ account.phone }}";
+    var template = '{{ template }}';
+    var delivery_variant_id = '{{ account.delivery_variants[0].id }}';
+    var payment_gateway_id = '{{ account.payment_gateways[0].id }}';
+	var product_order_type = '{{ settings.product_order_type }}';
+	var product_order_target = '{{ settings.product_order_target }}';
+	var product_order_text = '{{ settings.product_order_text }}';
+	var product_order_email = '{{ settings.product_order_email }}';
+	var privacy = {
+		active: {% if settings.privacy_active %}true{% else %}false{% endif %},
+		checkbox_checked: {% if settings.privacy_checkbox_checked %}true{% else %}false{% endif %},
+		forms: {% if settings.privacy_forms %}true{% else %}false{% endif %},
+		popup: {% if settings.privacy_popup %}true{% else %}false{% endif %},
+		popup_delay: {{ settings.privacy_popup_delay }},
+		forms_build: '{% if settings.privacy_active and settings.privacy_forms %}<label class="privacy-info privacy-info-checkbox{% if settings.privacy_checkbox_checked %} privacy-info-checked{% endif %}"><input type="checkbox"{% if settings.privacy_checkbox_checked %} checked{% endif %} autocomplete="off" class="js-privacy-checkbox window-input" value="1" title="Согласие на обработку персональных данных" data-title="Согласие на обработку персональных данных" name="client[consent_to_personal_data]" required>{{ blocks.settings-privacy-forms-text.content | remove: "<p>" | remove: "</p>" }}</label>{% endif %}',
+		popup_build: '{{ blocks.settings-privacy-popup-text.content }}',
+	};
+                                                                  
+    var cart_enable_gift = '{{ settings.cart_enable_gift }}';
+    var cart_is_gift_handle = '{{ settings.cart_is_gift_handle }}';
+    var cart_gift_handle = '{{ settings.cart_gift_handle }}';
+
+    var cart_gift_settings = {
+      move_down: '{{settings.cart_move_gift_down}}',
+      lock_change: '{{settings.cart_gift_lock_change}}',
+      lock_delete: '{{settings.cart_gift_lock_delete}}'
+    };                                                             
+  
+  Site = _.merge({}, Site, {
+    template: '{{ template }}',
+
+    menuConfig: {
+      'top-menu': {
+        levels: {
+          1: ['horizontal'],
+        }
+      },
+      'catalog-menu': {
+        levels: {
+          1: ['horizontal'],
+          2: ['vertical', 'drop', 'down'],
+          default: ['vertical', 'drop', 'right'],
+        }
+      },
+      'mega-menu': {
+        levels: {
+          1: ['vertical'],
+          2: ['vertical', 'drop', 'right'],
+          3: ['vertical'],
+          default: ['vertical', 'collapse']
+        }
+      },
+      'sidebar-menu': {
+        levels: {
+          default: ['vertical', 'collapse']
+        }
+      },
+      'mobile-sidebar-menu': {
+        levels: {
+          default: ['vertical', 'collapse']
+        }
+      }
+    },
+    filterConfig: {
+      'sidebar-filter': {
+        submitOnChange: false,
+        collapse: true,
+        openActive: true,
+      },
+      'is-modal-filter': {
+        collapse: true,
+        openActive: true,
+      }
+    },
+    alertifyConfig :{
+      glossary: {
+        modal: {
+          ok: '{{ messages.s_alertify-ok }}',
+          cancel: '{{ messages.s_alertify-cancel }}',
+        },
+        cart: {
+          item_added: '{{ messages.s_alertify-addcart }}',
+          item_removed: '{{ messages.s_alertify-removecart }}'
+        },
+        compares: {
+          product_added: '{{ messages.product_added_to_comparison }}',
+          product_removed: '{{ messages.product_removed_from_comparison }}',
+          overload: '{{ messages.maximum_number_of_comparable }}'
+        }
+      }
+    },
+    messages: {
+      field_name: '{{ messages.field_name }}',
+      field_email: '{{ messages.field_email }}',
+      field_message: '{{ messages.field_message }}',
+      label_product: '{{ messages.label_product }}',
+      label_variant: '{{ messages.label_variant }}',
+      field_captcha: '{{ messages.field_captcha }}',
+
+      preorder: '{{ messages.preorder }}',
+      button_submit: '{{ messages.button_submit }}'
+    }
+  });
+
+  /* Доп. услуги для чекаута */
+    Site.co_important_products_ids = '{{ settings.co_important_products_ids }}';
+
+    Site.co_usluga_etaj_items_weight = '{{ settings.co_usluga_etaj_items_weight }}';
+
+    Site.co_usluga_etaj_enable = '{{ settings.co_usluga_etaj_enable }}';
+
+    Site.co_usluga_etaj_product_id = '{{ settings.co_usluga_etaj_product_id }}';
+
+    Site.co_usluga_etaj_field_id = '{{ settings.co_usluga_etaj_field_id }}';
+  
+  Products.setConfig({});
+</script>
+
+<script>
+    (function () {
+      function loadHandler() {
+        var preloader = document.querySelector('.js-preloader');
+        document.querySelector('body').removeAttribute('style');
+        if (preloader) {
+          preloader.style.opacity = '0';
+          preloader.addEventListener('transitionend', disablePreloader);
+          setTimeout(function(){
+            $('.js-preloader').remove();
+          }, 1000);
+          function disablePreloader() {
+            preloader.style.display = 'none';
+            preloader.removeEventListener('transitionend', disablePreloader);
+            window.removeEventListener('load', loadHandler);
+          }
+        }
+      }
+      loadHandler();
+      // не работает замена текста т.к. скрипт отрабатывает раньше, чем отрисовывается форма
+      // Настоящим подтверждаю,что <a href="https://static.insales-cdn.com/files/1/1266/40502514/original/2_4_%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%B8%D0%B5_%D0%BD%D0%B0_%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D1%83_%D0%BF%D0%B5%D1%80%D1%81%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85.pdf" target="blank">согласен</a> на обработку персональных данных
+      // $('[name="consent_to_personal_data"] ~ .form-toggle-caption').html('Настоящим подтверждаю, что я ознакомлен и согласен с условиями <a href="https://static.insales-cdn.com/files/1/1266/40502514/original/2_4_%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%B8%D0%B5_%D0%BD%D0%B0_%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D1%83_%D0%BF%D0%B5%D1%80%D1%81%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85.pdf" target="blank">оферты</a> и <a href="/page/policy" target="blank">политики конфиденциальности</a>.');
+      // $('[name="consent_to_personal_data"] ~ .form-toggle-caption').html('Настоящим подтверждаю, что <a href="https://static.insales-cdn.com/files/1/1266/40502514/original/2_4_%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%B8%D0%B5_%D0%BD%D0%B0_%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D1%83_%D0%BF%D0%B5%D1%80%D1%81%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85.pdf" target="blank">согласен</a> на обработку персональных данных');
+    })();
+</script>
+
+<script>
+  {% if template == 'article' %}
+    /* Комментирование статтей */
+    $(function () {
+      var _commentForm = {
+        fields: [
+          {
+            title: '{{ messages.field_comment }}',
+            name: 'content',
+            type: 'textarea',
+            required: true,
+          },
+          {
+            title: '{{ messages.field_name }}',
+            name: 'author',
+            required: true,
+          },
+          {
+            title: '{{ messages.field_email }}',
+            name: 'email',
+            required: true,
+          },
+          {% if comment.captcha_enabled? %}
+          {
+            title: '{{ messages.field_captcha }}',
+            type: 'captcha',
+            required: true,
+          }
+          {% endif %}
+        ],
+        sendTo: Shop.sendComment,
+        messages: {
+          success: '{{ messages.comment_success }}'
+        },
+        onValid: function (response, form) {
+          var $notice = $('.js-comments-notice-success');
+          var $commentsList = $('[data-comments-list]');
+
+          // alertify.success('{{ messages.comment_success }}');
+
+          $notice.removeClass('hidden');
+          setTimeout(function () {
+            $notice.addClass('hidden');
+          }, 10000);
+
+          form.clear();
+
+          if (!$commentsList.data('commentsModerated')) {
+            $commentsList.load(document.location.pathname + ' [data-comments-list] > div');
+          };
+        },
+        onError: function (response, form) {
+          form.markErrors(response.errors);
+        },
+      };
+      //var $form = InSalesUI.Form.create($('#comment_form'), _commentForm);
+
+      $(document).on('click', '.js-comments-toggle', function(event) {
+        event.preventDefault();
+        console.log('>>>>');
+
+        alertify.modal({
+          formDefination: _commentForm
+        }).set('title', '{{ messages.button_review }}' );
+      });
+    });
+  {% endif %}
+
+  {% if template == 'product' %}
+      (function(){
+        var _reviewYandexCaptchaId = null;
+        var _reviewCaptchaToken = null;
+
+        var _reviewForm = {
+          form: {
+            classes: 'is-reviews',
+          },
+          fields: [
+            {
+              title: '{{ messages.field_rating }}',
+              name: 'rating',
+              type: 'rating',
+              rating: 5
+            },
+            {
+              title: '{{ messages.field_text }}',
+              type: 'textarea',
+              name: 'content',
+              required: true,
+            },
+            {
+              title: '{{ messages.field_name }}',
+              name: 'author',
+              required: true,
+            },
+            {
+              title: '{{ messages.field_email }}',
+              name: 'email',
+              required: true
+            }
+          ],
+
+          sendTo: function(data, options) {
+            var token = _reviewCaptchaToken || '';
+            if (!token && window.smartCaptcha && _reviewYandexCaptchaId !== null) {
+              try { token = window.smartCaptcha.getResponse(_reviewYandexCaptchaId) || ''; } catch(e) {}
+            }
+
+            if (!token) {
+              $('.ajs-dialog .reviews-captcha-row').css('outline', '2px solid red');
+              alertify.error('Пожалуйста, подтвердите, что вы не робот');
+              return $.Deferred().reject({ errors: {} });
+            }
+            $('.ajs-dialog .reviews-captcha-row').css('outline', '');
+
+            return $.ajax({
+              url: '{{ product.url }}/reviews.json',
+              type: 'POST',
+              dataType: 'json',
+              data: {
+                'review[rating]': data.rating || 5,
+                'review[content]': data.content || '',
+                'review[author]': data.author || '',
+                'review[email]': data.email || '',
+                'review[yandex-smart-token]': token,
+                'lang': ''
+              }
+            });
+          },
+          messages: {
+            success: '{{ messages.review_is_added }}'
+          },
+          onValid: function (response, form) {
+            var $notice = $('.js-reviews-notice-success');
+            alertify.set('notifier','position', 'top-right');
+            $notice.removeClass('hidden');
+            setTimeout(function () {
+              $notice.addClass('hidden');
+            }, 10000);
+
+            if (window.smartCaptcha && _reviewYandexCaptchaId !== null) {
+              window.smartCaptcha.reset(_reviewYandexCaptchaId);
+            }
+            form.clear();
+          },
+          onErrors: function (response, form) {
+            if (window.smartCaptcha && _reviewYandexCaptchaId !== null) {
+              window.smartCaptcha.reset(_reviewYandexCaptchaId);
+            }
+            alertify.error('Ошибка при отправке отзыва. Попробуйте ещё раз.');
+          }
+        };
+
+        function initReviewYandexCaptcha() {
+          if (!window.smartCaptcha) return;
+          var $form = $('.ajs-dialog .form.is-reviews');
+          if (!$form.length || $form.find('.reviews-yandex-captcha').length) return;
+
+          var $captchaRow = $(
+            '<div class="form-row is-required is-captcha reviews-captcha-row">' +
+              '<div class="reviews-yandex-captcha"></div>' +
+            '</div>'
+          );
+          $form.find('.form-controls-wrapper').before($captchaRow);
+
+          var sitekey = (Shop.config.config || {}).yandex_captcha_key || '';
+
+          _reviewCaptchaToken = null;
+          _reviewYandexCaptchaId = window.smartCaptcha.render(
+            $form.find('.reviews-yandex-captcha')[0],
+            {
+              sitekey: sitekey,
+              callback: function(token) {
+                _reviewCaptchaToken = token;
+                $('.ajs-dialog .reviews-captcha-row').css('outline', '');
+              },
+              'expired-callback': function() { _reviewCaptchaToken = null; },
+              'error-callback': function() { _reviewCaptchaToken = null; }
+            }
+          );
+        }
+
+        $(document).on('click', '.js-reviews-toggle', function (event) {
+          event.preventDefault();
+
+          _reviewYandexCaptchaId = null;
+          alertify.modal({
+            formDefination: _reviewForm
+          }).set('title', '{{ messages.button_review }}' );
+
+          setTimeout(initReviewYandexCaptcha, 300);
+        });
+      }());
+  {% endif %}
+</script>
+
+{% if template contains 'page' %}
+  <script type="text/javascript">
+    $(function () {
+      if (!$('.js-form-feedback').length) return;
+
+      // EventBus — платформа генерирует событие при успешной отправке data-feedback-form-wrapper форм
+      EventBus.subscribe('send-feedback:insales:ui_feedback', function() {
+        if (!$('.js-form-feedback').length) return;
+        var $msg = $('.js-feedback-success');
+        $msg.stop(true).fadeIn(300);
+        setTimeout(function() { $msg.fadeOut(400); }, 8000);
+      });
+    });
+  </script>
+  {% if page.url contains 'service-centers' %}
+    {% comment %} <script src="{{ 'service-centers.js' | asset_url }}" charset="utf-8"></script> {% endcomment %}
+    {% comment %} <script src="{{ 'pagination.min.js' | asset_url }}" charset="utf-8"></script> {% endcomment %}
+  {% endif %}
+{% endif %}
+
+{% if template contains 'page.services' %}
+  <script>
+    $('.js-services-product-item').on('click', function () {
+      var $this = $(this);
+
+      $this.closest('.page-services__products').hide();
+      $('.page-services__heading').hide();
+
+      $('.page-services__product').show();
+      $('.page-services__product .page-services__product__item__image').find('img').attr('src', $this.data('image'));
+      $('.page-services__product .page-services__product__item__title').html($this.data('title'));
+
+      $('.page-services__problems').show().data('product-title', $this.data('title'));
+      $('.page-services__problems .page-services__problems__items').html($this.find('.js-problems-list').html());
+      $('.page-services__feedback').hide();
+      $('#feedback_subject_ser').val('');
+    });
+
+    $(document).on('click', '.page-services__problems__item', function () {
+      var productTitle = $('.page-services__problems').data('product-title') || '';
+      var problemTitle = $(this).find('.page-services__problems__item__title').html();
+
+      $(this).closest('.page-services__problems__items').find('.page-services__problems__item').removeClass('active');
+      $(this).addClass('active');
+
+      $('#feedback_subject_ser').val(productTitle + ' - ' + problemTitle);
+      $('.page-services__feedback').show();
+      $('.js-services-feedback-success').hide();
+      $('.page-services__feedback [name="name"]').focus();
+    });
+
+    EventBus.subscribe('send-feedback:insales:ui_feedback', function (data) {
+      if (!data.form || !data.form.hasClass('js-widget-services-feedback')) {
+        return;
+      }
+
+      var $msg = $('.js-services-feedback-success');
+      $msg.stop(true).fadeIn(300);
+      setTimeout(function () { $msg.fadeOut(400); }, 8000);
+    });
+  </script>
+{% endif %}
+
+{% if template == 'card' %}
+  <script>
+    {% if show_related == false %}
+      $('.js-section_reviews_products').hide();
+    {% endif %}
+  </script>
+{% endif %}
+
+<script>
+function loadYmaps(callback) {
+  if (window.ymaps) { ymaps.ready(callback); return; }
+  var s = document.createElement('script');
+  s.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=92ad239b-aeae-48d9-92aa-de133d2fba73';
+  s.onload = function() { ymaps.ready(callback); };
+  document.head.appendChild(s);
+}
+</script>
+
+{% unless settings.product_boxberry_hide %}
+  <script type="text/javascript" src="https://points.boxberry.de/js/boxberry.js" async></script>
+{% endunless %}
+
+<script>
+  if (typeof window.InSales === 'undefined') {
+    window.InSales = {
+      formatMoney: function (price) {
+        if (typeof Shop !== 'undefined' && Shop.money && Shop.money.format) {
+          return Shop.money.format(price);
+        }
+        return price;
+      }
+    };
+  }
+</script>
+
+<script src="{{ 'plugins.js' | asset_url }}" defer></script>
+
+<script src="{{ 'theme.js' | asset_url }}" charset="utf-8" defer></script>
+
+{% if template contains 'page' %}
+  {% if page.url contains 'service-centers' %}
+    <script src="{{ 'service-centers.js' | asset_url }}" charset="utf-8"></script>
+    {% comment %} <script src="{{ 'pagination.min.js' | asset_url }}" charset="utf-8"></script> {% endcomment %}
+  {% endif %}
+{% endif %}

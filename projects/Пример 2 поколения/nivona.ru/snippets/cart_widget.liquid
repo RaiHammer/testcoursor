@@ -1,0 +1,19 @@
+
+<div class="shopcart-widget {{ block_class }} ">
+  <a href="{{ cart_url }} " title="{{ messages.cart_title }}" class="shopcart-widget-link ">
+    <span class="shopcart-widget-icon">
+        <span class="shopcart-widget-count js-shopcart-widget-count {{ block_class }}" ></span>
+    </span>
+    <span class="shopcart-widget-data">
+      <span class="shopcart-widget-caption">
+      {{ messages.cart_title }}
+      </span>
+
+      <span class="shopcart-widget-amount js-shopcart-widget-amount hidden-md"></span>
+    </span>
+  </a>
+
+</div>
+
+{% assign block_class = null %}
+{% assign cart_class = null %}

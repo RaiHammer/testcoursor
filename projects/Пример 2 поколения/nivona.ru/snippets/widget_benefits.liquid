@@ -1,0 +1,38 @@
+{% if data.blocks.size > 0 %}
+
+<div class="benefits-wrapper">
+
+  <div class="benefits">
+    <!-- <div class="benefits-heading-wrapper">
+      <div class="benefits-heading">
+        {{ data.name | editable }}
+      </div>
+    </div> -->
+
+    <div class="benefits-list row">
+
+      {% for benefit in data.blocks %}
+
+        <span class="benefit cell-">
+
+          <div class="benefit-inner">
+            <div class="benefit-image">
+              <div class="image-container is-square">
+                <img src="{{ benefit.image }}" title="{{ benefit.description }}" alt="{{ benefit.description }}" loading="lazy">
+              </div>
+            </div>
+
+            <div class="benefit-caption hidden-xs">
+              {{ benefit.description | editable }}
+            </div>
+          </div>
+
+        </span>
+
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}

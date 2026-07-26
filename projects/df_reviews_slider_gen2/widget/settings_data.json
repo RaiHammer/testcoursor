@@ -1,0 +1,20 @@
+{
+  "title": "Отзывы покупателей",
+  "title_align": "center",
+  "display_mode": "slider",
+  "accent_color": "#f5a623",
+  "text_lines": 5,
+  "slider_limit": 10,
+  "list_limit": 10,
+  "min_rating": "0",
+  "hide_date": false,
+  "hide_source": false,
+  "autoplay": false,
+  "show_arrows": true,
+  "autoplay_delay": 5000,
+  "speed": 400,
+  "slides_mobile": 1,
+  "slides_tablet": 2,
+  "slides_per_view": 3,
+  "empty_message": "Отзывы скоро появятся"
+}

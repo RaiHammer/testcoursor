@@ -1,0 +1,91 @@
+
+{% if settings.prod_sale_off != '1' %}
+{% if product.old_price %}
+  {% if product.old_price > product.price %}
+    {% assign discount = product.price | divided_by: product.old_price | times: -100 | plus: 100 | round: 0 %}
+  {% endif %}
+{% endif %}
+{%endif%}
+<div class="product-gallery">
+  {% include "product_labels" %}
+  {% if product.images.size > 0 %}
+      <div class="gallery-main-wrapper">
+        {% if product.fields.Video.value.size > 0 %}
+          <div class="js-play-video play-video"><i class="fa fa-play"></i></div>
+        {% endif %}
+        <div class="gallery-main swiper-container js-product-gallery-main">
+            {% for image in product.images %}
+              {% if image.title %}
+                {% assign current_title = image.title %}
+              {% else %}
+                {% assign current_title = product.title %}
+              {% endif %}
+              <div data-slider-slide>
+                <div class="slide-inner">
+                  <a href="{{ image.original_url }}" title="{{ current_title | strip_html }}" class="image-wrapper popup-gallery" data-fancybox="gallery">
+                    <picture>
+                      <source srcset="{{ image | image_url: 1000, format: 'webp' }}" type="image/webp">
+                      <img src="{{ image | image_url: 1000 }}" alt="{{ current_title | strip_html }}" title="{{ current_title | strip_html }}" class="slide-image"  {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}>
+                    </picture>
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+          <div data-slider-controls>
+            <div class="gallery-prev" data-slider-prev>
+              <button type="button" class="gallery-prev-btn js-gallery-prev" aria-label="Предыдущее фото">
+                    <svg width="32" height="84" viewBox="0 0 32 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M30.7644 0.470553C29.4896 -0.387227 27.7673 -0.039543 26.9174 1.24713L-6.46474e-07 42L26.9174 82.7529C27.7673 84.0395 29.4896 84.3872 30.7644 83.5294C32.0392 82.6717 32.3836 80.9333 31.5338 79.6466L12.2163 42L31.5338 4.35343C32.3836 3.06676 32.0392 1.32833 30.7644 0.470553Z" fill="#828282"/>
+                    </svg>
+              </button>
+            </div>
+            <div class="gallery-next" data-slider-next>
+              <button type="button" class="gallery-next-btn js-gallery-next" aria-label="Следующее фото">
+                    <svg width="32" height="84" viewBox="0 0 32 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.2356 0.470553C2.51038 -0.387227 4.23273 -0.039543 5.08258 1.24713L32 42L5.08258 82.7529C4.23273 84.0396 2.51038 84.3872 1.2356 83.5294C-0.0391775 82.6717 -0.383648 80.9333 0.466203 79.6466L19.7837 42L0.466203 4.35343C-0.383648 3.06676 -0.0391775 1.32833 1.2356 0.470553Z" fill="#828282"/>
+                    </svg>
+              </button>
+            </div>
+          </div>
+          <div class="swiper-pagination" data-slider-pagination></div>
+        </div>
+      </div>
+
+      <div class="gallery-thumbs-block">
+        <div class="gallery-thumbs-wrapper">
+          <div class="gallery-thumbs js-gallery-thumbs">
+              {% for image in product.images %}
+                {% if image.title %}
+                  {% assign current_title = image.title %}
+                {% else %}
+                  {% assign current_title = product.title %}
+                {% endif %}
+                <div class="{% if forloop.index == 1 %} active {% endif %} js-gallery-trigger" data-link="{{ image.url }}" data-image-small-url="{{ image.small_url }}" data-slider-slide>
+                  <div class="slide-inner with-object-fit">
+                    <img src="{{ image | image_url: 150 }}" alt="{{ current_title | strip_html }}" title="{{ current_title | strip_html }}" class="slide-image" width="150" height="150" loading="lazy">
+                  </div>
+                </div>
+              {% endfor %}
+          </div>
+          <div data-slider-controls>
+            <button type="button" class="gallery-thumbs-prev js-gallery-thumbs-prev gallery-thumbs-btn button is-action md-btn" data-slider-prev aria-label="Предыдущий слайд">
+              <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.792902 8.7071C0.402378 8.31658 0.402378 7.68341 0.792902 7.29289L7.15687 0.928929C7.54739 0.538404 8.18055 0.538405 8.57108 0.928929C8.9616 1.31945 8.9616 1.95262 8.57108 2.34314L2.91422 8L8.57108 13.6569C8.9616 14.0474 8.9616 14.6805 8.57108 15.0711C8.18055 15.4616 7.54739 15.4616 7.15686 15.0711L0.792902 8.7071ZM27.5 9L1.50001 9L1.50001 7L27.5 7L27.5 9Z" fill="#969696"/>
+              </svg>
+            </button>
+            <button type="button" class="gallery-thumbs-next js-gallery-thumbs-next gallery-thumbs-btn button is-action md-btn" data-slider-next aria-label="Следующий слайд">
+              <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M27.2071 8.7071C27.5976 8.31658 27.5976 7.68341 27.2071 7.29289L20.8431 0.928929C20.4526 0.538404 19.8194 0.538405 19.4289 0.928929C19.0384 1.31945 19.0384 1.95262 19.4289 2.34314L25.0858 8L19.4289 13.6569C19.0384 14.0474 19.0384 14.6805 19.4289 15.0711C19.8194 15.4616 20.4526 15.4616 20.8431 15.0711L27.2071 8.7071ZM0.5 9L26.5 9L26.5 7L0.5 7L0.5 9Z" fill="#969696"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+  {% else %}
+    <div class="cell-xl-12 gallery-main-wrapper">
+      <a href="{{ 'no_image.png' | asset_url }}" class="image-wrapper popup-gallery" title="{{ product.title | strip_html }}">
+        <img src="{{ 'no_image.png' | asset_url }}" alt="{{ product.title | strip_html }}" title="{{ product.title | strip_html }}" class="product-image">
+      </a>
+    </div>
+  {% endif %}
+</div>

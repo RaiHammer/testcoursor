@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>DanForge dual-source e2e fixture</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 1rem; background: #f5f5f5; }
+    .df-reviews { padding: 1rem; --df-reviews-text-lines: 3; --df-reviews-accent: #fba064; --df-reviews-columns: 3; position: relative; }
+    .df-reviews__slide { display: flex; flex-direction: column; gap: .5rem; padding: 1rem; background: #fff; border: 1px solid #eee; border-radius: 12px; box-sizing: border-box; }
+    .df-reviews__slide.is-hidden, .df-reviews__slide.df-reviews__slide--source-hidden { display: none !important; }
+    .df-reviews__tabs { display: flex; gap: .5rem; margin-bottom: 1rem; }
+    .df-reviews__tab { padding: .5rem 1rem; border: 1px solid #ddd; background: #fff; cursor: pointer; border-radius: 8px; }
+    .df-reviews__tab.is-active { border-color: #fba064; background: #fff6ef; }
+    .df-reviews--layout-masonry .df-reviews__grid { column-count: 2; column-gap: 1rem; }
+    .df-reviews--layout-masonry .df-reviews__slide { break-inside: avoid; margin-bottom: 1rem; display: inline-flex; width: 100%; }
+    .df-reviews--layout-masonry .df-reviews__shell-inner { display: flex; gap: 1rem; }
+    .df-reviews--layout-masonry .df-reviews__tabs--side { flex-direction: column; min-width: 140px; }
+    .df-reviews--layout-masonry .swiper-slide { width: auto !important; height: auto !important; margin: 0 !important; }
+    [data-df-reviews-pool] { display: none !important; }
+    section { margin-bottom: 2rem; background: #fff; padding: 1rem; border-radius: 12px; }
+    section h2 { margin: 0 0 1rem; font-size: 1rem; color: #666; }
+  </style>
+</head>
+<body>
+
+<section id="w-slider-tabs">
+  <h2>Slider + tabs (default insales)</h2>
+  <div class="df-reviews df-reviews--layout-slider">
+    <div class="df-reviews__tabs" data-df-reviews-tabs>
+      <button type="button" class="df-reviews__tab is-active" data-source-tab="insales">
+        <span class="df-reviews__tab-name">InSales</span>
+      </button>
+      <button type="button" class="df-reviews__tab" data-source-tab="yandex">
+        <span class="df-reviews__tab-name">Яндекс</span>
+      </button>
+    </div>
+    <div class="df-reviews__shell-inner">
+      <div class="df-reviews__main">
+        <div
+          class="df-reviews__viewport df-reviews__slider"
+          data-df-reviews-root
+          data-layout="slider"
+          data-source-tabs="true"
+          data-default-source-tab="insales"
+          data-insales-count="2"
+          data-hide-insales="false"
+          data-hide-yandex="false"
+          data-min-rating="0"
+          data-slider-limit="10"
+        >
+          <div class="swiper-wrapper" data-df-reviews-wrapper>
+            <div class="swiper-slide df-reviews__slide" data-rating="5" data-source="insales">
+              <div class="df-reviews__author">InSales 1</div>
+              <p class="df-reviews__text">InSales review one</p>
+            </div>
+            <div class="swiper-slide df-reviews__slide" data-rating="5" data-source="insales">
+              <div class="df-reviews__author">InSales 2</div>
+              <p class="df-reviews__text">InSales review two</p>
+            </div>
+            <div class="swiper-slide df-reviews__slide" data-rating="5" data-source="yandex">
+              <div class="df-reviews__author">Yandex 1</div>
+              <p class="df-reviews__text">Yandex review one</p>
+            </div>
+            <div class="swiper-slide df-reviews__slide" data-rating="5" data-source="yandex">
+              <div class="df-reviews__author">Yandex 2</div>
+              <p class="df-reviews__text">Yandex review two</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="w-masonry-tabs">
+  <h2>Masonry + tab counts</h2>
+  <div class="df-reviews df-reviews--layout-masonry">
+    <div class="df-reviews__shell-inner">
+      <div class="df-reviews__tabs df-reviews__tabs--side" data-df-reviews-tabs>
+        <button type="button" class="df-reviews__tab is-active" data-source-tab="insales">
+          <span class="df-reviews__tab-name">InSales</span>
+          <span class="df-reviews__tab-count" data-df-tab-count="insales">0</span>
+        </button>
+        <button type="button" class="df-reviews__tab" data-source-tab="yandex">
+          <span class="df-reviews__tab-name">Яндекс</span>
+          <span class="df-reviews__tab-count" data-df-tab-count="yandex">0</span>
+        </button>
+      </div>
+      <div class="df-reviews__main">
+        <div
+          class="df-reviews__viewport"
+          data-df-reviews-root
+          data-layout="masonry"
+          data-source-tabs="true"
+          data-default-source-tab="insales"
+          data-insales-count="3"
+          data-hide-insales="false"
+          data-hide-yandex="false"
+          data-min-rating="0"
+          data-page-size="6"
+        >
+          <div class="df-reviews__grid" data-df-reviews-wrapper>
+            <div class="df-reviews__slide" data-rating="5" data-source="insales"><div class="df-reviews__author">I1</div></div>
+            <div class="df-reviews__slide" data-rating="5" data-source="insales"><div class="df-reviews__author">I2</div></div>
+            <div class="df-reviews__slide" data-rating="5" data-source="insales"><div class="df-reviews__author">I3</div></div>
+            <div class="df-reviews__slide" data-rating="5" data-source="yandex"><div class="df-reviews__author">Y1</div></div>
+            <div class="df-reviews__slide" data-rating="5" data-source="yandex"><div class="df-reviews__author">Y2</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="w-hide-yandex">
+  <h2>hide_yandex ON</h2>
+  <div class="df-reviews df-reviews--layout-slider">
+    <div class="df-reviews__tabs" data-df-reviews-tabs hidden>
+      <button type="button" class="df-reviews__tab is-active" data-source-tab="insales">
+        <span class="df-reviews__tab-name">InSales</span>
+      </button>
+      <button type="button" class="df-reviews__tab" data-source-tab="yandex" hidden style="display:none">
+        <span class="df-reviews__tab-name">Яндекс</span>
+      </button>
+    </div>
+    <div class="df-reviews__shell-inner">
+      <div class="df-reviews__main">
+        <div
+          class="df-reviews__viewport df-reviews__slider"
+          data-df-reviews-root
+          data-layout="slider"
+          data-source-tabs="true"
+          data-default-source-tab="insales"
+          data-insales-count="1"
+          data-hide-insales="false"
+          data-hide-yandex="true"
+          data-min-rating="0"
+          data-slider-limit="10"
+        >
+          <div class="swiper-wrapper" data-df-reviews-wrapper>
+            <div class="swiper-slide df-reviews__slide" data-rating="5" data-source="insales">
+              <div class="df-reviews__author">Only InSales</div>
+            </div>
+            <div class="swiper-slide df-reviews__slide" data-rating="5" data-source="yandex">
+              <div class="df-reviews__author">Hidden Yandex</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="w-slider-loadmore">
+  <h2>Masonry + InSales load-more (lazy yandex)</h2>
+  <div class="df-reviews df-reviews--layout-masonry">
+    <div class="df-reviews__tabs" data-df-reviews-tabs>
+      <button type="button" class="df-reviews__tab is-active" data-source-tab="insales">
+        <span class="df-reviews__tab-name">InSales</span>
+      </button>
+      <button type="button" class="df-reviews__tab" data-source-tab="yandex">
+        <span class="df-reviews__tab-name">Яндекс</span>
+      </button>
+    </div>
+    <div class="df-reviews__shell-inner">
+      <div class="df-reviews__main">
+        <div
+          class="df-reviews__viewport"
+          data-df-reviews-root
+          data-layout="masonry"
+          data-source-tabs="true"
+          data-default-source-tab="insales"
+          data-insales-count="4"
+          data-insales-prefetch-limit="2"
+          data-page-size="12"
+          data-yandex-count="2"
+          data-hide-insales="false"
+          data-hide-yandex="false"
+          data-min-rating="0"
+          data-insales-ajax-enabled="true"
+        >
+          <div class="df-reviews__grid" data-df-reviews-wrapper>
+            <div class="df-reviews__slide" data-source="insales" data-review-id="i1" data-rating="5">
+              <div class="df-reviews__author">InSales 1</div>
+            </div>
+            <div class="df-reviews__slide" data-source="insales" data-review-id="i2" data-rating="5">
+              <div class="df-reviews__author">InSales 2</div>
+            </div>
+            <div class="df-reviews__slide" data-source="yandex" data-rating="5">
+              <div class="df-reviews__author">Yandex 1</div>
+            </div>
+            <div class="df-reviews__slide" data-source="yandex" data-rating="5">
+              <div class="df-reviews__author">Yandex 2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="df-reviews__insales-pagination" data-df-insales-pagination>
+      <button type="button" class="df-reviews__insales-loadmore" data-df-insales-loadmore data-url="https://fixture.test/insales-more">Загрузить ещё</button>
+    </div>
+  </div>
+</section>
+
+<section id="w-masonry-loadmore">
+  <h2>Masonry + native masonry load-more</h2>
+  <div class="df-reviews df-reviews--layout-masonry">
+    <div class="df-reviews__shell-inner">
+      <div class="df-reviews__main">
+        <div
+          class="df-reviews__viewport"
+          data-df-reviews-root
+          data-layout="masonry"
+          data-insales-count="20"
+          data-insales-prefetch-limit="2"
+          data-insales-total-pages="10"
+          data-insales-server-pagination="true"
+          data-insales-batch-page="1"
+          data-insales-ajax-url="https://fixture.test/native-reviews-more"
+          data-page-size="12"
+          data-hide-insales="false"
+          data-hide-yandex="true"
+          data-min-rating="0"
+          data-insales-ajax-enabled="true"
+        >
+          <div class="df-reviews__grid" data-df-reviews-wrapper>
+            <div class="df-reviews__slide" data-source="insales" data-review-id="i1" data-rating="5">
+              <div class="df-reviews__author">InSales 1</div>
+            </div>
+            <div class="df-reviews__slide" data-source="insales" data-review-id="i2" data-rating="5">
+              <div class="df-reviews__author">InSales 2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="df-reviews__insales-pagination" data-df-insales-pagination>
+      <button type="button" class="df-reviews__insales-loadmore" data-df-insales-loadmore data-url="https://fixture.test/native-reviews-more?page=2">Загрузить ещё</button>
+    </div>
+  </div>
+</section>
+
+<section id="w-layout-rescan">
+  <h2>Editor layout rescan</h2>
+  <div class="df-reviews df-reviews--layout-slider">
+    <div class="df-reviews__tabs" data-df-reviews-tabs>
+      <button type="button" class="df-reviews__tab is-active" data-source-tab="insales">
+        <span class="df-reviews__tab-name">InSales</span>
+      </button>
+      <button type="button" class="df-reviews__tab" data-source-tab="yandex">
+        <span class="df-reviews__tab-name">Яндекс</span>
+      </button>
+    </div>
+    <div class="df-reviews__shell-inner">
+      <div class="df-reviews__main">
+        <div
+          class="df-reviews__viewport df-reviews__slider"
+          data-df-reviews-root
+          data-layout="slider"
+          data-source-tabs="true"
+          data-default-source-tab="insales"
+          data-insales-count="2"
+          data-hide-insales="false"
+          data-hide-yandex="false"
+          data-min-rating="0"
+          data-slider-limit="10"
+          data-page-size="6"
+        >
+          <div class="swiper-wrapper" data-df-reviews-wrapper>
+            <div class="swiper-slide df-reviews__slide" data-source="insales" data-rating="5">
+              <div class="df-reviews__author">InSales A</div>
+            </div>
+            <div class="swiper-slide df-reviews__slide" data-source="insales" data-rating="5">
+              <div class="df-reviews__author">InSales B</div>
+            </div>
+            <div class="swiper-slide df-reviews__slide" data-source="yandex" data-rating="5">
+              <div class="df-reviews__author">Yandex A</div>
+            </div>
+            <div class="swiper-slide df-reviews__slide" data-source="yandex" data-rating="5">
+              <div class="df-reviews__author">Yandex B</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="w-masonry-paginated">
+  <h2>Masonry server pagination (890 reviews)</h2>
+  <div class="df-reviews df-reviews--layout-masonry">
+    <div class="df-reviews__shell-inner">
+      <div class="df-reviews__main">
+        <div
+          class="df-reviews__viewport"
+          data-df-reviews-root
+          data-layout="masonry"
+          data-insales-count="890"
+          data-insales-prefetch-limit="20"
+          data-insales-total-pages="45"
+          data-insales-server-pagination="true"
+          data-insales-batch-page="1"
+          data-insales-ajax-url="https://fixture.test/masonry-large-batch"
+          data-page-size="2"
+          data-hide-insales="false"
+          data-hide-yandex="true"
+          data-min-rating="0"
+          data-insales-ajax-enabled="true"
+        >
+          <div class="df-reviews__grid" data-df-reviews-wrapper>
+            <div class="df-reviews__slide" data-source="insales" data-review-id="p1" data-rating="5"><div class="df-reviews__author">R1</div></div>
+            <div class="df-reviews__slide" data-source="insales" data-review-id="p2" data-rating="5"><div class="df-reviews__author">R2</div></div>
+            <div class="df-reviews__slide" data-source="insales" data-review-id="p3" data-rating="5"><div class="df-reviews__author">R3</div></div>
+            <div class="df-reviews__slide" data-source="insales" data-review-id="p4" data-rating="5"><div class="df-reviews__author">R4</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="df-reviews__insales-pagination" data-df-insales-pagination>
+      <button type="button" class="df-reviews__insales-loadmore" data-df-insales-loadmore data-url="https://fixture.test/masonry-large-batch?page=2">Загрузить ещё</button>
+    </div>
+    <nav class="df-reviews__pages" data-df-reviews-pages aria-label="Страницы отзывов">
+      <button type="button" class="df-reviews__page-arrow" data-df-page-prev aria-label="Предыдущая страница">‹</button>
+      <div class="df-reviews__pages-list" data-df-pages-list></div>
+      <button type="button" class="df-reviews__page-arrow" data-df-page-next aria-label="Следующая страница">›</button>
+    </nav>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="../../snippet.js"></script>
+</body>
+</html>

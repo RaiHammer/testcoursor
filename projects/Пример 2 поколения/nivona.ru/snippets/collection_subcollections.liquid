@@ -1,0 +1,31 @@
+{% assign is_cover = settings.cards_crop_off | default: 'is-cover' | replace: '1', '' %}
+
+<div class="categories-subcollections">
+  <div class="row">
+    {% for collection in collections[source_handle].subcollections %}
+      <div class="category-subcollections cell-">
+        <a href="{{ collection.url }}" class="category-inner">
+          <div class="category-image-wrapper">
+            <span class="category-image-inner image-container is-square {{ is_cover }} ">
+
+              {% unless collection.image.large_url contains 'no_image' %}
+                {% assign image = collection.image.large_url %}
+              {% elsif collection.products.first.first_image.large_url  %}
+                {% assign image = collection.products.first.first_image.large_url %}
+              {% else %}
+                {% assign image = collection.image.large_url %}
+              {% endunless %}
+
+              <img src="{{ image }}" class="category-image" title='{{ collection.title }}'>
+            </span>
+          </div>
+
+          <div class="category-caption">
+            {{ collection.title }}
+          </div>
+
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>

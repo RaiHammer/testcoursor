@@ -1,0 +1,51 @@
+{% if product.is_bundle %}
+  {% assign xct_product = product %}
+
+  <div class="bundle-slider">
+    {% include "product_slider", slider_products: product.bundle_components, slider_class: 'bundle-products', is_bundle: true %}
+  </div>
+
+  {% assign product = xct_product %}
+  <div class="bundle-prices">
+    <div class='price-bundle'>
+      {{ messages.bundle_product_price }} :   <span> {{   product.bundle_discount | plus: product.price | money  }} </span>
+    </div>
+    <div class='price_discount'>
+      {{ messages.bundle_product_discount }}:   <span> {{ product.bundle_discount | money }} </span>
+    </div>
+    <div class="price_finall">
+      {{ messages.bundle_product_finall }}: <span> {{ product.price | money }}  </span>
+    </div>
+  </div>
+
+  <form class="product-cart-control " method="post" action="{{ cart_url }}">
+    <input type="hidden" name="variant_id" value="{{ product.variants.first.id }}">
+    <input type="hidden" name="quantity" class="counter-input input-number input-field" value="1"/>
+
+    <div class="buy text-right-xl more-info bundle_buy ">
+      <button class="product-button button is-primary  js-variant-shown" type="submit" data-item-add style="display: none;">
+        <span class="button-text">
+          {{ messages.button_to_cart }}
+        </span>
+      </button>
+
+      <div class="product-order-variant variant-hidden js-variant-hidden hidden" style="display: none;">
+        <p class="notice notice-info">
+          {{ messages.product_not_available }}
+        </p>
+      </div>
+
+      <button class="product-button button  is-primary js-variant-preorder "
+        type="button" style="display: none;"
+      >
+        <span class="button-text">
+          {{ messages.button_preorder }}
+        </span>
+      </button>
+    </div><!-- /.buy -->
+
+  </form>
+
+{% endif %}
+
+{% assign xct_product = null %}

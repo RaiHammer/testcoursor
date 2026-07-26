@@ -1,0 +1,67 @@
+
+{% include "widget_slider_collection" %}
+{% include "page_header" %}
+
+<div class="collection_content">
+  <div class="container">
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 collection_content__sidebar">
+          <div class="sidebar">
+            <h1 class="sidebar__header__title">
+              {% if filter.title %}
+                {{ filter.title | editable }}
+              {% else %}
+                {{ collection.title | editable }}
+              {% endif %}
+            </h1>
+            <div class="sidebar__block collection_filter__sidebar">
+              <div class="filter__content__mobile__header">
+                <div class="filter__content__mobile__title">Фильтры</div>
+                <div class="filter__content__mobile__close">
+                  <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="23.6066" y="25.021" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.021)" fill="#B5ACA7"></rect>
+                    <rect x="0.979187" y="23.6064" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6064)" fill="#B5ACA7"></rect>
+                  </svg>
+                </div>
+              </div>
+              {% include "collection_filter_check" %}
+              {% include "collection_filter", filter_class: 'sidebar-filter' %}
+            </div>
+          </div>
+        </div>
+
+      <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 collection_content__products">
+        
+            {% comment %} {{ collection.seo_description }} {% endcomment %}
+            {% if collection.seo_description %}
+                {{ collection.seo_description }}
+              {% else %}
+                {% unless blocks.advertising-text.hide == true %}
+                  {{ blocks.advertising-text.text }}
+                {% endunless %}
+            {% endif %}
+
+        {% include "collection_order" | hide_page_size: true %}
+
+        {% assign filters_count = collection.current_characteristics.size | plus: collection.current_option_values.size %}
+        <button class="filter__open">Фильтры <span class="js-filtersCount" {% if filters_count == 0 %}style="display: none;"{% endif %}>{{ filters_count }}</span></button>
+
+        {% paginate products by 21 %}
+          {% include "collection_products" %}
+          {% include "pagination" %}  
+        {% endpaginate %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if collection.description.size > 0 %}
+  <div class="promo">       	
+      <div class="container">
+        <!--  <h3 class="promo__title">{{ collection.title }}</h3>-->
+          <div class="promo__text">{{ collection.description }}</div>
+      </div>
+  </div>
+{% endif %}
+

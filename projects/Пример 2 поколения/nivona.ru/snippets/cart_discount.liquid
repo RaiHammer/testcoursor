@@ -1,0 +1,28 @@
+{% if discount_type == 'checkout' %}
+  <script type="text/template" hidden data-template-id="cart-discounts">
+    <% _.forEach( discounts, function (discount) { %>
+      <div class="co-basket_subtotal order-item">
+        <div class="co-basket_subtotal-title discount-subtotal-description"><%= discount.description %></div>
+        <div class="co-basket_subtotal-price co-price--current discount-subtotal-amount order-item__number">- <%= Shop.money.format(discount.amount) %></div>
+      </div>
+    <% }); %>
+  </script>
+{% else %}
+  <div class="discount-comment-list js-discount-comment-list">
+    {% for discount in cart.discounts %}
+      <div class="discount-comment order-item">
+        <div class="discount-comment-title">{{ discount.description }}</div>
+        <div class="discount-comment-price co-price--current order-item__number">- {{ discount.amount | money }}</div>
+      </div>
+    {% endfor %}
+  </div>
+  <script type="text/template" hidden data-template-id="cart-discounts">
+    <% _.forEach( discounts, function (discount) { %>
+      <div class="discount-comment order-item">
+        <div class="discount-comment-title"><%= discount.description %></div>
+        <div class="discount-comment-price co-price--current order-item__number">- <%= Shop.money.format(discount.amount) %></div>
+      </div>
+    <% }); %>
+  </script>
+{% endif %}
+

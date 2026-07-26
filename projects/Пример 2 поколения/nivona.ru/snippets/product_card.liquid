@@ -1,0 +1,122 @@
+                              {% comment %}
+                                Если у нас есть аналогичный товаров с акцией (комплект)
+                                Подменяем его в коде, чтобы он попадал в корзину
+                              {% endcomment %}
+                              {% if settings.actions_bundle_change_position_enable == '1' and product.fields[settings.actions_bundle_change_position_field_handle].value.size > 0 %}
+                                {% assign productIds = product.fields[settings.actions_bundle_change_position_field_handle].value | split: '||' %}
+                                {% assign product_id = productIds[0] %}
+                                {% assign variant_id = productIds[1] %}
+                              {% else %}
+                                {% assign product_id = product.id %}
+                                {% assign variant_id = product.variants.first.id %}
+                              {% endif %}
+
+{% if settings.cards_sale_off != '1' %}
+{% if product.old_price %}
+  {% if product.old_price > product.price %}
+    {% assign discount = product.price | divided_by: product.old_price | times: -100 | plus: 100 | round: 0 %}
+  {% endif %}
+{% endif %}
+{%endif%}
+                              <form class="product-cart-control {{ hidden_form }}" method="post" action="{{ cart_url }}" data-product-id="{{ product_id }}" data-main-form
+                                 data-product-item data-item-sku="{{ product.sku }}" data-item-title="{{ product.title | escape | replace: '"', '&quot;' | replace: "'", "&prime;" }}" 
+                                 data-item-collection="{{ product.collections.first.title | replace: '"', '&quot;' | replace: "'", "&prime;" }}" 
+                                 data-item-brand="{{ product.properties.brend.characteristics.first.title | replace: '"', '&quot;' | replace: "'", "&prime;" }}" 
+                                 data-item-price="{{ product.price }}" data-item-currency="RUB" 
+                                 data-item-variant="{{ product.variants[0].title | replace: '"', '&quot;' | replace: "'", "&prime;" }}" data-item-url="{{ product.url | escape }}">
+                                <input type="hidden" name="variant_id" value="{{ variant_id }}">
+                                <input type="hidden" name="quantity" class="counter-input input-number input-field" value="1"/>
+                                <div class="product-card">
+                                  {% include "product_labels" %}
+                                  <div class="product-card__actions">
+                                    <button type="button" class="product-card__favorites_trigger" data-favorites-trigger="{{ product_id }}" aria-label="Добавить в избранное">
+                                      <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.75 1C11.8818 1 11.0858 1.27512 10.3842 1.81775C9.7115 2.33797 9.26366 3.00056 9 3.48237C8.73634 3.00053 8.2885 2.33797 7.61584 1.81775C6.91422 1.27512 6.11822 1 5.25 1C2.82713 1 1 2.98178 1 5.60981C1 8.449 3.27947 10.3915 6.73028 13.3322C7.31628 13.8317 7.9805 14.3977 8.67088 15.0014C8.76188 15.0811 8.87875 15.125 9 15.125C9.12125 15.125 9.23813 15.0811 9.32913 15.0015C10.0196 14.3977 10.6838 13.8316 11.2701 13.3319C14.7205 10.3915 17 8.449 17 5.60981C17 2.98178 15.1729 1 12.75 1Z" stroke="#B5ACA7" stroke-width="2"/>
+                                      </svg>
+                                    </button>
+
+                                    <button class="product-card__add js-compare-add" data-toggle="tooltip" data-placement="bottom" title="Сравнить" data-compare-add="{{ product_id }}" aria-label="Сравнить">
+                                      <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19 6H13V17H19V6Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+                                        <path d="M7 10H1V17H7V10Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+                                        <path d="M13 1H7V17H13V1Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+                                      </svg>
+                                    </button>
+                                    <button class="product-card__delete js-compare-delete" data-toggle="tooltip" data-placement="bottom" title="Удалить из сравнения" data-compare-delete="{{ product.id }}" style="display: none;" aria-label="Удалить из сравнения">
+                                      <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M19 6H13V17H19V6Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+                                        <path d="M7 10H1V17H7V10Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+                                        <path d="M13 1H7V17H13V1Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"/>
+                                      </svg>
+                                    </button>
+                                  </div>
+
+                                    <a href="{{ product.url }}" class="image-container is-square is-cover" data-product-url>
+                                      <img src="{{ product.first_image.original_url }}" alt="{{ product.title }}" width="500" height="670" loading="lazy">
+                                    </a>
+                                    <div class="product-card__meta">
+                                        <div class="product-card__meta__content">
+                                          <a href="{{ product.url }}" data-product-url><span class="product-card__title">{{ product.title }}</span></a>
+                                          
+                                          {% if product.short_description.size > 0 %}
+                                            <div class="product-card__descr">
+                                              {{ product.short_description }}
+                                            </div>
+                                          {% endif %}
+                                          
+                                          {% comment %}
+                                              <div class="product-card__params">
+                                                {% assign main_params = settings.product_main_params | split: '||' %}
+                                                <div class="product-card__params__items">
+                                                  {%- for param in main_params -%}
+                                                    {%- if item.product.properties[param].name.size > 0 -%}
+                                                      <div class="product-card__params__item">
+                                                        <div class="product-card__params__item__title">{{ item.product.properties[param].title }}: </div>
+                                                        <div class="product-card__params__item__values">
+                                                          {%- for characteristic in item.product.properties[param].characteristics -%}
+                                                            {{ characteristic.name }}{% unless forloop.last %},{% endunless %}
+                                                          {%- endfor -%}
+                                                        </div>
+                                                      </div>
+                                                    {%- endif -%}
+                                                  {%- endfor -%}
+                                                </div>
+                                              </div>
+                                          {% endcomment %}
+                                        </div>
+
+                                        <div class="product-card__prices">
+                                          {% if product.old_price and product.old_price > product.price %}
+                                            <span class="product-card__old_price">{{ product.old_price | money }}</span>
+                                          {% endif %}
+                                          <span class="product-card__price {% if product.old_price and product.old_price and product.old_price > product.price %}is_discount{% endif %}">{{ product.price | money }}</span>
+                                        </div>
+                                        
+                                        <!-- Если больше 1 модификации -->
+                                        {% if product.variants.size > 1 %}
+                                          <a class="product-card__btn" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit'); return true;" href="{{ product.url }}" title='{{ product.title }}' data-product-url>Купить</a>
+
+                                        <!-- product.quantity больше 0 -->
+                                        {% elsif product.available %}
+                                          <button class="product-card__btn {% unless product.available %}is_disabled{% endunless %}" type="submit" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit'); return true;" data-item-add {% unless product.available %}disabled="disabled" title="Нет в наличии"{% endunless %}>Купить</button>
+
+                                        <!-- product.quantity == 0 -->
+                                        {% elsif settings.product_not_available contains 'shown' %}
+                                            <button
+												class="product-card__btn  winbox  button is-primary"
+												data-window="{% if settings.product_order_target == 'mail' %}{% if product.properties['is_preorder'].characteristics[0].handle == 'true' %}preorder{% else %}request{% endif %}{% else %}quickorder|request{% endif %}"
+												data-product-title="{{ product.title | escape }}"
+												data-window-product-url="{{ account.url }}{{ product.canonical_url }}"
+												data-variant-id="{{ product.variants.first.id }}"
+												data-variant-price="{{ product.variants.first.price }}"
+												data-variant-image="{{ product.first_image.original_url }}"
+												data-product-id="{{ product_id }}"
+											>
+                                              <span class="button-text">{% if product.properties['is_preorder'].characteristics[0].handle == 'true' %}Предзаказ{% else %}{{ settings.product_order_text }}{% endif %}</span>
+                                            </button>
+                                        {% else %}
+                                            <a class="product-card__btn" onclick="ym(48352907,'reachGoal','klik_po_knopke_kupit'); return true;" href="{{ product.url }}" title='{{ product.title }}' data-product-url>Купить</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                              </form>

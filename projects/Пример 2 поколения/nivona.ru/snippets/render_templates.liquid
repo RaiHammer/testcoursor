@@ -1,0 +1,104 @@
+{% comment %}
+{% assign is_cover = settings.cards_crop_off | default: 'is-cover' | replace: '1', '' %}
+
+ <script type="text/template" hidden data-template-id="cart-widget-dropdown">
+  <% _.forEach( obj.order_lines, function (item) { %>
+    <div class="cart-item is-cart-dropdown" data-product-id="<%= item.product.id %>" data-item-id="<%= item.id %>">
+      <div class="cart-item-inner item is-cart-dropdown">
+
+        <div class="item-image-wrapper is-cart-dropdown">
+          <div class="item-image-inner">
+            <a href="<%= item.product.url %>" title="<%= item.title %>" class="item-image-link image-container is-square  {{ is_cover }}" onclick="onProductClick('<%= item.product.sku %>', '<%= item.title %>', '', '', '<%= item.product.url %>'); return !ga.loaded;">
+              <img title="<%= item.title %>" alt="<%= item.title %>" src="<%= item.first_image.small_url %>" class="item-image">
+            </a>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="item-caption">
+            <a href="<%= item.product.url %>" class="item-title" onclick="onProductClick('<%= item.product.sku %>', '<%= item.title %>', '', '', '<%= item.product.url %>'); return !ga.loaded;">
+              <%= item.title %>
+            </a>
+          </div>
+    <div class="item-numbers">
+      <div class="item-prices ">
+        <%= item.quantity %> x
+      </div>
+
+      <div class="item-prices is-total-price js-item-total-price">
+        <%= item.total_price %>
+      </div>
+    </div>
+
+      <div class="item-delete">
+        <button type="submit" class="button is-item-delete is-transparent" data-item-delete="<%= item.id %>">
+
+      </button>
+    </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  <% }); %>
+</script>
+
+<script type="text/template" hidden data-template-id="view_products">
+  <div class="views-tovar-heading">
+    {{ messages.view_products }}
+  </div>
+  <div class="product-slider is-reviews" data-slider="reviews-products">
+
+    <div  class="product-slider-controls" data-slider-controls>
+      <button class="product-slider-prev reviews-products-button" data-slider-prev></button>
+      <button class="product-slider-next reviews-products-button" data-slider-next></button>
+    </div>
+  <% _.forEach( obj, function(item, key) { %>
+    <% if(item) { %>
+      <div class="reviews-products" data-slider-slide>
+        <div class="product-card " >
+          <div class="product-card-inner">
+
+            <a href="<%= item.url %> "class="product-card-photo image-container is-square {{ is_cover }}" title="<%= item.title %>" onclick="onProductClick('<%= item.product.sku %>', '<%= item.title %>', '', '', '<%= item.product.url %>'); return !ga.loaded;">
+                <img src="<%= item.first_image.large_url %>"   alt="<%= item.title %>" class="product-card-image">
+            </a>
+
+
+          <div class="product-card-form_block">
+            <div class="product-card-price product-prices in-card">
+              <div class="price in-card">
+                  <%= Shop.money.format(item.price_min) %>
+              </div>
+            </div>
+
+          <form class="product-cart-control" method="post">
+             <% if(item.variants.length > 1) { %>
+             	<a class="product-card__btn" href="{{ product.url }}" title='{{ product.title }}' data-product-url>Купить</a>
+             <% }else if(item.available){ %>
+                <div class="more-info">
+                  <a class="button is-primary product-card__btn" href="<%= item.url %>" title='<%= item.title %>' onclick="onProductClick('<%= item.product.sku %>', '<%= item.title %>', '', '', '<%= item.product.url %>'); return !ga.loaded;">
+                  </a>
+                </div>
+              <% }else{ %>
+                <button class="product-card__btn winbox  button is-primary" data-window="{% if settings.product_order_target == 'mail' %}request{% else %}quickorder|request{% endif %}" data-product-title="<%= item.title %>" data-window-product-url="{{ account.url }}<%= item.url %>" data-variant-id="<%= item.variants[0].id %>" data-variant-price="<%= item.price %>" data-variant-image="<%= item.images[0].original_url %>" data-product-id="<%= item.id %>">
+                                                <span class="button-text">{% if product.properties['is_preorder'].characteristics[0].handle == 'true' %}Предзаказ{% else %}{{ settings.product_order_text }}{% endif %}</span>
+                 </button>
+               <% } %>
+
+            </form><!-- /.product-control -->
+            </div>
+            <a  href="<%= item.url %>" class="product-link" onclick="onProductClick('<%= item.product.sku %>', '<%= item.title %>', '', '', '<%= item.product.url %>'); return !ga.loaded;">
+            <%= item.title %>
+            </a>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  <% }); %>
+</div>
+</script>
+
+{% assign is_cover = null %}
+
+{% endcomment %}

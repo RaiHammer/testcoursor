@@ -1,0 +1,50 @@
+		<div class="col-xs-12">
+            <form action="{{ cart_items }}" method="post" class="shopping-cart" data-cart-form>
+				<div class="table-responsive">
+					<table class="basket-table">
+						<tbody>
+                            {% for item in cart.items %}
+                                {% include 'cart_item' %}
+                            {% endfor %}
+						</tbody>
+					</table>
+				</div>
+				
+				{% if template == 'cart' %}
+					<div class="basket-total total basket-total-{{ template }}">
+						<a class="form__btn" href="/new_order">отправить заказ</a>
+						<div class="total_price">
+							Итого:<span class="js-shopcart-total-summ">{{ cart.total_price }}</span>
+						</div>
+					</div>
+				{% else %}
+					<div class="basket-footer">
+						<div id="js-coupon-wrapper" class="discount-wrapper">
+							{% if cart.enable_coupon? %}
+								<div class="discount-form">
+									<div class="discount-row">
+										<input type="text" placeholder="{{ messages.discount_placeholder }}" class="discount-input" name="cart[coupon]" value="{{ cart.coupon }}"/>
+
+										<button type="submit" class="discount-button button is-secondary co-button co-button--link co-form-button" data-coupon-submit>
+											<span class="button-text">
+												Применить
+											</span>
+										</button>
+									</div>
+								</div>
+								{% assign hide_notice = cart.invalid_coupon? | default: 'hidden' %}
+								<div class="discounts-notice notice is-error {{ hide_notice }}">
+									{{ cart.coupon_error }}
+								</div>
+							{% endif %}
+						</div>
+
+						<div class="basket-footer-prices">
+							{% include 'cart_discount' %}
+							<div class="basket-total">Итого:<span class="js-shopcart-total-summ total_price">{{ cart.total_price }}</span></div>
+						</div>
+					</div>
+				{% endif %}
+
+            </form>
+		</div>

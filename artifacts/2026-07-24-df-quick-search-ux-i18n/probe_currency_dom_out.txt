@@ -1,0 +1,18 @@
+status 200 len 828250
+cookies: [('ins_myshop-cny848', 'a5fpfe-f63a22e42cdd8a0da1a34b3091b7f272'), ('ins_order_version', '1784893771.624719'), ('x_csrf_token', 'WsSRzjb_b-QsjlTUYogkBlo41UnM_JKYVafRdjbFOcMf9ZL1eEbGcuHRoRgP'), ('first_current_location', '%2Fsite_currencies%2Fupdate_current'), ('first_referer', 'https%3A%2F%2Fbimbobooks.ru%2F%3Flang%3Den'), ('referer', 'https%3A%2F%2Fbimbobooks.ru%2F%3Flang%3Den'), ('current_location', '%2Fsite_currencies%2Fupdate_current')]
+PAT name=["\']site_currency_code["\'][\s\S]{0,1500}?</ hits=1
+  SAMPLE: name="site_currency_code" onchange="this.parentNode.submit()">                                                                                   <option  value="RUR">₽&nbsp;RUR</option>                                                                                   <option selected value="USD">$&nbsp;USD</option>                                    </select>
+PAT header-currency[\s\S]{0,2000}?</select> hits=1
+  SAMPLE: header-currency">               <form action="/site_currencies/update_current" method="post">                 <select name="site_currency_code" onchange="this.parentNode.submit()">                                                                                   <option  value="RUR">₽&nbsp;RUR</option>                                                                                   <option selected value="USD">$&nbsp;USD</option>                                    </select>
+PAT class=["\'][^"\']*currency[^"\']*["\'][^>]{0,200} hits=1
+  SAMPLE: class="header-currency"
+PAT <option[^>]*selected[^>]*>[\s\S]{0,80}</option> hits=1
+  SAMPLE: <option selected value="USD">$&nbsp;USD</option>
+CFG keys: ['money_with_currency_format', 'currency_code', 'currency_iso_code', 'default_currency']
+money_with_currency_format = {"delimiter": " ", "separator": ".", "format": "%u%n", "unit": "$", "show_price_without_cents": 0}
+currency_code = 'USD'
+currency_iso_code = 'USD'
+default_currency = {"title": "Российский рубль", "code": "RUR", "rate": 1.0, "format_string": "%n %u", "unit": "₽", "price_separator": "", "is_default": true, "price_delimiter": "", "show_price_with_delimiter": true, "show_price_without_cents": false}
+json key money_format hits 0 sample []
+json key money_with_currency_format hits 0 sample []
+json key currency hits 0 sample []

@@ -1,0 +1,143 @@
+{%- if template contains 'index' or page.url contains 'contacts' -%}
+  {%- assign default_add =  account.default_address | remove: '{' | remove: '}' | split: ',' -%}
+  {%- assign country = default_add[0] | split: '=>' | last | remove: '"' -%}
+  {%- assign city = default_add[1] | split: '=>' | last | remove: '"' -%}
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "{{- city -}}, {{- country -}}"
+      },
+      "email": "{{ account.email }}",
+      "name": "{{ account.organization | replace: '"', "'" }}",
+      "telephone": "{{ account.phone }}"
+    }
+  </script>
+{%- endif -%}
+{%- if template contains 'product' -%}
+  {%- assign product_description = product.fields.description.value -%}
+  {%- unless  product.fields.description.value -%}
+    {%- assign product_description = product.short_description -%}
+  {%- endunless -%}
+  
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/", 
+      "@type": "Product", 
+      "name": "{{ product.title }}",
+      "image": "{{ product.images.first.original_url }}",
+      "description": {{ product_description | strip_html | json }},
+      "brand": "{{ product.properties.brend.characteristics.first.name }}",
+      "sku": "{{ product.sku }}",
+      "offers": {
+          "@type": "AggregateOffer",
+        "lowPrice": "{{ product.price_min }}",
+        "highPrice": "{{ product.price_max }}",
+        "priceCurrency": "{{ account.currency_code }}",
+        "offerCount": "{{ product.variants.size }}",
+        "offers": [
+          {%- for variant in product.variants -%}
+            {
+              "@type": "Offer",
+              "url": "{{ product.url }}",
+              "priceCurrency": "{{ account.currency_code }}",
+              "price": "{{ variant.price }}",
+              "sku": "{{ variant.id }}"
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+      {%- if product.rating -%},
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "{{ product.rating }}",
+          "worstRating": "1",
+          "bestRating": "5",
+          "ratingCount": "{{ product.reviews_count }}",
+          "reviewCount": "{{ product.reviews_count }}"
+        },
+        "review": [
+            {%- for review in product.reviews -%}
+          {
+            "@type": "Review",
+            "name": "{{ product.title }}",
+            "reviewRating": {
+              "@type": "Rating",
+              "ratingValue": "{% if review.rating %}{{ review.rating }}{% else %}5{% endif %}",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "datePublished": "{{ review.created_at | date: "%Y-%m-%d" }}",
+            "author": {"@type": "Person", "name": "{{ review.author }}"}
+          }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      {%- endif -%}
+    }
+  </script>
+{%- endif -%}
+
+{%- if template contains 'article' -%}
+  {% comment %} {%- assign article_preview = article.content | strip_html | lstrip | strip_newlines -%}
+  {%- unless article.content -%}
+    {%- assign article_preview = article.preview | strip_html | lstrip | strip_newlines -%}
+  {%- endunless -%} {% endcomment %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "url": "{{- account.url -}}{{- article.url -}}",
+      "publisher":{
+          "@type":"Organization",
+          "name":"{{ account.title }}",
+          "logo":"{{ account.logo.original_url }}"
+      },
+      "headline": "{{ article.title }}",
+      "name": "{{ article.title }}",
+      "mainEntityOfPage": "{{- account.url -}}{{- article.url -}}",
+      {% if article.preview %}
+        "abstract": {{ article.preview  | strip_html | lstrip | strip_newlines | json }},
+      {% endif %}
+      {% if article.content %}
+        "articleBody": {{ article.content | strip_html | lstrip | strip_newlines | json }},
+      {% endif %}
+      "image":[
+          "{{ article.image.large_url }}"
+      ],
+      "author": {{article.author | json }},
+      "datePublished":"{{ article.published_at | date: "%Y-%m-%d" }}"
+    }
+  </script>
+{%- endif -%}
+
+{% if template contains 'collection' %}
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement":
+    [
+       {% for item in collection.products %}
+        {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "item":
+        {
+          "@id": "{{ item.url }}",
+          "name": "{{ item.title }}"
+          }
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {% endfor %}
+    ]
+    }
+  </script>
+{% endif %}
+
+
+{% assign default_add = null %}
+{% assign country = null %}
+{% assign city = null %}
+

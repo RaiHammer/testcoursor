@@ -1,0 +1,10 @@
+{% comment %}
+  DanForge Quick Search — фрагмент для templates/layouts.layout.liquid
+  Место: после {% include "modals" %}, перед {% include "scripts" %}.
+  Не добавлять в checkout / client_account layouts.
+  Ровно один include на storefront.
+{% endcomment %}
+
+{% include "modals" %}
+{% include "df_quick_search" %}
+{% include "scripts" %}

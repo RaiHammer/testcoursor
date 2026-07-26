@@ -1,0 +1,84 @@
+{% if order.payment_title==settings.tinkov_pay %}
+  {% if  order.paid? %}
+    <div>Стоимость доставки оплачиваетя отдельно</div>
+  {% else %}
+
+  {% assign tks_url = settings.tinkov_url %}
+  {% assign tks_shopId = settings.tinkov_identifikator %}
+  {% assign tks_showcaseId = settings.tinkov_showcaseid %}
+  {% assign tks_promoCode = settings.tinkov_promocode %}
+
+
+
+  {% assign order_discount = 0 %}
+  {% for discount in order.discounts %}
+    {% assign order_discount = order_discount | plus: discount.amount.with_margin %}
+  {% endfor %}
+  {% assign order_discount_item = order_discount | divided_by: order.items.size %}
+
+  <script src="https://forma.tinkoff.ru/static/onlineScript.js"></script>
+  <div style="display:none !important;" id="tinkoff_create">
+    {% for item in order.items %}
+      {% assign _itemPrice = item.sale_price | minus: order_discount_item  %}
+      {% if item.quantity > 1 %}
+        {% assign disc = order_discount_item | divided_by: item.quantity %}
+        {% assign _itemPrice = item.sale_price | minus: disc  %}
+      {% endif %}
+      {% assign _item = 'items.' | append: forloop.index0 | append: '.name=' | append: item.title | append: '&items.' | append: forloop.index0 | append: '.price=' | append: _itemPrice | append: '&items.' | append: forloop.index0 | append: '.quantity=' | append: item.quantity %}
+      {%- assign _items = _items | append: '&' | append: _item -%}
+
+      {% if forloop.last %}
+        {% unless order.delivery_price == 0 %}
+          {% assign loop = forloop.index0 | plus: 1 %}
+          {% assign _item = 'items.' | append: loop | append: '.name=Доставка' | append: '&items.' | append: loop | append: '.price=' | append: order.delivery_price.with_margin | append: '&items.' | append: loop | append: '.quantity=1' %}
+          {%- assign _items = _items | append: '&' | append: _item -%}
+        {% endunless %}
+        {% comment %} summProd==> {{ _itemPrice | plus: _itemPrice }} {% endcomment %}
+        {% assign _readyItems = _items | append: '&promoCode=' | append: tks_promoCode | append: '&sum=' | append: order.total_price  %}
+      {% endif %}
+    {% endfor %}
+    <tinkoff-create-button
+      shopId="{{ tks_shopId }}"
+      showcaseId="{{ tks_showcaseId }}"
+      {% comment %} payment-data="demoFlow=sms&initialStage=filling&{{_readyItems}}" {% endcomment %}
+      payment-data="{{_readyItems}}"
+      ui-data="useReturnLinks=true&view=self"
+    ></tinkoff-create-button>
+  </div>
+  <script>
+    let first_time_loading_page = false;
+    {% if order.first_time_loading_page? %}
+      first_time_loading_page = true;
+    {% endif %}
+    (function(){
+
+      var payTitle = '{{ order.payment_title }}',
+          order_total = '{{ order.total_price }}',
+          order_status = '{{ order.status }}',
+          PAY_TITLE = '{{ settings.tinkov_pay }}';
+
+      if (payTitle == PAY_TITLE && first_time_loading_page) {
+        console.log('%c Первая загрузка страницы >> автоматическое перенаправление в Тинькофф ', 'background:#560a75;color:white;padding:5px 10px;');
+        document.querySelector('body').style.opacity = '0';
+        setTimeout(function () {
+          document.querySelector('#tinkoff_create tinkoff-create-button').click();
+          //tinkoff.create({
+          //      sum: '{{order.total_price }}',
+          //      items: [
+          //          {% for item in order.items %}
+          //                    {name: '{{ item.title }}', price: '{{ item.sale_price | minus: order_discount_item  }}', quantity: '{{ item.quantity }}' },
+          //          {% endfor %}
+          //        {% unless order.delivery_price == 0 %}
+          //                    {name: 'Доставка', price: '{{ order.delivery_price.with_margin }}', quantity: '1' },
+          //        {% endunless %}
+          //      ],
+          //      promoCode: '{{ tks_promoCode }}',
+          //      shopId: '{{ tks_shopId }}',
+          //      showcaseId: '{{ tks_showcaseId }}'
+          //  }, {view: 'modal'});
+        }, 1500);
+      }
+    })();
+  </script>
+  {% endif %}
+{% endif %}

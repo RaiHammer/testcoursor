@@ -1,0 +1,83 @@
+	<section class="tabs">
+    <div class="tabs__header">
+      <div class="container">
+        <ul class="tabs__nav clearfix" role="tablist">
+          {% if product.fields.description.value.size > 0 %}
+            <li role="presentation" class="active"><a href="#tab-description" aria-controls="tab-description" role="tab" data-toggle="tab">Описание</a></li>
+          {% endif %}
+
+          {% if product.properties.size > 0 %}
+            <li role="presentation"><a href="#tab-properties" aria-controls="tab-properties" role="tab" data-toggle="tab">Характеристики</a></li>
+          {% endif %}
+
+          <li role="presentation" id="tab_reviews"><a href="#tab-reviews" aria-controls="tab-reviews" role="tab" data-toggle="tab">Отзывы</a></li>
+        </ul>
+      </div>
+    </div>
+
+		<div class="tab-content">
+      <div class="container">
+        {% if product.fields.description.value.size > 0 %}
+          <div role="tabpanel" class="tab-pane active tab-description" id="tab-description" >
+            {{ product.fields.description.value }}
+          </div>
+        {% endif %}
+
+        {% if product.properties.size > 0 %}
+          <div role="tabpanel" class="tab-pane tab-properties" id="tab-properties">
+            {% include "product_properties" %}
+          </div>
+        {% endif %}
+
+				<noindex role="tabpanel" class="tab-pane tab-reviews" id="tab-reviews">
+          {% include "product_reviews" %}
+        </noindex> 
+
+        <div class="tab-products js-tab-products">
+          <div class="tab-products__items">
+            {% if product.related_products.size > 0 %}
+              <div class="tab-products__item">
+                {% include "product_slider", slider_products: product.related_products, slider_class: 'related-products', slider_heading: 'Аксессуары' %}
+              </div>
+            {% endif %}
+
+            {% if collections['kofe-v-zyornah'].products.size > 0 %}
+              <div class="tab-products__item">
+                {% include "product_slider", slider_products: collections['kofe-v-zyornah'].products, slider_class: 'related-products-2', slider_heading: 'Кофе' %}
+              </div>
+            {% endif %}
+
+            {% if product.similar_products.size > 0 %}
+              <div class="tab-products__item">
+                {% include "product_slider", slider_products: product.similar_products, slider_class: 'similar-products', slider_heading: 'Смотрите также' %}
+              </div>
+            {% endif %}
+
+            {% unless settings.product_nivona_hide and settings.product_boxberry_hide %}
+              <div class="tab-products_item js-productMap">
+                <div class="tab-products__item__title">
+                  Пункты самовывоза
+                </div>
+                <div class="tab-products__item__content">
+                  <div class="pickup_mapLink_items">
+                    {% unless settings.product_nivona_hide %}
+                    <div class="pickup_mapLink_item pickup_mapLink_nivona">
+                      <a href="#" class="pickup_mapLink_item_link js-pickup_mapLink_nivona button is-primary">
+                        <span class="icon"><img src="{{ 'logo_new.svg' | asset_url }}" alt="Nivona" /></span>
+                        <span class="title">Пункт выдачи NIVONA</span>
+                      </a>
+                    </div>
+                  {% endunless %}
+
+                  {% unless settings.product_boxberry_hide %}
+                    <div class="pickup_mapLink_item pickup_mapLink"></div>
+                  {% endunless %}
+                  </div>
+                </div>
+              </div>
+            {% endunless %}
+          </div>
+        </div>
+			</div>
+		</div>
+  </section>

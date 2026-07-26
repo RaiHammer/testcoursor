@@ -1,0 +1,2 @@
+settings.test.js: all 72 checks passed
+EXIT:0

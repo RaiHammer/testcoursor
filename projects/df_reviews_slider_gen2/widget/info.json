@@ -1,0 +1,21 @@
+{
+  "type": "SimpleWidgetType",
+  "handle": "danforge_reviews_slider_g2",
+  "page_kinds": ["all"],
+  "widget_list_kinds": [
+    "content",
+    "before_content",
+    "after_content",
+    "footer",
+    "sidebar"
+  ],
+  "generation": 2,
+  "name": {
+    "ru": "Отзывы Яндекс DanForge (gen-2)"
+  },
+  "description": {
+    "ru": "Отзывы с Яндекс Карт в слайдере или ленте. Обновление через CLI DanForge (сниппет danforge_reviews_yandex)."
+  },
+  "widget_category_handle": "drugie",
+  "libraries": ["swiper"]
+}

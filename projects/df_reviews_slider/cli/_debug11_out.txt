@@ -1,0 +1,27 @@
+inline scripts 16
+biggest lens [226402, 20493, 13466, 10568, 4065]
+search in 226402
+
+PAT ["\']([^"\']*apphost[^"\']*)["\'] 1
+  ╬ЄёєёЄтє■Є фрээ√х ё apphost, яЁюшчтюфшь ajax чруЁєчъє
+
+PAT ["\']([^"\']*ajax[^"\']*)["\'] 4
+  ╬ЄёєёЄтє■Є фрээ√х ё apphost, яЁюшчтюфшь ajax чруЁєчъє
+  reviews-list-not-ajax-empty
+  overlay:ajax-fetch
+  reviews-empty-ajax-data
+
+PAT ["\']([^"\']*reviews[^"\']*fetch[^" 7
+  :{const{response:s,fetchedReviewsCount:c}=t,i=(0,r.lT)({response:s,fetchedReviewsCount:c,state:e});return(0,a._)({},e,i)}case
+  ;(self.serpWebpackJsonp=self.serpWebpackJsonp||[]).push([[74340],{874340:(e,t,s)=>{s.d(t,{Y$:()=>h});var a=s(328320),c=s(743452),r=s(41594),i=s(314573),n=s(6006
+  ;let d=e.aspectRanking;d||(d=s?n.T.POSITIVE:c?n.T.TEXT_RELEVANCE:n.T.DEFAULT),G({ranking:d,searchQuery:c,searchAspectId:s,searchAspectTag:r,aspectId:i,aspectKey
+  ,attrs:{metrikaCounterId:c.D}},e=>{var n,t;const {status:s,reviews:i,csrfToken:l,appId:c,fetchNext:u,changeSort:d,hasMore:x,ranking:C,objectInfo:j,viewportWidth
+  ,{ref:Y[C.REVIEWS],children:[(0,n.jsx)(U.R,(0,o._)({},R,{fetchNext:h,changeSort:j,appId:u.appId,viewportWidth:null==c?void 0:c.viewportWidth,rsyData:v,userAvata
+  ,hasMore:t<k&&(null!==(s=null===(y=e.reviews)||void 0===y||null===(R=y.items)||void 0===R?void 0:R.length)&&void 0!==s?s:0)>0,aspects:L,fetchedReviewsCount:t,re
+  ,reviews:{count:0,totalCount:0,items:[]},fetchedReviewsCount:0,hasMore:!0,aspectId:
+
+PAT ["\']([^"\']*ugc[^"\']*reviews[^"\' 4
+  ,String(e.ugcStat.reviewsCount),(0,o._)({path:e.path},e.ugcStat)),
+  ,ssr:!1}),Q=e=>{var t,i,s,r;const {isLoggedIn:d,ugcRequestParams:u,mainProps:c,rsyData:v}=e,{ratingSpreadVisible:p,handleRatingSpreadOpen:g,handleRatingSpreadCl
+  ;(self.serpWebpackJsonp=self.serpWebpackJsonp||[]).push([[74,287,381,1466,2104,3476,3489,4796,4924,6161,6645,7066,7353,7962,8412,9082,10090,11118,11224,11710,11
+  },project:d.V.ugc});const _=Q.searchAspectId||(Q.searchQuery?void 0:Q.aspectId),k=Q.searchAspectId?void 0:Q.searchQuery||void 0,R=Q.ranking,C=Q.searchAspectTag|

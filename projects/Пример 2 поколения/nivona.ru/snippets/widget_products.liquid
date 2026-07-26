@@ -1,0 +1,33 @@
+{% if block_lists.special-products-2.blocks.size > 0 %}
+  <div class="special-products-tab tab">
+    <div class="special-products-tab__header">
+      {% for block in block_lists.special-products-2.blocks %}
+        {% assign tabHeaderWidth = 100 | divided_by: forloop.length | round: 2 %}
+        <button class="tab-toggle product-slider-heading tab-index" style="flex: 1 0 {{ tabHeaderWidth }}%;" data-target="#product-{{ block.handle }}" data-toggle="tabs">
+          <p class="tab-toggle-caption">{% if block.title == '' %}{{ block.collection.title | editable }}{% else %}{{ block.title | editable }}{% endif %}</p>
+        </button>
+      {% endfor %}
+    </div>
+
+    <div class="special-products-tab__content">
+      {% for block in block_lists.special-products-2.blocks %}
+      <div class="special-products-tab__title">{% if block.title == '' %}{{ block.collection.title | editable }}{% else %}{{ block.title | editable }}{% endif %}</div>
+        <div class="tab-block" id="product-{{ block.handle }}">
+          <div class="container">
+            <div class="products-items products-items_grid">
+              <div class="products-list is-collection row">
+                {% for product in block.collection.products %}
+                  <div class="col-xs-6 col-sm-4 col-md-3">
+                    {% include 'product_card' %}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% assign block_name = null %}

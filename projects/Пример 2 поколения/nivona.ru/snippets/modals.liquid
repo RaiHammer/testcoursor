@@ -1,0 +1,668 @@
+	<div id="signin" class="mfp-hide modal modal--signin">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<span class="modal__title">Вход</span>
+		<p class="modal__text"><span>Заполните пожалуйста поля!</span></p>
+
+		<form class="form form--modal js-form-signin" action="/client_account/session" method="post">
+			<div class="form__group">
+				<label  class="form__label">Email</label>
+				<input type="text" class="form__input" name="email">
+			</div>
+
+			<div class="form__group">
+				<label  class="form__label">Пароль</label>
+				<input type="password" class="form__input" name="password">
+			</div>
+
+			<button class="form__btn button is-primary" name="commit" type="submit">Войти</button>
+
+			<div class="row">
+				<div class="col-xs-6">
+					<a href="/client_account/password/change" class="form__link popup-modal" data-attr="#forgot">Забыли пароль?</a>
+				</div>
+				<div class="col-xs-6">
+					<a href="/client_account/contacts/new" class="form__link form__link--right popup-modal" data-attr="#signup">Регистрация</a>
+				</div>
+				<div class="col-xs-12 error_form" style="color:red; font-size:17px;"></div>
+			</div>
+		</form>
+	</div>
+
+	<div id="signup" class="mfp-hide modal modal--signup">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<span class="modal__title">Регистрация</span>
+		<p class="modal__text"><span>Заполните пожалуйста поля!</span></p>
+
+		<form class="form form--modal js-form-signup" id="new_client" action="/client_account/contacts" accept-charset="UTF-8" method="post">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label  class="form__label">Контактное лицо</label>
+						<input type="text" class="form__input" name="client[name]" id="client_name_reg">
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<div class="form__group">
+						<label  class="form__label">Email</label>
+						<input type="text" class="form__input" id="client_email_reg" name="client[email]">
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<div class="form__group">
+						<label  class="form__label">Телефон</label>
+						<input type="text" class="form__input" id="client_phone_reg" name="client[phone]">
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<div class="form__group">
+						<label  class="form__label">Пароль</label>
+						<input type="password" class="form__input" name="client[password]" id="client_password_reg">
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<div class="form__group">
+						<label  class="form__label">Пароль еще раз</label>
+						<input type="password" class="form__input" name="client[password_confirmation]" id="client_password_confirmation">
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<div class="form__group form__group--regulations">
+						<input id="consent_to_personal_data_reg" name="client[consent_to_personal_data]" class="form__checkbox-input" type="checkbox" value="1">
+						{% comment %} <label for="consent_to_personal_data" class="form__checkbox-label">Я соглашаюсь с <a href="/page/agreement">правилами сайта</a></label> {% endcomment %}
+						<label for="consent_to_personal_data_reg" class="form__checkbox-label"><span>
+							Настоящим подтверждаю, что <a href="/page/soglasie-na-obrabotku-personalnyh-dannyh" target="blank">согласен</a> на обработку персональных данных
+						</span></label>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<button class="form__btn button is-primary" type="submit" name="commit">зарегистрироваться</button>
+				</div>
+				<div class="col-xs-12 error_form" style="color:red; font-size:17px;"></div>
+			</div>
+		</form>
+	</div>
+
+	<div id="forgot" class="mfp-hide modal modal--forgot">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<span class="modal__title">забыли пароль? Не страшно!</span>
+		<p class="modal__text"><span>Пожалуйста,</span><br>	введите адрес электронной почты</p>
+
+		<form class="form form--modal js-form-reset" action="/client_account/password/reset" method="post" accept-charset="UTF-8">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6">
+					<div class="form__group form__group--margin">
+						<label  class="form__label">Ваш Email</label>
+						<input type="text" class="form__input" name="email">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-6">
+					<button class="form__btn button is-primary" name="commit" type="submit">выслать пароль</button>
+				</div>
+				<div class="col-xs-12 error_form" style="color:red; font-size:17px;"></div>
+			</div>
+		</form>
+	</div>
+
+	<div id="call" class="mfp-hide modal modal--call">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<span class="modal__title">Обратный звонок</span>
+		<p class="modal__text"><span>Закажите обратный звонок  и наш менеджер свяжится <br>с Вами в ближайшее время.</span></p>
+		
+		{% if account.captcha_type == 'yandex' or settings.feedback_captcha_enabled %}
+			{% if account.captcha_type == 'google' and settings.feedback_captcha_enabled %}
+				<form class="form form--modal js-form-call" action="/client_account/feedback" accept-charset="UTF-8" method="post" data-response-modal="call_thx" data-captcha="google">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6">
+							<div class="form__group">
+								<label for="feedback_name" class="form__label">Как к Вам обращаться?</label>
+								<input type="text" class="form__input" name="feedback[name]" id="feedback_name">
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6">
+							<div class="form__group">
+								<label for="feedback_phone" class="form__label">Телефон</label>
+								<input type="text" class="form__input" name="feedback[phone]" id="feedback_phone">
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-12">
+							<div class="form__group form__group--regulations">
+								<input class="form__checkbox-input" type="checkbox" name="consent_to_personal_data" id="consent_to_personal_data" style="vertical-align: middle; margin: 0 6px 0 0; cursor: pointer;">
+								<label for="consent_to_personal_data" class="form__checkbox-label"><span>
+									Настоящим подтверждаю, что <a href="/page/soglasie-na-obrabotku-personalnyh-dannyh" target="blank">согласен</a> на обработку персональных данных
+								</span></label>
+							</div>
+						</div>
+
+
+						<div class="col-xs-12 col-sm-12">
+							<div class="form__group">
+								<div id="captchaFeedback" class="g-recaptcha"></div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-4 col-sm-offset-4">
+							<input type="hidden" class="form__input" name="feedback[subject]" id="feedback_subject" value="Заказ обратного звонка с сайта {{ account.title }}">
+							<input type="hidden" class="form__input" name="feedback[content]" id="feedback_content_call" value="Заказ обратного звонка с сайта {{ account.title }}">
+							<input type="hidden" class="form__input" name="feedback[from]" id="feedback_from" value="{{ account.email }}">
+							<button href="#thx" class="form__btn button is-primary">отправить</button>
+						</div>
+					</div>
+				</form>
+			{% elsif account.captcha_type == 'yandex' %}
+				<form class="form form--modal js-form-call" action="/client_account/feedback" accept-charset="UTF-8" method="post" data-response-modal="call_thx" data-captcha="yandex" data-feedback-form-wrapper>
+					{% comment %} <div class="row">
+						<div class="col-xs-12">
+							<div
+								data-feedback-form-success='{"showTime": 10000}'
+								class="success-message"
+							>Успешно отправлено</div>
+						</div>
+					</div> {% endcomment %}
+					<div class="row">
+						<div class="col-xs-12 col-sm-6">
+							<div class="form__group" data-feedback-form-field-area>
+								<label for="feedback_name" class="form__label">Как к Вам обращаться?</label>
+							{% comment %} <input type="text" class="form__input" name="feedback[name]" id="feedback_name" {% endcomment %}
+								<input type="text" class="form__input" name="name" id="feedback_name"
+									data-feedback-form-field='{
+										"isRequired": true,
+										"errorMessage": "Неправильно заполнено поле Имя"
+									}'
+									value=""
+								>
+								{% comment %} <div data-feedback-form-field-error></div> {% endcomment %}
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6">
+							<div class="form__group" data-feedback-form-field-area>
+								<label for="feedback_phone" class="form__label">Телефон</label>
+							{% comment %} <input type="text" class="form__input" name="feedback[phone]" id="feedback_phone" {% endcomment %}
+								<input type="text" class="form__input" name="phone" id="feedback_phone"
+									data-feedback-form-field='{
+										"isRequired": true,
+										"errorMessage": "Неправильно заполнено поле Телефон"
+									}'
+								>
+								{% comment %} <div data-feedback-form-field-error></div> {% endcomment %}
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-12">
+							<div class="form__group form__group--regulations">
+								<input class="form__checkbox-input" type="checkbox" name="consent_to_personal_data" id="consent_to_personal_data" style="vertical-align: middle; margin: 0 6px 0 0; cursor: pointer;"
+								data-feedback-form-agree='{"errorMessage": "Необходимо подтвердить согласие"}'
+								>
+								<label for="consent_to_personal_data" class="form__checkbox-label"><span>
+									Настоящим подтверждаю, что <a href="/page/soglasie-na-obrabotku-personalnyh-dannyh" target="blank">согласен</a> на обработку персональных данных
+								</span></label>
+							</div>
+						</div>
+
+
+						<div class="col-xs-12 col-sm-12">
+							<div class="form__group">
+								{% comment %} <div id="captchaFeedback" class="g-recaptcha"></div> {% endcomment %}
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12">
+							<div class="form__group">
+								<div data-feedback-form-field-area class="feedback__field-area">
+									<div data-yandex-captcha-type="visible" data-yandex-captcha-shield-position="top-left" data-feedback-form-yandex-captcha='{"isRequired": true, "errorMessage": " Пожалуйста, подтвердите, что вы не робот"}' class="feedback__yandex-captcha"></div>
+									<div data-feedback-form-field-error class="feedback__field-error"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-4 col-sm-offset-4">
+							<input type="hidden" class="form__input" name="subject" id="feedback_subject" value="Заказ обратного звонка с сайта {{ account.title }}">
+							<input type="hidden" class="form__input" name="feedback[from]" id="feedback_from" value="{{ account.email }}">
+								<div data-feedback-form-field-area hidden>
+									<textarea
+										name="content"
+										data-feedback-form-field='{"errorMessage": "Неправильно заполнено поле Текст"}'
+										value="Заказ обратного звонка с сайта '{{ account.title }}'"
+										>Заказ обратного звонка с сайта '{{ account.title }}'</textarea>
+									{% comment %} <div data-feedback-form-field-error></div> {% endcomment %}
+								</div>
+							<button href="#thx" class="form__btn button is-primary" type="submit">отправить</button>
+						</div>
+					</div>
+
+				</form>
+			{% endif %}
+		{% endif %}
+	</div>
+
+	<div id="call_thx" class="mfp-hide modal modal--thx">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<img class="modal__img lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-original="{{ 'thx.png' | asset_url_if_exists }}" alt="">
+		<span class="modal__thx">Спасибо за заказ обратного звонка! Мы Вам перезвоним в ближайшее время</span>
+	</div>
+
+	<div id="thx" class="mfp-hide modal modal--thx">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<span class="modal__thx">Товар добавлен в корзину!</span>
+		<div class="modal__btns">
+			<div class="modal__btn">
+				<a href="#" class="button is-bordered js-magnificPopup-close">Продолжить</a>
+			</div>
+			<div class="modal__btn">
+				<a href="/cart_items" class="button is-primary">В корзину</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="thx_for_reset" class="mfp-hide modal modal--thx">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<img class="modal__img lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-original="{{ 'thx.png' | asset_url_if_exists }}" alt="">
+		<span class="modal__thx">Инструкцию по смене пароля придет на Ваш Email!</span>
+	</div>
+
+
+	<div id="subscribe" class="mfp-hide modal modal--subscribe">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<div class="modal--subscribe__content">
+			<div class="modal--subscribe__content__logo">
+				<a href="/" class="top_line_panel__mobile__logo__link">
+					{% if settings.ny_show == '1' %}
+						<img src="{{ 'nivona-ny-logo-mobile_2x.png' | asset_url }}">
+					{% else %}
+						<img src="{{ 'logo_new_mobile.svg' | asset_url }}">
+					{% endif %}
+					{% comment %} <img src="{{ 'logo-ny.png' | asset_url }}"> {% endcomment %}
+				</a>
+			</div>
+			<div class="modal--subscribe__content__title">
+				Узнайте первым о новинках, акциях и мероприятиях!
+			</div>
+			<div class="modal--subscribe__content__descr">
+				Подпишитесь на рассылку и получите доступ к специальным предложениям
+			</div>
+			<div class="modal--subscribe__content__form">
+				<div class="js-subscribe subscribe_block">
+					<div class="form subscribe_block_content">
+						<div class="input-group">
+					  		<input type="text" id="subscribe_name" placeholder="Имя*" name="feedback[name]" />
+						</div>
+						<div class="input-group">
+					  		<input type="text" id="subscribe_phone" class="subscribe_phone" placeholder="Телефон" name="feedback[phone]" />
+						</div>
+						<div class="input-group">
+					  		<input type="text" placeholder="Ваш email*" name="feedback[email]" id="subscribe_email">
+						</div>
+						<div class="input-group">
+					  		<button class="js-subscribe_submit button is-secondary">
+								<span class="button-title">Подписаться</span>
+							</button>
+						</div>
+					  <input id="client_registered" name="feedback[registered]" type="hidden" value="1" />
+					  <input type="hidden" id="subscribe_pass" value="q1w2e3" name="feedback[password]" />
+					  <input type="hidden" id="subscribe_pass_c" value="q1w2e3" name="feedback[password_confirmation]" />
+
+
+
+					</div>
+					<div>
+						<div class="subscribe_block_info">
+							<input type="checkbox" name="" id="" style=" vertical-align: middle; margin: 0 6px 0 0; cursor: pointer; ">
+							{% comment %} Заполняя эту форму, вы соглашаетесь с <a href="/page/policy">Политикой конфиденциальности</a> {% endcomment %}
+							Заполняя эту форму, вы <a href="/page/soglasie-na-informatsionnuyu-i-reklamnuyu-rassylku" rel="noopener" target="_blank">соглашаетесь</a> на получение информационных рассылок о специальных предложениях, а также <a href="/page/soglasie-na-obrabotku-personalnyh-dannyh" rel="noopener" target="_blank">предоставляете согласие</a> на обработку персональных данных
+						</div>
+					</div>
+					<div class="subscribe_block_success" style="display: none;">
+					  Вы успешно подписались на новости!
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="thx-favorites" class="mfp-hide modal modal--thx">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<span class="modal__thx">Товар добавлен в избранное</span>
+		<div class="modal__btns">
+			<div class="modal__btn">
+				<a href="#" class="button is-bordered js-magnificPopup-close">Продолжить</a>
+			</div>
+			<div class="modal__btn">
+				<a href="/page/favorites" class="button is-primary">В избранное</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="tnx-compares" class="mfp-hide modal modal--thx">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<span class="modal__thx">Товар добавлен в сравнение</span>
+		<div class="modal__btns">
+			<div class="modal__btn">
+				<a href="#" class="button is-bordered js-magnificPopup-close">Продолжить</a>
+			</div>
+			<div class="modal__btn">
+				<a href="/compares" class="button is-primary">В сравнение</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="pickup_mapLink_nivona" class="mfp-hide modal modal--pickup_mapLink_nivona">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<span class="modal__title">Пункт выдачи NIVONA</span>
+		<div id="map"></div>
+	</div>
+  <!--noindex-->
+	<div id="found-cheaper" class="mfp-hide modal modal--found-cheaper">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<span class="modal__title">Нашли дешевле? Снизим цену!</span>
+		<p class="modal__text"><span>Если вы нашли цену ниже, чем в официальном магазине Nivona.ru, мы продадим товар по той же цене.</span></p>
+		<p class="modal__text"><span>Для участия в акции необходимо предоставить ссылку на товар в наличии, с "розничной" ценой ниже чем на сайте Nivona.ru, сообщить об этом в магазин указав контактные данные: ФИО,  E-mail, телефон.</span></p>
+        <p class="modal__text"><span>Дождаться ответа магазина.</p>
+		<p class="modal__text"><span>Список магазинов, которые могут быть приняты к сравнению для снижения цены на товар:OZON (Продавцы: Официальный магазин Nivona «юридическое лицо ООО «Премиум Кофе Солюншз», Альпийский Бриллиант, ООО"ПКС"), Technopark.ru, Mvideo.ru, Сitilink.ru, Dns-shop.ru, Niv-rus.ru, Coffeefine.ru, Holodilnik.ru, Vazaro.ru, Eldorado.ru </span></p>
+
+		<form class="form form--modal js-form-call" action="/client_account/feedback" accept-charset="UTF-8" method="post" data-response-modal="found-cheaper_thx">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_name_nd" class="form__label">ФИО</label>
+						<input type="text" class="form__input" name="feedback[name]" id="feedback_name_nd">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_from_nd" class="form__label">E-mail</label>
+						<input type="text" class="form__input" name="feedback[from]" id="feedback_from_nd">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_phone_nd" class="form__label">Телефон</label>
+						<input type="text" class="form__input" name="feedback[phone]" id="feedback_phone_nd">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_content_cheaper" class="form__label">Cсылки на товар у конкурента</label>
+						<input type="text" class="form__input" name="feedback[content]" id="feedback_content_cheaper">
+					</div>
+				</div>
+
+                <div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						{% if settings.feedback_captcha_enabled %}
+							{% if account.captcha_type == 'google' %}
+								<div id="captchaFeedback" class="g-recaptcha"></div>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-4 col-sm-offset-4">
+					<input type="hidden" class="form__input" name="feedback[subject]" id="feedback_subject_nd" value="Заявка \"Нашли дешевле\" с сайта {{ account.title }}">
+					<button href="#thx" class="form__btn button is-primary">отправить</button>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="subscribe_block_info">
+						Заполняя эту форму, вы соглашаетесь с&nbsp;<a href="/page/policy" target="_blank">Политикой конфиденциальности</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!--/noindex-->
+
+	<div id="found-cheaper_thx" class="mfp-hide modal modal--found-cheaper_thx">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+		<img class="modal__img lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-original="{{ 'thx.png' | asset_url_if_exists }}" alt="">
+		<span class="modal__thx">Спасибо за уведомление! Мы Вам перезвоним в ближайшее время</span>
+	</div>
+
+	<div id="services_feedback" class="mfp-hide modal">
+		<button class="modal__close">
+			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<g opacity="0.5">
+				<rect x="23.6066" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.0208)" fill="#B5ACA7"/>
+				<rect x="0.979187" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6066)" fill="#B5ACA7"/>
+				</g>
+			</svg>
+		</button>
+
+		<form class="form form--modal js-form-call" action="/client_account/feedback" accept-charset="UTF-8" method="post" data-response-modal="found-cheaper_thx">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_name_yo" class="form__label">Ваше имя<span>*</span></label>
+						<input type="text" class="form__input" name="feedback_name" id="feedback_name_yo">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_name_sr" class="form__label">Ваша фамилия <span>*</span></label>
+						<input type="text" class="form__input" name="feedback_name" id="feedback_name_sr">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_phone_sr" class="form__label">Телефон <span>*</span></label>
+						<input type="text" class="form__input" name="feedback_phone" id="feedback_phone_sr">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_mail" class="form__label">E-mail <span>*</span></label>
+						<input type="text" class="form__input" name="feedback_mail" id="feedback_mail">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_city" class="form__label">Город <span>*</span></label>
+						<input type="text" class="form__input" name="feedback_city" id="feedback_city">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_photo_sn" class="form__label">Фото серийного номера</label>
+						<input type="text" class="form__input" name="feedback_photo_sn" id="feedback_photo_sn">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_date" class="form__label">Дата покупки <span>*</span></label>
+						<input type="text" class="form__input" name="feedback_date" id="feedback_date">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_seller" class="form__label">Информация о продавце <span>*</span></label>
+						<input type="text" class="form__input" name="feedback_seller" id="feedback_seller">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_photo_receipt" class="form__label">Фото чека о покупке</label>
+						<input type="file" class="form__input" name="feedback_photo_receipt" id="feedback_photo_receipt">
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						{% comment %} <label for="feedback_content" class="form__label">В чем заключается проблема?</label>
+						<input type="text" class="form__input" name="feedback_problem" id="feedback_content"> {% endcomment %}
+						<label for="feedback_problem" class="form__label">В чем заключается проблема?</label>
+						<select name="feedback_problem" id="feedback_problem">
+							<option value="problem1">Проблема 1</option>
+							<option value="problem2" selected>Проблема 2</option>
+							<option value="problem3">Проблема 3</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-12">
+					<div class="form__group">
+						<label for="feedback_content" class="form__label">Опишите подробнее причину обращения <span>*</span></label>
+						<textarea rows="5" type="text" class="form__input" name="feedback_content" id="feedback_content"></textarea>
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-sm-4 col-sm-offset-4">
+					<input type="hidden" class="form__input" name="feedback[subject]" id="feedback_subject_ch" value="Заявка \"Нашли дешевле\" с сайта {{ account.title }}">
+					<button href="#thx" class="form__btn button is-primary">отправить</button>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="subscribe_block_info">
+						Заполняя эту форму, вы соглашаетесь с&nbsp;<a href="/page/policy" target="_blank">Политикой конфиденциальности</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+<script type="text/template" data-modal="mobile-sidebar">
+<div class="sidebar">
+
+  <div class="sidebar-block">
+    <div class="sidebar-block-heading">
+      {{ messages.label_catalog }}
+    </div>
+
+    <div class="sidebar-block-content">
+      {%- include "menu", source_type: 'collection', source_handle: 'all', menu_class: 'mobile-sidebar-menu', show_icon: false -%}
+    </div>
+  </div>
+
+  <div class="sidebar-block">
+    <div class="sidebar-block-heading">
+      {{ messages.label_main_menu }}
+    </div>
+
+    <div class="sidebar-block-content">
+      {%- include "menu", source_type: 'menu', source_handle: 'main-menu', menu_class: 'mobile-sidebar-menu' -%}
+    </div>
+    <div class="sidebar-block-content">
+        <a class="mobile-sidebar-menu-link menu-link" href="/client_account/login">
+          {% if client %}
+            <span class="js-user-name-mobile"></span>
+          {% else %}
+            <span>{{ messages.log_in }}</span>
+          {% endif %}
+        </a>
+    </div>
+  </div>
+</div>
+</script>
+
+<script type="text/template" data-modal="collection-filter">
+  <div class="sidebar">
+    <div class="sidebar-block">
+      {%- include "collection_filter", filter_class: 'is-modal-filter', hide_options: settings.category_filter_hidden -%}
+    </div>
+  </div>
+</script>
+
+<script type="text/template" data-modal="search-form">
+  {%- include "search_widget", widget_class: 'in-search-panel' -%}
+</script>
+

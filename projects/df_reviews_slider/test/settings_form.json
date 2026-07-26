@@ -1,0 +1,215 @@
+{
+  "Настройки страницы отзывов":[
+    {
+      "items":[
+         {
+          "class": "checkbox",
+          "name": "hide-date",
+          "label": "{{ messages.hide_date }}",
+          "value": null,
+          "type": "checkbox",
+          "general": true,
+          "general_position": 1
+        },
+        {
+          "class":"text",
+          "name":"title",
+          "label":"Заголовок страницы",
+          "value":null,
+          "type":"text"
+        },
+        {
+          "class":"range",
+          "name":"reviews_limit",
+          "label":"Кол-во отзывов на странице",
+          "min":20,
+          "max":100,
+          "step":10,
+          "type":"range"
+        },
+        {
+          "class":"text",
+          "name":"review-main-title",
+          "label":"Заголовок для отзыва к магазину",
+          "value":null,
+          "type":"text",
+          "help": "Например название магазина"
+        },
+        {
+          "class":"file",
+          "name":"review-main-src",
+          "label":"Картинка для отзыва к магазину",
+          "type":"file",
+          "help": "Например лого магазина"
+        },
+        {
+          "name":"rating-color",
+          "label":"{{ messages.rating_color }}",
+          "value":"",
+          "type":"color"
+        },
+        {
+          "class":"range",
+          "name":"grid-list-min-width",
+          "label":"{{ messages.review_item_masonry_min_width }}",
+          "min":270,
+          "max":500,
+          "step":10,
+          "unit":"px",
+          "type":"range",
+          "help":"{{ messages.review_item_masonry_min_width_help }}"
+        },
+        {
+          "class":"range",
+          "name":"grid-list-row-gap",
+          "min":0.5,
+          "max":10,
+          "step":0.5,
+          "label":"{{ messages.vertical_padding_between_cards }}",
+          "unit":"rem",
+          "type":"range"
+        },
+        {
+          "class":"range",
+          "name":"grid-list-column-gap",
+          "min":0,
+          "max":10,
+          "step":0.5,
+          "label":"{{ messages.horizontal_space_between_cards }}",
+          "unit":"rem",
+          "type":"range"
+        },
+        {
+          "class":"range",
+          "name":"img-border-radius",
+          "label":"{{ messages.review_item_masonry_border_radius }}",
+          "min":0,
+          "max":50,
+          "step":1,
+          "unit":"px",
+          "type":"range"
+        },
+        {
+          "name":"manager-photo",
+          "label":"{{ messages.review_manager_photo }}",
+          "value":null,
+          "type":"file"
+        }
+      ]
+    }
+  ],
+  "Дизайн": [
+    {
+      "group_name":"{{ messages.background }}",
+      "items": [
+        {
+          "name":"bg",
+          "label":"{{ messages.widget_background_color }}",
+          "value":"",
+          "type":"color",
+          "clearable": true
+        },
+        {
+          "class": "checkbox",
+          "name": "layout-wide-bg",
+          "label": "{{ messages.wide_background }}",
+          "value": null,
+          "type": "checkbox"
+        }
+      ]
+    },
+    {
+      "group_name":"{{ messages.indentation }}",
+      "items": [
+        {
+          "class": "range",
+          "name": "layout-mt",
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "label": "{{ messages.margin_top }}",
+          "type": "range",
+          "unit": "vw"
+        },
+        {
+          "class": "range",
+          "name": "layout-mb",
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "label": "{{ messages.margin_bottom }}",
+          "type": "range",
+          "unit": "vw"
+        },
+        {
+          "class": "range",
+          "name": "layout-pt",
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "label": "{{ messages.padding_top }}",
+          "type": "range",
+          "unit": "vw"
+        },
+        {
+          "class": "range",
+          "name": "layout-pb",
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "label": "{{ messages.padding_bottom }}",
+          "type": "range",
+          "unit": "vw"
+        }
+      ]
+    },
+    {
+      "group_name":"{{ messages.content }}",
+      "items": [
+        {
+          "class": "range",
+          "name": "layout-content-max-width",
+          "min": 980,
+          "max": 2000,
+          "step": 2,
+          "label": "{{ messages.content_max_width }}",
+          "type": "range",
+          "unit": "px"
+        },
+        {
+          "class": "checkbox",
+          "name": "layout-wide-content",
+          "label": "{{ messages.wide_content }}",
+          "value": null,
+          "type": "checkbox"
+        },
+        {
+          "class": "checkbox",
+          "name": "layout-edge",
+          "label": "{{ messages.remove_padding_at_edges }}",
+          "value": null,
+          "type": "checkbox"
+        }
+      ]
+    },
+    {
+      "group_name":"{{ messages.adaptive }}",
+      "items": [
+        {
+          "class": "checkbox",
+          "name": "hide-desktop",
+          "label": "{{ messages.hide_desktop }}",
+          "value": null,
+          "type": "checkbox"
+        },
+        {
+          "class": "checkbox",
+          "name": "hide-mobile",
+          "label": "{{ messages.hide_mobile }}",
+          "value": null,
+          "type": "checkbox"
+        }
+      ]
+    }
+  ]
+}

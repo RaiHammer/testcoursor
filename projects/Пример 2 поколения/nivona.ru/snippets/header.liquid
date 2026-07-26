@@ -1,0 +1,366 @@
+{% comment %} ODX-3339  {% endcomment %}
+{% assign main_phone = account.phone %}
+
+{% if template == "collection" and collection.id == 46708225 %}
+	{% assign main_phone = "+7 963 683 62 32" %}
+{% endif %}
+
+{% if template == "product" and product.canonical_collection.id == 46708225 %}
+	{% assign main_phone = "+7 963 683 62 32" %}
+{% endif %}
+
+{% if template == "cart" or template == "checkout" and cart.items_count > 0 %}
+	{% for item in cart.items %}
+		{% if item.product.canonical_collection.id == 46708225 %}
+			{% assign main_phone = "+7 963 683 62 32" %}
+			{% break %}
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+<div class="top_line">
+	<div class="container">
+		<div class="top_line_panel__mobile">
+			<div class="top_line_panel__mobile__logo">
+				<a href="/" class="top_line_panel__mobile__logo__link">
+					{% if settings.ny_show == '1' %}
+						<img src="{{ 'nivona-ny-logo-mobile_2x.png' | asset_url }}" alt="Nivona">
+					{% else %}
+						<img src="{{ 'logo_new_mobile.svg' | asset_url }}" alt="Nivona">
+					{% endif %}
+					{% comment %} <img src="{{ 'logo-ny.png' | asset_url }}"> {% endcomment %}
+				</a>
+			</div>
+			<div class="top_line_panel__mobile__controls">
+				{% unless settings.phone_hide == '1' %}
+					<div class="top_line_panel__mobile__controls__phone" > 
+						<a href="tel:{{- main_phone | replace: ' ', '' -}}">
+							<svg width="16" height="16"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#phone_c"></use></svg>
+							<span>{{ main_phone }}</span> 
+						</a>
+						<!--Для внесения срочной инфы МОБИЛЬНЫЕ <p align="right">К сожалению, по техническим причинам, телефон в данный момент не работает. Просьба оставлять заявки и заказы через систему на сайте.</p>-->
+					</div>
+				{% endunless %}
+				<div class="top_line_panel__mobile__controls__burger">
+					<button class="header__btn" aria-label="Открыть меню">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="top_line_panel">
+			<div class="left_top_line">
+				<div class="top_city_wrap">
+				{% if settings.geo_active and settings.header_geo %}
+					<div class="header__geo">
+					  <script>
+						var geo_active = {% if settings.geo_active %}true{% else %}false{% endif %};
+					  </script>
+					  <div class="geo-city-header">
+						<div class="geo-city js-geo-city"></div>
+						{% if settings.header_geo_popup %}
+						  <div id="minigeo" class="minigeo header-icons-item-popup js-minigeo">
+							<div class="header-icons-item-popup-content">
+							  <p><span class="js-geo-city-popup">Город доставки ваших покупок<br><strong>&hellip;</strong>?</span></p>
+							  <div class="minigeo_buttons">
+								  <button class="button is-primary js-minigeo-toggle">Да, все верно</button>
+								  <button class="button is-bordered winbox" data-window="geo|geoCity">Нет, сменить город</button>
+							  </div>
+							</div>
+						  </div>
+						{% endif %}
+					  </div>
+					</div>
+				  {% endif %}
+				</div>
+				<div class="top_left_menu">
+					{% for link in linklists.top-menu.links %}
+						{% if settings.prod_sale_off == '1' or settings.cards_sale_off == '1' %}
+							{% unless link.title == 'Акции' %}
+											<div class="left_menu_item">
+													<a href="{{ link.url }}">{{ link.title }}</a>
+											</div>
+							{% endunless %}
+						{% elsif link.title == 'Все акции' %}
+							<div class="left_menu_item left_menu_item_expand">
+								<a class="left_menu_item_expand-link" href="{{ link.url }}">
+									<span class="left_menu_item_expand-icon">
+										<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M5.43559 0.699054C5.63253 0.479109 5.87363 0.303168 6.14317 0.182713C6.41271 0.0622591 6.70462 0 6.99985 0C7.29507 0 7.58698 0.0622591 7.85652 0.182713C8.12606 0.303168 8.36716 0.479109 8.5641 0.699054L9.05402 1.24637C9.12403 1.32469 9.21078 1.38625 9.30783 1.42647C9.40488 1.46669 9.50974 1.48456 9.61463 1.47873L10.3495 1.43814C10.6442 1.42195 10.939 1.46807 11.2147 1.57349C11.4903 1.67892 11.7407 1.84127 11.9493 2.04996C12.158 2.25865 12.3204 2.50899 12.4258 2.78465C12.5312 3.06031 12.5773 3.3551 12.5612 3.64979L12.5206 4.38467C12.5149 4.48945 12.5328 4.59417 12.573 4.69109C12.6132 4.78801 12.6747 4.87464 12.7529 4.94458L13.3009 5.4345C13.521 5.63144 13.697 5.87259 13.8176 6.14219C13.9381 6.41179 14.0004 6.70379 14.0004 6.9991C14.0004 7.29442 13.9381 7.58642 13.8176 7.85602C13.697 8.12562 13.521 8.36677 13.3009 8.56371L12.7529 9.05363C12.6746 9.12364 12.6131 9.21039 12.5728 9.30744C12.5326 9.40449 12.5147 9.50935 12.5206 9.61424L12.5612 10.3491C12.5773 10.6438 12.5312 10.9386 12.4258 11.2143C12.3204 11.4899 12.158 11.7403 11.9493 11.949C11.7407 12.1576 11.4903 12.32 11.2147 12.4254C10.939 12.5308 10.6442 12.577 10.3495 12.5608L9.61463 12.5202C9.50985 12.5145 9.40513 12.5324 9.30821 12.5726C9.21129 12.6128 9.12466 12.6743 9.05472 12.7525L8.5648 13.3006C8.36786 13.5206 8.12671 13.6967 7.85711 13.8172C7.58751 13.9377 7.29551 14 7.0002 14C6.70488 14 6.41289 13.9377 6.14328 13.8172C5.87368 13.6967 5.63253 13.5206 5.43559 13.3006L4.94567 12.7525C4.87566 12.6742 4.78891 12.6127 4.69186 12.5724C4.59481 12.5322 4.48995 12.5144 4.38506 12.5202L3.65018 12.5608C3.35549 12.577 3.0607 12.5308 2.78504 12.4254C2.50938 12.32 2.25904 12.1576 2.05035 11.949C1.84166 11.7403 1.67931 11.4899 1.57389 11.2143C1.46847 10.9386 1.42234 10.6438 1.43853 10.3491L1.47912 9.61424C1.48484 9.50946 1.46693 9.40474 1.42671 9.30782C1.38648 9.2109 1.32498 9.12427 1.24676 9.05433L0.699445 8.56441C0.479385 8.36747 0.303344 8.12632 0.18282 7.85672C0.0622963 7.58712 0 7.29512 0 6.9998C0 6.70449 0.0622963 6.41249 0.18282 6.14289C0.303344 5.87329 0.479385 5.63214 0.699445 5.4352L1.24676 4.94528C1.32508 4.87527 1.38664 4.78852 1.42686 4.69147C1.46709 4.59442 1.48495 4.48956 1.47912 4.38467L1.43853 3.64979C1.42234 3.3551 1.46847 3.06031 1.57389 2.78465C1.67931 2.50899 1.84166 2.25865 2.05035 2.04996C2.25904 1.84127 2.50938 1.67892 2.78504 1.57349C3.0607 1.46807 3.35549 1.42195 3.65018 1.43814L4.38506 1.47873C4.48984 1.48445 4.59456 1.46654 4.69148 1.42631C4.7884 1.38609 4.87503 1.32459 4.94497 1.24637L5.43559 0.699054ZM9.59433 4.40497C9.72554 4.53621 9.79925 4.7142 9.79925 4.89979C9.79925 5.08537 9.72554 5.26336 9.59433 5.39461L5.395 9.59394C5.263 9.72143 5.08621 9.79198 4.9027 9.79038C4.71919 9.78879 4.54365 9.71518 4.41388 9.58542C4.28412 9.45565 4.21051 9.28011 4.20892 9.0966C4.20732 8.91309 4.27787 8.7363 4.40536 8.6043L8.60469 4.40497C8.73594 4.27376 8.91393 4.20005 9.09951 4.20005C9.2851 4.20005 9.46309 4.27376 9.59433 4.40497ZM5.25012 4.1999C4.97169 4.1999 4.70466 4.31051 4.50778 4.50739C4.3109 4.70427 4.20029 4.9713 4.20029 5.24973V5.25673C4.20029 5.53516 4.3109 5.80219 4.50778 5.99908C4.70466 6.19596 4.97169 6.30656 5.25012 6.30656H5.25712C5.53556 6.30656 5.80258 6.19596 5.99947 5.99908C6.19635 5.80219 6.30696 5.53516 6.30696 5.25673V5.24973C6.30696 4.9713 6.19635 4.70427 5.99947 4.50739C5.80258 4.31051 5.53556 4.1999 5.25712 4.1999H5.25012ZM8.74957 7.69934C8.47114 7.69934 8.20411 7.80995 8.00722 8.00683C7.81034 8.20371 7.69973 8.47074 7.69973 8.74918V8.75618C7.69973 9.03461 7.81034 9.30164 8.00722 9.49852C8.20411 9.6954 8.47114 9.80601 8.74957 9.80601H8.75657C9.035 9.80601 9.30203 9.6954 9.49891 9.49852C9.69579 9.30164 9.8064 9.03461 9.8064 8.75618V8.74918C9.8064 8.47074 9.69579 8.20371 9.49891 8.00683C9.30203 7.80995 9.035 7.69934 8.75657 7.69934H8.74957Z" fill="#F3DDDA"/>
+										</svg>
+									</span>
+									{{ link.title }}
+								</a>
+							</div>
+						{% else %}
+							{% assign menuLink = link.url | split: '/' | last %}
+							{% if menuLink == 'aktsiya-luchshaya-tsena' %}
+									<div class="left_menu_item left_menu_item_expand">
+										<a class="left_menu_item_expand-link" href="{{ link.url }}">
+											<span class="left_menu_item_expand-icon">
+												<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="22" height="22" viewBox="0 0 440.994 440.994" xml:space="preserve" fill="#fb3b3b"> <path d="M274.61,249.183c-5.044,0-8.816,3.714-10.618,5.929c-4.025,4.951-6.336,12.059-6.336,19.499s2.311,14.548,6.336,19.5    c1.802,2.214,5.574,5.928,10.618,5.928s8.816-3.714,10.618-5.928c4.025-4.952,6.336-12.06,6.336-19.5s-2.311-14.548-6.336-19.499    C283.428,252.896,279.654,249.183,274.61,249.183z"></path> <path d="M166.384,191.81c5.044,0,8.816-3.714,10.618-5.928c4.026-4.952,6.336-12.059,6.336-19.5c0-7.441-2.31-14.547-6.336-19.499    c-1.802-2.214-5.574-5.928-10.618-5.928c-5.044,0-8.816,3.714-10.618,5.928c-4.026,4.952-6.336,12.058-6.336,19.499    c0,7.441,2.31,14.548,6.336,19.5C157.567,188.097,161.34,191.81,166.384,191.81z"></path> <path d="M435.289,209.037l-53.984-40.794l19.699-64.751c1.312-4.31,0.525-8.984-2.123-12.628    c-2.647-3.643-6.854-5.833-11.356-5.916l-67.672-1.235l-22.065-63.997c-1.469-4.262-4.855-7.587-9.143-8.979    c-4.283-1.393-8.979-0.692-12.675,1.892l-55.475,38.814L165.02,12.627c-3.693-2.583-8.387-3.285-12.674-1.892    c-4.289,1.393-7.672,4.718-9.143,8.979l-22.064,63.996l-67.672,1.236c-4.502,0.083-8.707,2.272-11.355,5.916    c-2.648,3.644-3.436,8.319-2.125,12.628l19.701,64.75L5.705,209.037C2.111,211.751,0,215.995,0,220.497    c0,4.503,2.111,8.746,5.705,11.461l53.984,40.794L39.99,337.502c-1.311,4.31-0.523,8.984,2.125,12.628    c2.648,3.643,6.854,5.833,11.355,5.916l67.672,1.236l22.064,63.996c1.469,4.262,4.854,7.587,9.141,8.979    c4.285,1.394,8.98,0.692,12.674-1.893l55.475-38.814l55.477,38.815c2.443,1.709,5.324,2.595,8.236,2.595    c1.488,0,2.986-0.23,4.438-0.703c4.286-1.393,7.672-4.718,9.141-8.979l22.063-63.996l67.675-1.237    c4.502-0.083,8.707-2.272,11.354-5.916c2.648-3.644,3.437-8.318,2.125-12.628l-19.701-64.749l53.984-40.795    c3.594-2.715,5.705-6.958,5.705-11.461S438.883,211.75,435.289,209.037z M166.384,121.01c20.38,0,36.901,20.314,36.901,45.374    c0,25.061-16.521,45.375-36.901,45.375c-20.38,0-36.901-20.314-36.901-45.375C129.482,141.324,146.004,121.01,166.384,121.01z     M164.038,320.178c-2.307,3.209-6.047,5.125-10.005,5.125c-2.581,0-5.059-0.8-7.163-2.312c-5.509-3.957-6.771-11.658-2.813-17.167    l132.9-185.01c2.306-3.209,6.046-5.125,10.005-5.125c2.58,0,5.058,0.8,7.162,2.312c5.509,3.957,6.771,11.658,2.813,17.167    L164.038,320.178z M274.61,319.983c-20.38,0-36.901-20.313-36.901-45.375c0-25.059,16.521-45.373,36.901-45.373    s36.9,20.314,36.9,45.373C311.512,299.669,294.99,319.983,274.61,319.983z"></path> </svg>
+											</span>
+											{{ link.title }}
+										</a>
+									</div>
+								{% elsif menuLink == '#product_registration' %}
+									<div class="left_menu_item">
+										{% if client %}
+											<a href="{{ link.url }}" popup-button popup-content="form">{{ link.title }}</a>
+										{% else %}
+											<a href="/client_account/login" class="popup-modal" data-attr="#signin">{{ link.title }}</a>
+										{% endif %}
+									</div>
+								{% else %}
+									<div class="left_menu_item">
+											<a href="{{ link.url }}">{{ link.title }}</a>
+									</div>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="right_top_line">
+				{% unless settings.phone_hide == '1' %}
+					<div class="top_phone" >
+						<a href="tel:{{- main_phone | replace: ' ', '' -}}">
+							<svg width="16" height="16"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#phone_c" fill="#F79C1F"></use></svg>
+							<span>{{- main_phone -}}</span>
+						</a>
+					</div>
+				{% endunless %}
+				<div class="top_recall">
+					<a href="#call" class="popup-modal"  data-attr="#call">
+						Заказать звонок
+					</a>
+				</div>
+             <!--Для внесения срочной инфы ДЕСКТОП <p align="right">К сожалению, по техническим причинам, телефон в данный момент не работает. Просьба оставлять заявки и заказы через систему на сайте.</p>-->
+			</div>
+		</div>
+	</div>
+</div>
+<header class="header">
+	<div class="container">
+		<div class="header_middle">
+			<div class="header__logo">
+				<a href="/" class="header__logo__link">
+					{% if settings.ny_show == '1' %}
+						<img src="{{ 'nivona-ny-logo-mobile_2x.png' | asset_url }}" alt="Nivona" style=" height: 140px; ">
+					{% else %}
+						<img src="{{ 'logo_new_mobile.svg' | asset_url }}" alt="Nivona">
+					{% endif %}
+					{% comment %} <img src="{{ 'logo-ny.png' | asset_url }}">  {% endcomment %}
+				</a>
+				<a href="/" class="header__logo__link__mobile">
+					{% if settings.ny_show == '1' %}
+						<img src="{{ 'nivona-ny-logo-mobile_2x.png' | asset_url }}" alt="Nivona">
+					{% else %}
+						<img src="{{ 'logo_new_mobile.svg' | asset_url }}" alt="Nivona">
+					{% endif %}
+					<!--<img src="{{ 'logo-ny.png' | asset_url }}">-->
+				</a>
+			</div>
+			<div class="header_search">
+				<form action="/search" role="search">
+					<label for="header-search" class="visually-hidden">Поиск по каталогу</label>
+					<input id="header-search" name="q" placeholder="Поиск по каталогу" aria-label="Поиск по каталогу">
+					<button type="submit" aria-label="Найти"><svg width="20" height="19"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#search"></use></svg></button>
+				</form>
+			</div>
+			<div class="header_content">
+				<div class="header_set">
+					<div class="header_user">
+						{% if client %}
+							<a href="/client_account/orders">
+								<div class="icon"><svg width="23" height="28"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#user" fill="#000"></use></svg></div>
+								<div class="title js-clientName">Профиль</div>
+							</a>
+							<a href="/client_account/exit" class="exit" aria-label="Выйти">
+								<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<rect x="0.928955" y="2.34315" width="2" height="18" rx="1" transform="rotate(-45 0.928955 2.34315)" fill="#B5ACA7"/>
+									<rect x="2.34326" y="15.0711" width="2" height="18" rx="1" transform="rotate(-135 2.34326 15.0711)" fill="#B5ACA7"/>
+								</svg>
+							</a>
+						{% else %}
+							<a href="/client_account/login" class="popup-modal" data-attr="#signin">
+								<div class="icon"><svg width="23" height="28"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#user" fill="#000"></use></svg></div>
+								<div class="title">Вход</div>
+							</a>
+						{% endif %}
+					</div>
+					<div class="header_favorites">
+						<a href="/page/favorites">
+							<div class="icon">
+								<svg width="26" height="24" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M12.75 1C11.8818 1 11.0858 1.27512 10.3842 1.81775C9.7115 2.33797 9.26366 3.00056 9 3.48237C8.73634 3.00053 8.2885 2.33797 7.61584 1.81775C6.91422 1.27512 6.11822 1 5.25 1C2.82713 1 1 2.98178 1 5.60981C1 8.449 3.27947 10.3915 6.73028 13.3322C7.31628 13.8317 7.9805 14.3977 8.67088 15.0014C8.76188 15.0811 8.87875 15.125 9 15.125C9.12125 15.125 9.23813 15.0811 9.32913 15.0015C10.0196 14.3977 10.6838 13.8316 11.2701 13.3319C14.7205 10.3915 17 8.449 17 5.60981C17 2.98178 15.1729 1 12.75 1Z" stroke-width="2"/>
+								</svg>
+							</div>
+							<div class="title">
+								<span class="maintitle">Избранное</span><span class="header_favorites_count js-wishlist-count"></span>
+							</div>
+						</a>
+					</div>
+					<div class="header_compares">
+						<a href="/compares">
+							<div class="icon">
+								<svg width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M17 6L24 6C24.5523 6 25 6.44772 25 7V28H17L17 6Z" stroke="black" stroke-width="2"></path>
+									<path d="M9 2C9 1.44772 9.44771 1 10 1H16C16.5523 1 17 1.44772 17 2V28H9V2Z" stroke="black" stroke-width="2"></path>
+									<path d="M1 11C1 10.4477 1.44772 10 2 10H9V28H1L1 11Z" stroke="black" stroke-width="2"></path>
+								</svg>
+							</div>
+							<div class="title">
+								<span class="maintitle">Сравнить</span><span class="header_compares_count js-compares-widget-count">3</span>
+							</div>
+						</a>
+					</div>
+					<div class="header_cart">
+						<a href="/cart_items" aria-label="Корзина">
+							<svg width="25" height="33"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#cart" fill="#000"></use></svg>
+							<span class="js-widget-card-total-summ"></span>
+							<span class="header_cart_quantity js-widget-card-total-count"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+
+</header>
+<div class="menu" style="display: none;">
+	<div class="menu__close">
+		<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect x="23.6066" y="25.021" width="32" height="2" rx="1" transform="rotate(-135 23.6066 25.021)" fill="#B5ACA7"/>
+			<rect x="0.979187" y="23.6064" width="32" height="2" rx="1" transform="rotate(-45 0.979187 23.6064)" fill="#B5ACA7"/>
+		</svg>
+	</div>
+
+	{% if settings.geo_active and settings.header_geo %}
+		<div class="menu__geo">
+			<div class="header__geo">
+				<script>
+					var geo_active = {% if settings.geo_active %}true{% else %}false{% endif %};
+				</script>
+				<div class="geo-city-header">
+					<div class="geo-city js-geo-city-modal"></div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	<div class="menu__header__items">
+		<div class="menu__profile menu__header__item {% if client %}is_client{% else %}is_not_client{% endif %}">
+			<div class="icon">
+				<svg width="23" height="28" viewBox="0 0 23 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M18 7.5C18 11.0899 15.0899 14 11.5 14C7.91015 14 5 11.0899 5 7.5C5 3.91015 7.91015 1 11.5 1C15.0899 1 18 3.91015 18 7.5Z" stroke="black" stroke-width="2"/>
+					<path d="M1.73567 22.5488C2.38819 17.6549 6.56278 14 11.5 14C16.4372 14 20.6118 17.6549 21.2643 22.5488L21.8578 27H1.14218L1.73567 22.5488ZM21.9334 27.5672C21.9334 27.567 21.9334 27.5668 21.9334 27.5666L21.9334 27.5672Z" stroke="black" stroke-width="2"/>
+				</svg>
+			</div>
+			{% if client %}
+				<div class="title">
+					<a href="/client_account/orders" class="profile_link js-clientName">Профиль</a>
+					<a href="/client_account/exit">Выйти</a>
+				</div>
+			{% else %}
+				<div class="title">
+					<a href="/client_account/login" class="profile_link">Войти</a>
+				</div>
+			{% endif %}
+		</div>
+		<div class="menu__favorites menu__header__item">
+			<div class="icon">
+				<svg width="26" height="24" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M12.75 1C11.8818 1 11.0858 1.27512 10.3842 1.81775C9.7115 2.33797 9.26366 3.00056 9 3.48237C8.73634 3.00053 8.2885 2.33797 7.61584 1.81775C6.91422 1.27512 6.11822 1 5.25 1C2.82713 1 1 2.98178 1 5.60981C1 8.449 3.27947 10.3915 6.73028 13.3322C7.31628 13.8317 7.9805 14.3977 8.67088 15.0014C8.76188 15.0811 8.87875 15.125 9 15.125C9.12125 15.125 9.23813 15.0811 9.32913 15.0015C10.0196 14.3977 10.6838 13.8316 11.2701 13.3319C14.7205 10.3915 17 8.449 17 5.60981C17 2.98178 15.1729 1 12.75 1Z" stroke="black" stroke-width="2"/>
+				</svg>
+			</div>
+			<div class="title">
+				<a href="/page/favorites">
+					<span class="maintitle">Избранное</span><span class="header_favorites_count js-wishlist-count"></span>
+				</a>
+			</div>
+		</div>
+		<div class="menu__compare menu__header__item">
+			<div class="icon">
+				<svg width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M17 6L24 6C24.5523 6 25 6.44772 25 7V28H17L17 6Z" stroke="black" stroke-width="2"/>
+					<path d="M9 2C9 1.44772 9.44771 1 10 1H16C16.5523 1 17 1.44772 17 2V28H9V2Z" stroke="black" stroke-width="2"/>
+					<path d="M1 11C1 10.4477 1.44772 10 2 10H9V28H1L1 11Z" stroke="black" stroke-width="2"/>
+				</svg>
+			</div>
+			<div class="title">
+				<a href="/compares">
+					<span class="maintitle">Сравнить</span><span class="header_compares_count js-compares-widget-count"></span>
+				</a>
+			</div>
+		</div>
+		<div class="menu__cart menu__header__item">
+			<div class="icon">
+				<svg width="26" height="31" viewBox="0 0 26 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M2.84957 7.92025C2.89115 7.40055 3.32503 7 3.84639 7H22.1536C22.675 7 23.1089 7.40055 23.1504 7.92026L24.5713 25.681C24.7575 28.0085 22.9189 30 20.584 30H5.41597C3.08108 30 1.24252 28.0085 1.42871 25.681L2.84957 7.92025Z" stroke="black" stroke-width="2"/>
+					<path d="M8 12V5C8 2.23858 10.2386 0 13 0V0C15.7614 0 18 2.23858 18 5V12" stroke="black" stroke-width="2" stroke-linecap="round"/>
+				</svg>
+			</div>
+			<div class="title">
+				<a href="/cart_items">
+					<span class="maintitle">Корзина</span><span class="header_cart_quantity js-widget-card-total-count"></span> | <span class="js-widget-card-total-summ"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="menu__header__separated"></div>
+
+	{% include "menu", source_type: 'menu__nav', source_handle: 'new-mobile-menu', menu_class: 'menu__nav' %}
+</div>
+
+{% if template == 'account.orders' or template == 'account' or template == 'page.services' or template == 'page.product_registration' %}
+	{% if client %}
+			{% assign menu_source = 'header-menu-cabinet' %}
+		{% else %}
+			{% assign menu_source = 'header-menu' %}
+	{% endif %}
+{% else %}
+	{% if template == 'order' and client %}
+		{% assign menu_source = 'header-menu-cabinet' %}
+	{% else %}
+		{% assign menu_source = 'header-menu' %}
+	{% endif %}
+{% endif %}
+<div class="header_menu {{ menu_source }}">
+	<div class="container">
+		<div class="header_menu_control js-open-header_menu">{% if menu_source == 'header-menu-cabinet' %}Меню{% else %}{% if template == 'collection' %}{{ collection.title }}{% else %}Каталог{% endif %}{% endif %}</div>
+		<div class="header_menu_wrap">
+		{% for link in linklists[menu_source].links %}
+			{% assign current_class = '' %}
+			{% if link.current? %}
+				{% assign current_class = 'active' %}
+			{% endif %}
+			<div class="header_menu_item {{ current_class }}">
+				<a href="{{ link.url }}">
+					<div class="icon">
+						{% case link.title %}
+							{% when 'Кофемашины' %}
+								<svg width="40" height="44"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#coffee-maker" fill="#000"></use></svg>
+							{% when 'Кофемолка' %}
+								<svg width="22" height="41"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#coffee-grinder" fill="#000"></use></svg>
+							{% when 'Кофе' %}
+								<svg width="32" height="41"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#coffee" fill="#000"></use></svg>
+							{% when 'Аксессуары' %}
+								<svg width="23" height="47"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#coffee-aks" fill="#000"></use></svg>
+							{% when 'О бренде' %}
+								<svg width="36" height="36"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#megaphone" fill="#000"></use></svg>
+							{% when 'Кофейная культура' %}
+								<svg width="36" height="36"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#coffee-hot" fill="#000"></use></svg>
+						{% endcase %}
+					</div>
+					<div class="title">
+						{{ link.title }}
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>

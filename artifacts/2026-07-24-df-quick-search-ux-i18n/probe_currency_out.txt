@@ -1,0 +1,132 @@
+EN page shop-config: {
+  "locale": "en",
+  "currency_code": "RUR",
+  "currency_iso_code": "RUB",
+  "money_type": "dict",
+  "money": {
+    "format": "%n %u",
+    "unit": "тВ╜",
+    "delimiter": " ",
+    "separator": ".",
+    "show_price_without_cents": 0
+  },
+  "default_currency_unit": "тВ╜",
+  "default_currency_code": "RUR"
+}
+cookies after EN: [('ins_myshop-cny848', 'a5fpfe-406fd0757ee0632068c71504a481b7af'), ('ins_order_version', '1784890972.0119658'), ('x_csrf_token', 'NhVFGiONNC8ethuuk-atEDcEwNlr3aVYbVoOnrGa'), ('cart', '%7B%22number%22%3Anull%2C%22comment%22%3'), ('first_current_location', '%2F%3Flang%3Den'), ('first_referer', ''), ('referer', ''), ('current_location', '%2F%3Flang%3Den')]
+
+products_by_id (none) -> [
+  {
+    "id": 490265387,
+    "title": "╨Ь╨╜╨╛╨│╨╛╤А╨░╨╖╨╛╨▓╨░╤П ╤В╨╡╤В╤А╨░╨┤╤М ╨Я╨Ш╨и╨Ш-╨б╨в╨Ш╨а╨Р╨Щ ╨┤╨╗╤П ╨┤╨╡╤В╨╡╨╣ 2-3 ╨╗╨╡╤В",
+    "price_min": "227.0",
+    "variants0_price": "227.0"
+  },
+  {
+    "id": 490265398,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨┤╨▓╨╛╨╣╨╜╤Л╨╝╨╕ ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨з╨в╨Ю ╨Я╨Ю╨Ф ╨Ч╨Х╨Ь╨Ы╨Х╨Щ?",
+    "price_min": "132.0",
+    "variants0_price": "132.0"
+  }
+]
+
+products_by_id ?lang=en -> [
+  {
+    "id": 490265387,
+    "title": "Reusable Write & Wipe Notebook for Toddlers Ages 2тАУ3",
+    "price_min": "227.0",
+    "variants0_price": "227.0"
+  },
+  {
+    "id": 490265398,
+    "title": "DoubleтАСFlap Book: WhatтАЩs under the ground?",
+    "price_min": "132.0",
+    "variants0_price": "132.0"
+  }
+]
+
+products_by_id ?lang=en&currency=USD -> [
+  {
+    "id": 490265387,
+    "title": "Reusable Write & Wipe Notebook for Toddlers Ages 2тАУ3",
+    "price_min": "227.0",
+    "variants0_price": "227.0"
+  },
+  {
+    "id": 490265398,
+    "title": "DoubleтАСFlap Book: WhatтАЩs under the ground?",
+    "price_min": "132.0",
+    "variants0_price": "132.0"
+  }
+]
+
+products_by_id ?lang=en&currency_code=USD -> [
+  {
+    "id": 490265387,
+    "title": "Reusable Write & Wipe Notebook for Toddlers Ages 2тАУ3",
+    "price_min": "227.0",
+    "variants0_price": "227.0"
+  },
+  {
+    "id": 490265398,
+    "title": "DoubleтАСFlap Book: WhatтАЩs under the ground?",
+    "price_min": "132.0",
+    "variants0_price": "132.0"
+  }
+]
+
+currency switch status 200 location None cookies [('ins_myshop-cny848', 'a5fpfe-406fd0757ee0632068c71504a481b7af'), ('ins_order_version', '1784890972.0119658'), ('x_csrf_token', 'JXJxTnDtIgkojUnnkVHWfR2asnQmq97Zaeuk0wHMXr2sIhTtR031TCqUHANs'), ('cart', '%7B%22number%22%3Anull%2C%22comment%22%3Anull%2C%22delivery_'), ('first_current_location', '%2F%3Flang%3Den'), ('first_referer', ''), ('referer', ''), ('current_location', '%2F%3Flang%3Den')]
+
+After USD switch shop-config: {
+  "locale": "en",
+  "currency_code": "USD",
+  "currency_iso_code": "USD",
+  "money_type": "dict",
+  "money": {
+    "format": "%u%n",
+    "unit": "$",
+    "delimiter": " ",
+    "separator": ".",
+    "show_price_without_cents": 0
+  },
+  "default_currency_unit": "тВ╜",
+  "default_currency_code": "RUR"
+}
+pattern currency_code["\']?\s*[:=]\s*["\']([A-Z]{3}) hits 0 sample []
+pattern \$[0-9] hits 8 sample ['$5', '$2', '$3', '$1', '$5']
+pattern site_currency hits 1 sample ['site_currency']
+pattern money\( hits 0 sample []
+pattern currency["\']?\s*:\s*["\']USD hits 0 sample []
+
+After USD products_by_id (none) [
+  {
+    "id": 490265387,
+    "title": "╨Ь╨╜╨╛╨│╨╛╤А╨░╨╖╨╛╨▓╨░╤П ╤В╨╡╤В╤А╨░╨┤╤М ╨Я╨Ш╨и╨Ш-╨б╨в╨Ш╨а╨Р╨Щ ╨┤╨╗╤П ╨┤╨╡╤В╨╡╨╣ 2-3 ╨╗╨╡╤В",
+    "price_min": "2.9056",
+    "variants0_price": "2.9056"
+  },
+  {
+    "id": 490265398,
+    "title": "╨Ъ╨╜╨╕╨╢╨║╨░ ╤Б ╨┤╨▓╨╛╨╣╨╜╤Л╨╝╨╕ ╨╛╨║╨╛╤И╨║╨░╨╝╨╕ ╨з╨в╨Ю ╨Я╨Ю╨Ф ╨Ч╨Х╨Ь╨Ы╨Х╨Щ?",
+    "price_min": "1.6896",
+    "variants0_price": "1.6896"
+  }
+]
+
+After USD products_by_id ?lang=en [
+  {
+    "id": 490265387,
+    "title": "Reusable Write & Wipe Notebook for Toddlers Ages 2тАУ3",
+    "price_min": "2.9056",
+    "variants0_price": "2.9056"
+  },
+  {
+    "id": 490265398,
+    "title": "DoubleтАСFlap Book: WhatтАЩs under the ground?",
+    "price_min": "1.6896",
+    "variants0_price": "1.6896"
+  }
+]
+
+suggestion0 keys ['value', 'data', 'fields']
+suggestion0 sample {"value": "Double-Flap Book: WhatтАЩs for Dinner Today?", "data": "490265480", "fields": {"price_min": 132.0}}

@@ -1,0 +1,23 @@
+{
+  "type": "SimpleWidgetType",
+  "handle": "danforge_quick_search",
+  "page_kinds": ["all"],
+  "widget_list_kinds": [
+    "content",
+    "before_content",
+    "after_content",
+    "header",
+    "footer",
+    "sidebar",
+    "outside"
+  ],
+  "generation": 4,
+  "name": {
+    "ru": "Быстрый поиск DanForge"
+  },
+  "description": {
+    "ru": "Стабильный v1.1.3: фикс hover 2-го фото (any-hover), настройка hover_second_image, RU/EN, USD/$, appear, SKU, категории, статьи. inSales gen 4."
+  },
+  "widget_category_handle": "drugie",
+  "libraries": []
+}

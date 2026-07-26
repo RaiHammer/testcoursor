@@ -1,0 +1,165 @@
+
+  {% include "page_header" %}
+	<div class="product-page">
+    <div class="container">
+      <div class="product-page__main">
+            <div class="product-gallery-wrapper">
+              <div class="product-mobile-heading visible-xs">
+                <div class="product__title">{{ product.title | editable }}</div>
+
+                <div class="product__sku">
+                  <div class="product__sku__title">
+                      Артикул
+                  </div>
+                  <div class="product__sku__descr">
+                      {{ product.sku | escape }}
+                  </div>
+                </div>
+              </div>
+
+              {% include "product_gallery" %}
+            </div>
+
+            <div class="product-page__main__info">
+              <div class="product">
+                <h1 class="product__title">{{ product.title | editable }}</h1>
+
+                <div class="product__sku">
+                  <div class="product__sku__title">
+                      Артикул
+                  </div>
+                  <div class="product__sku__descr">
+                      {{ product.sku | escape }}
+                  </div>
+                </div>
+      
+                <div class="product-rating">
+                        <div class="rating">
+                          {% assign rating5 = '' %}
+                          {% assign rating4 = '' %}
+                          {% assign rating3 = '' %}
+                          {% assign rating2 = '' %}
+                          {% assign rating1 = '' %}
+                          {% assign rating0 = '' %}
+                          {% for review in product.reviews %}
+                            {% if review.rating == 5 %}{% capture rating5 %}{{ rating5 }}5{% endcapture %}{% endif %}
+                            {% if review.rating == 4 %}{% capture rating4 %}{{ rating4 }}4{% endcapture %}{% endif %}
+                            {% if review.rating == 3 %}{% capture rating3 %}{{ rating3 }}3{% endcapture %}{% endif %}
+                            {% if review.rating == 2 %}{% capture rating2 %}{{ rating2 }}2{% endcapture %}{% endif %}
+                            {% if review.rating == 1 %}{% capture rating1 %}{{ rating1 }}1{% endcapture %}{% endif %}
+                            {% unless review.rating %}{% capture rating0 %}{{ rating0 }}0{% endcapture %}{% endunless %}
+                          {% endfor %}
+                            <div class="rating-rating review-rating">
+                              {% for i in (1..5) %}
+                                {% if product.rating >= i %}
+                                  <span class="im im-star">
+                                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.9885 4.94764C12.9611 4.85924 12.8883 4.79477 12.8005 4.78134L8.59106 4.13932L6.70856 0.136268C6.66947 0.0527488 6.58849 0 6.50006 0C6.41164 0 6.33043 0.0527488 6.29157 0.136268L4.40883 4.13956L0.199369 4.78158C0.111643 4.79501 0.039042 4.85924 0.0113512 4.94789C-0.0158741 5.03605 0.00669731 5.13324 0.0702232 5.19796L3.11644 8.31404L2.39718 12.7142C2.38228 12.8058 2.41812 12.8983 2.48956 12.953C2.56146 13.0082 2.65663 13.0153 2.73459 12.9716L6.50006 10.8943L10.2651 12.9716C10.299 12.9904 10.3365 12.9997 10.3735 12.9997C10.4217 12.9997 10.4696 12.984 10.5103 12.953C10.582 12.8983 10.6178 12.8058 10.6027 12.7142L9.88369 8.31429L12.9299 5.19796C12.9932 5.13275 13.016 5.0358 12.9885 4.94764Z" fill="#F79C1F"/>
+                                    </svg> 
+                                  </span>
+                                {% else %}
+                                  <span class="im im-star color-grey">
+                                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12.9885 4.94764C12.9611 4.85924 12.8883 4.79477 12.8005 4.78134L8.59106 4.13932L6.70856 0.136268C6.66947 0.0527488 6.58849 0 6.50006 0C6.41164 0 6.33043 0.0527488 6.29157 0.136268L4.40883 4.13956L0.199369 4.78158C0.111643 4.79501 0.039042 4.85924 0.0113512 4.94789C-0.0158741 5.03605 0.00669731 5.13324 0.0702232 5.19796L3.11644 8.31404L2.39718 12.7142C2.38228 12.8058 2.41812 12.8983 2.48956 12.953C2.56146 13.0082 2.65663 13.0153 2.73459 12.9716L6.50006 10.8943L10.2651 12.9716C10.299 12.9904 10.3365 12.9997 10.3735 12.9997C10.4217 12.9997 10.4696 12.984 10.5103 12.953C10.582 12.8983 10.6178 12.8058 10.6027 12.7142L9.88369 8.31429L12.9299 5.19796C12.9932 5.13275 13.016 5.0358 12.9885 4.94764Z" fill="#D9D9D9"/>
+                                    </svg>
+                                  </span>
+                                {% endif %}
+                              {% endfor %}
+                            </div>
+                        </div>
+                        <a href="#reviews_add" class="product-reviews-count js-go_to">
+                          <div class="title">
+                            {{ product.reviews.size }} отзывов
+                          </div>
+                        </a>
+                </div>
+                {% include "product_form" %}
+              </div>
+
+              <div class="product-footer">
+                <div class="product-footer__favorites">
+                  <button type="button" class="product__favorites" data-favorites-trigger="{{ product.id }}">
+                    <span class="icon">
+                      <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12.75 1C11.8818 1 11.0858 1.27512 10.3842 1.81775C9.7115 2.33797 9.26366 3.00056 9 3.48237C8.73634 3.00053 8.2885 2.33797 7.61584 1.81775C6.91422 1.27512 6.11822 1 5.25 1C2.82713 1 1 2.98178 1 5.60981C1 8.449 3.27947 10.3915 6.73028 13.3322C7.31628 13.8317 7.9805 14.3977 8.67088 15.0014C8.76188 15.0811 8.87875 15.125 9 15.125C9.12125 15.125 9.23813 15.0811 9.32913 15.0015C10.0196 14.3977 10.6838 13.8316 11.2701 13.3319C14.7205 10.3915 17 8.449 17 5.60981C17 2.98178 15.1729 1 12.75 1Z" stroke="#B5ACA7" stroke-width="2"/>
+                      </svg>
+                    </span>
+                    <span class="title">В избранное</span>
+                    <span class="title_added">В избранном</span>
+                  </button>
+                </div>
+                <div class="product-footer__compare">
+                  <button class="product__compare js-compare-add" data-compare-add="{{ product.id }}">
+                    <span class="icon">
+                      <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 6H13V17H19V6Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"></path>
+                        <path d="M7 10H1V17H7V10Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"></path>
+                        <path d="M13 1H7V17H13V1Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"></path>
+                      </svg>
+                    </span> 
+                    <span>Сравнить</span>
+                  </button>
+                  <button class="product__compare js-compare-delete" data-compare-delete="{{ product.id }}" style="display: none;">
+                    <span class="icon">
+                      <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 6H13V17H19V6Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"></path>
+                        <path d="M7 10H1V17H7V10Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"></path>
+                        <path d="M13 1H7V17H13V1Z" fill="#F7F7F7" stroke="#B5ACA7" stroke-width="2"></path>
+                      </svg>
+                    </span>
+                    <span>Удалить из сравнения</span>
+                  </button>
+                </div>
+                <div class="product-footer__share">
+                  <span class="icon">
+                    <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 10V14C14 15.1046 13.1046 16 12 16L3 16C1.89543 16 1 15.1046 1 14L1 5C1 3.89543 1.89543 3 3 3L7.25098 3" fill="#F7F7F7"/>
+                      <path d="M14 10V14C14 15.1046 13.1046 16 12 16L3 16C1.89543 16 1 15.1046 1 14L1 5C1 3.89543 1.89543 3 3 3L7.25098 3" stroke="#B5ACA7" stroke-width="2" stroke-linecap="round"/>
+                      <mask id="path-3-inside-1" fill="white">
+                      <path d="M7.5 9.5L17 0L7.5 9.5Z"/>
+                      </mask>
+                      <path d="M7.5 9.5L17 0L7.5 9.5Z" fill="#F7F7F7"/>
+                      <path d="M6.08579 8.08579C5.30474 8.86683 5.30474 10.1332 6.08579 10.9142C6.86683 11.6953 8.13317 11.6953 8.91421 10.9142L6.08579 8.08579ZM18.4142 1.41421C19.1953 0.633165 19.1953 -0.633165 18.4142 -1.41421C17.6332 -2.19526 16.3668 -2.19526 15.5858 -1.41421L18.4142 1.41421ZM8.91421 10.9142L18.4142 1.41421L15.5858 -1.41421L6.08579 8.08579L8.91421 10.9142Z" fill="#B5ACA7" mask="url(#path-3-inside-1)"/>
+                      <mask id="path-5-inside-2" fill="white">
+                      <path d="M10 0H17V7"/>
+                      </mask>
+                      <path d="M10 -2C8.89543 -2 8 -1.10457 8 0C8 1.10457 8.89543 2 10 2V-2ZM17 0H19C19 -1.10457 18.1046 -2 17 -2V0ZM15 7C15 8.10457 15.8954 9 17 9C18.1046 9 19 8.10457 19 7H15ZM10 2H17V-2H10V2ZM15 0V7H19V0H15Z" fill="#B5ACA7" mask="url(#path-5-inside-2)"/>
+                    </svg>
+                  </span> 
+                  <span class="title">Поделиться</span>
+                  {% unless settings.product_share_hide %}
+                    <div class="share">
+                      <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8" defer></script>
+                      <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8" defer></script>
+                      <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki"  data-description='{{ product.description | strip_html | truncatewords: 25, " ..." }}' data-image="{{ product.first_image.original_url }}" data-counter=""></div>
+                    </div>
+                  {% endunless %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mobile-product__info hide visible-xs">
+            {% include "product_info" %}
+          </div>
+      </div>
+      
+      {% include "product_tabs" %}
+    </div>
+
+    {% comment %}
+    {% if product.fields.video.value.size > 0 %}
+      <div class="video" data-bg="{{ product.fields.video-poster.value }}">
+        <div class="video__btn js-product-video-play"></div>
+        <video loop>
+          <source src="{{ product.fields.video.value }}" type="video/mp4">
+        </video>
+      </div>
+    {% endif %}
+
+    {% include "product_tabs" %}
+
+    {% include "product_slider", slider_products: product.related_products, slider_class: 'related-products', slider_heading: 'Возможно <span>Вам понадобятся</span>' %}
+
+    {% include "product_slider", slider_products: product.similar_products, slider_class: 'similar-products not_clone', slider_heading: 'Может быть <span>интересно</span>' %}
+    {% endcomment %}
+  </div>

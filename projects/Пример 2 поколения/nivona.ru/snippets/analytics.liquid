@@ -1,0 +1,48 @@
+{% include 'shema' %}
+<script>
+  {% comment %} // Создание заказа в чекауте
+    function sendOrder(){
+    yaCounter48352907.reachGoal('send_form_confirm-order');
+    } {% endcomment %}
+
+  // Регистрация
+    $('#new_client [name="commit"]').click(function(){
+      yaCounter48352907.reachGoal('send_form_register');
+    });
+
+  // Клик по ссылке "Регистрация"
+    $('[href="/client_account/contacts/new"]').click(function(){
+      yaCounter48352907.reachGoal('click_register');
+    });
+
+  // Клик по ссылке "Контакты"
+    $('[href="/page/contacts"]').click(function(){
+      yaCounter48352907.reachGoal('click_contact_us');
+    });
+
+    // Клик по ссылке "Телефон" /ТА
+    $('#phone_c').click(function(){
+      yaCounter48352907.reachGoal('click_phone');
+    });
+
+  // Переход в корзину
+    $('[href="/cart_items"]').click(function(){
+      yaCounter48352907.reachGoal('click_cart');
+    });
+
+  // Переход в корзину
+    $('[data-item-add]').click(function(){
+      yaCounter48352907.reachGoal('click_buy');
+    });
+
+  // Оформить заказ в корзине (клик по кнопке)
+     $('[data-cart-submit]').click(function(){
+       yaCounter48352907.reachGoal('click_place-order');
+     });
+
+  // Оформление заказа
+    function sendOrder(){
+    //yaCounter48352907.reachGoal('send_form_confirm-order');
+    //yaCounter48352907.reachGoal('otpravka_formy_zakaza');
+    }
+</script>

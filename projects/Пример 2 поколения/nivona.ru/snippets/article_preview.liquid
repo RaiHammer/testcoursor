@@ -1,0 +1,18 @@
+{% assign truncate_words = truncate_words | default: 25 %}
+<div class="blog-acticle__item__wrapper">
+    <a href="{{ article.url }}" class="blog-acticle__item" style="background-image: url({{ article.image | image_url: 600, resizing_type: 'fit_width' }})">
+        <div class="blog-acticle__item__content">
+            <span class="blog-acticle__item__title">{{ article.title }}</span>
+            <span class="blog-acticle__item__description">
+              {% if use_truncate %}
+                {{ article.preview | strip_html | truncatewords: truncate_words }}
+              {% elsif article.has_preview? %}
+                {{ article.preview }}
+              {% else %}
+                {{ article.preview | replace: 'pre', 'p' | strip_html | truncatewords: truncate_words }}
+              {% endif %}
+            </span>
+        </div>
+    </a>
+</div>
+{% assign use_truncate =  null %}

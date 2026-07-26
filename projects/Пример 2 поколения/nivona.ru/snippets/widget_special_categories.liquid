@@ -1,0 +1,65 @@
+{% assign is_cover = settings.cards_crop_off | default: 'is-cover' | replace: '1', '' %}
+
+
+{% if data.blocks.size > 0 %}
+  {% assign collections_handles = data.blocks | map: 'collection' | map: 'handle' %}
+  {% assign for_limit = 100 %}
+{% else %}
+  {% assign collections_handles = collections | map: 'handle' %}
+  {% assign for_limit = 4 %}
+{% endif %}
+
+
+<div class="special-categories-wrapper">
+
+<div class="special-categories">
+
+  <!-- <div class="special-categories-heading-wrapper">
+    <p class="special-categories-heading">{{ data.name | editable }}</p>
+  </div> -->
+
+  <div class="row">
+    {% for handle in collections_handles limit: for_limit %}
+      {% assign collection_data = collections[handle] %}
+
+      <div class="special-category is-data-{{ data.name }} cell-">
+        <a href="{{ collection_data.url }}" class="category-inner">
+
+          <div class="category-image-wrapper">
+            <span class="category-image-inner image-container is-square {{ is_cover }}">
+
+              {% if collection_data.image.large_url contains 'no_image' %}
+                {% if collection_data.products.first.first_image %}
+                  {% assign category_img = collection_data.products.first.first_image %}
+                {% else %}
+                  {% assign category_img = collection_data.image %}
+                {% endif %}
+              {% else %}
+                {% assign category_img = collection_data.image %}
+              {% endif %}
+
+              <picture>
+                <source srcset="{{ category_img | image_url: 1000, format: 'webp' }}" type="image/webp">
+                <img src="{{ category_img | image_url: 1000 }}" class="category-image" title="{{ collection_data.title }}" alt="{{ collection_data.title }}" loading="lazy">
+              </picture>
+            </span>
+          </div>
+
+          <div class="category-caption">
+            {{ collection_data.title }}
+          </div>
+
+        </a>
+      </div>
+
+    {% endfor %}
+
+  </div>
+</div>
+
+</div>
+
+{% assign category_cell_class = null %}
+{% assign collections_handles = null %}
+{% assign for_limit = null %}
+{% assign is_cover = null %}

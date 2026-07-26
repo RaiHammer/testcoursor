@@ -1,0 +1,22 @@
+{
+  "df_qs_enabled": "1",
+  "df_qs_placeholder": "Поиск по каталогу",
+  "df_qs_popular_queries": "",
+  "df_qs_trigger_selectors": ".header__search, .header__search-form, .header__search-field, .header__search-btn, .js-open-search-panel, .js-show-search, .header_search, .header_search form, #header-search, .header_search button",
+  "df_qs_show_photos": "1",
+  "df_qs_hover_second_image": "1",
+  "df_qs_show_out_of_stock_badge": "1",
+  "df_qs_show_prices": "1",
+  "df_qs_show_product_sort": "1",
+  "df_qs_show_all_results": "1",
+  "df_qs_show_categories": "1",
+  "df_qs_articles_lazy_load": "1",
+  "df_qs_article_blog_handles": "blog",
+  "df_qs_articles_display_limit": "8",
+  "df_qs_articles_blog_url": "/blog",
+  "df_qs_results_limit": "24",
+  "df_qs_image_ratio": "square",
+  "df_qs_cols_mobile": "2",
+  "df_qs_cols_tablet": "3",
+  "df_qs_cols_desktop": "4"
+}

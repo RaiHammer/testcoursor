@@ -1,0 +1,43 @@
+{% if data.blocks.size > 0 %}
+
+{% assign slide.link = slide.link | default: '#' %}
+
+  <div class="promo-slider-wrapper" data-slider="promo">
+    <div class="promo-slider-heading-wrapper">
+      <div class="promo-slider-heading">
+        {{ data.name | editable }}
+      </div>
+    </div>
+
+    {% for slide in data.blocks %}
+      <div class="promo-slide" data-slider-slide>
+        {% if slide.link != '' %}
+          <a class="promo-slide-inner" href="{{ slide.link }}" title="{{ slide.title }}">
+        {% else %}
+          <span class="promo-slide-inner">
+        {% endif %}
+
+          <img class="promo-slide-image is-desktop" src="{{ slide.image }}" title="{{ slide.title }}" alt="{{ slide.title }}" loading="lazy">
+
+          {% if slide.description and slide.description != '' %}
+            <div class="promo-slide-caption">
+              <div class="promo-slide-title">{{ slide.description | editable }}</div>
+            </div>
+          {% endif %}
+
+        {% if slide.link != '' %}
+          </a>
+        {% else %}
+          </span>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <div class="promo-slider-pagination" data-slider-pagination></div>
+
+    <div data-slider-controls>
+      <button class="promo-slider-prev" data-slider-prev aria-label="Предыдущий слайд"></button>
+      <button class="promo-slider-next" data-slider-next aria-label="Следующий слайд"></button>
+    </div>
+  </div>
+{% endif %}

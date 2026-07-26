@@ -1,0 +1,64 @@
+{
+  "type": "SimpleWidgetType",
+  "handle": "widget_v4_product-reviews_1_ca17d4222a7b6ed19d83f32d8b73274c",
+  "page_kinds": [
+    "product",
+    "page",
+    "blog"
+  ],
+  "widget_list_kinds": [
+    "content"
+  ],
+  "generation": 4,
+  "name": {
+    "ru": "Отзывы на все товары",
+    "en": null,
+    "ee": null,
+    "lv": null,
+    "lt": null,
+    "ua": null,
+    "fr": null,
+    "de": null,
+    "it": null,
+    "cn": null,
+    "jp": null,
+    "pl": null,
+    "az": null,
+    "he": null,
+    "bg": null,
+    "el": null,
+    "cz": null,
+    "pt": null,
+    "fi": null,
+    "es": "Reseñas de producto - 1"
+  },
+  "description": {
+    "ru": "Список отзывов товара.",
+    "en": null,
+    "ee": null,
+    "lv": null,
+    "lt": null,
+    "ua": null,
+    "fr": null,
+    "de": null,
+    "it": null,
+    "cn": null,
+    "jp": null,
+    "pl": null,
+    "az": null,
+    "he": null,
+    "bg": null,
+    "el": null,
+    "cz": null,
+    "pt": null,
+    "fi": null,
+    "es": "Lista de reseñas de producto"
+  },
+  "widget_category_handle": "reviews",
+  "libraries": [
+    "commonjs_v2",
+    "fslightbox",
+    "jquery",
+    "my-layout"
+  ]
+}

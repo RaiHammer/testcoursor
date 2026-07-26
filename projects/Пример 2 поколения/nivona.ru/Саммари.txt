@@ -1,0 +1,46 @@
+Саммари проекта nivona.ru
+Основные цели
+Оптимизация скорости загрузки — основная задача
+Починить формы — выяснилось попутно:
+Форма отзыва на товар (is-reviews) — не отправляется
+Форма обратной связи (is-feedback, /page/feedback) — нет сообщения об успехе
+Ключевые конфигурации
+Shop.config.config.yandex_captcha_key = "ysc1_ec1ApqrRlTZTXotpTnO8PmXe2ISPHxsd9MO3y0rye822b9d2"
+Shop.config.config.captcha_type = "yandex"
+Shop.config.config.consent_to_personal_data = { active: true, obligatory: true }
+Архитектурные решения
+Форма	Решение
+modal--call	data-feedback-form-wrapper (платформа InSales) — работает, не трогаем
+is-feedback	Переписан HTML в page.liquid с data-feedback-form-wrapper — платформа сама отправляет
+is-reviews	alertify.modal() + insales.ui.forms.js + прямой $.ajax POST /front_api/products/{id}/reviews
+Важные особенности InSales
+insales.ui.forms.js — платформенный CDN файл, не редактируем. Опция называется onErrors (множ. число), не onError
+insales.ui.alertify.js — OK кнопка вызывает _form.validate().done(success) — нет .fail() handler
+data-feedback-form-wrapper — платформенный механизм из common-js@v2 CDN. Скорее всего использует Fetch API, а не jQuery AJAX
+$.ajaxSuccess не сработает для платформенных форм с data-feedback-form-wrapper
+Текущая задача: два нерешённых вопроса
+1. Отзыв — форма не отправляется
+Из HTML видно что капча уже решена — в name="smart-token" есть длинный токен. Значит sendTo вызывается и AJAX уходит. Но мы не видим ни ошибки, ни успеха, потому что:
+
+onErrors (plural) не определён → при ошибке от сервера ничего не показывается
+Алертифай не имеет .fail() handler
+Нужно добавить onErrors и проверить что именно возвращает сервер. Смотрите Network tab в DevTools — должен быть запрос POST /front_api/products/.../reviews. Что там за ответ?
+
+2. Feedback — success message не показывается
+$(document).ajaxSuccess не срабатывает потому что data-feedback-form-wrapper использует Fetch API, а не jQuery. Нужно перехватывать через window.fetch.
+
+Исправляю оба места:
+
+Read
+scripts.liquid
+Теперь вношу оба исправления:
+
+Edited
+scripts.liquid
++32
+-14
+Что изменилось:
+
+Форма отзыва — добавлен onErrors (множественное число — именно это ищет insales.ui.forms.js). Теперь при ошибке сервера покажется alertify.error(...). Оставил и onError на всякий случай.
+Feedback success message — заменил $(document).ajaxSuccess на перехват window.fetch. Платформа data-feedback-form-wrapper использует Fetch API, поэтому jQuery-событие никогда не срабатывало.
+Деплойте и проверяйте. По форме отзыва — теперь хотя бы увидите ошибку если сервер вернёт что-то не то. Напишите что показывает при попытке отправить.

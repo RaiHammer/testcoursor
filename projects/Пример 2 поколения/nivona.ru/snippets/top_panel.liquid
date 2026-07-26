@@ -1,0 +1,83 @@
+<div class="top-panel row js-top-panel-fixed">
+  <div class="top-menu-wrapper hidden-sm">
+    <a class="client-account-link" href="/client_account/login">
+      {% if client %}
+        <span class="js-user-name"></span>
+      {% else %}
+        <span>{{ messages.log_in }}</span>
+      {% endif %}
+    </a>
+  </div>
+  <div class="top-menu-wrapper cell- hidden shown-sm">
+    <button type="button" class="top-panel-open-sidebar button js-open-sidebar"></button>
+  </div>
+
+  <div class="top-menu-icons-block collapse-block hide show-sm cell-">
+    <div class="contacts-top-menu hidden shown-sm">
+    {% unless settings.phone == 'hidden' and settings.email == 'hidden'  %}
+
+      <button type="button" class="contacts-icon js-open-contacts"></button>
+
+    {% endunless %}
+      <div class="contacts-top-menu-block cell-12 hidden">
+        <div class="header-block js-contacts-header cell- ">
+
+
+          <div class="email text-left ">
+            {% case settings.email %}
+              {% when 'from_settings' %}
+                <a href="mailto:{{ account.email | strip_html }}" class="contact-link email">
+                   {{ account.email | strip_html | editable }}
+                </a>
+              {% when 'edited_block' %}
+                <span class="">
+                  {{ blocks.email.content | editable }}
+                </span>
+            {% endcase %}
+          </div>
+
+          <div class="phone text-left ">
+            {% case settings.phone %}
+              {% when 'from_settings' %}
+                <a href="tel:{{ account.phone | strip_html }}" class="contact-link tel">
+                  {{ account.phone | strip_html | editable }}
+                </a>
+                </br><a class="backcall-toggle js-backcall-toggle">{{ messages.backcall_title }}</a>
+              {% when 'edited_block' %}
+                <span class="">
+                  {{ blocks.phone.content | editable }}
+                </span>
+                <a class="backcall-toggle backcall-toggle-block js-backcall-toggle">{{ messages.backcall_title }}</a>
+            {% endcase %}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hidden shown-sm">
+      <button type="button" class="top-panel-open-search button js-open-search-panel shown-sm"></button>
+    </div>
+
+    {% unless settings.product_compare_hide %}
+      <div class="compares-widget is-top-panel cell- hidden shown-sm">
+        <a href="/compares" class="compares-widget-link"  title="{{ messages.compare_description }}">
+          <span class="compare-widget-caption is-top-panel">
+            <span class="compare-widget-icon-header"></span>
+            <span class="compares-widget-count is-top-panel js-compares-widget-count"></span>
+          </span>
+        </a>
+      </div>
+    {% endunless %}
+
+    <div class="shopcart-widget-wrapper is-top-panel cell-  hidden shown-sm">
+      {% include "cart_widget", block_class: 'is-top-panel' %}
+    </div>
+  </div>
+
+  <div class="block-top-panel hidden-sm" >
+    {{ blocks.block-top-panel.content | editable }}
+  </div>
+
+</div>

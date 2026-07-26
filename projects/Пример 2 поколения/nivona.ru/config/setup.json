@@ -1,0 +1,302 @@
+{
+  "collections": {
+    "frontpage": "{{ messages.collection_frontpage }}",
+    "popular": "{{ messages.collection_popular }}"
+  },
+  "menus": {
+    "main-menu": "{{ messages.main_menu }}",
+    "footer-menu": "{{ messages.footer_menu }}"
+  },
+  "menu_items": {
+    "main-menu": {
+      "{{ messages.page_delivery }}": "/page/delivery",
+      "{{ messages.page_payment }}": "/page/payment",
+      "{{ messages.page_contacts }}": "/page/feedback"
+    },
+    "footer-menu": {
+      "{{ messages.page_delivery }}": "/page/delivery",
+      "{{ messages.page_payment }}": "/page/payment",
+      "{{ messages.page_contacts }}": "/page/feedback"
+    }
+  },
+
+  "properties": {
+    "label": {
+      "title": "{{ messages.option_label }}",
+      "characteristics": {
+        "new": "{{ messages.option_label_new }}",
+        "sale": "{{ messages.option_label_sale }}"
+      }
+    }
+  },
+  "pages": {
+    "delivery": "{{ messages.page_delivery }}"
+  },
+  "block_lists": {
+    "benefits": {
+      "block_template": "system-benefit",
+      "title": "{{ messages.block_list_benefits }}",
+      "blocks": ["benefit-1", "benefit-2", "benefit-3"]
+    },
+    "slider": {
+      "block_template": "system-promo-slide",
+      "title": "{{ messages.block_list_slider }}",
+      "blocks": ["slide-1"]
+    },
+    "contacts": {
+      "title": "{{ messages.block_list_contacts }}",
+      "blocks": ["phone","email"]
+    },
+    "social": {
+      "block_template": "system-social",
+      "title": "{{ messages.block_list_social }}",
+      "blocks": ["vkontakte", "facebook", "instagram", "odnoklassniki", "youtube", "twitter", "google"]
+    },
+    "special-categories": {
+      "block_template": "system-collection",
+      "title": "{{ messages.snippet_title_categories }}"
+    },
+    "special-products": {
+      "block_template": "system-collection",
+      "title": "{{ messages.snippet_title_collections }}",
+      "blocks": ["products-1", "products-2"]
+    },
+    "feedback-form": {
+      "title": "{{ messages.block_list_feedback }}",
+      "block_template": "system-widget-feedback",
+      "blocks": ["feedback-form-1"]
+    },
+    "image-text": {
+      "block_template": "system-image-and-content",
+      "title": "{{ messages.snippet_image_text }}",
+      "blocks": ["image-text-1"]
+    },
+    "reviews": {
+      "block_template": "system-review",
+      "title": "{{ messages.snippet_reviews }}",
+      "blocks": ["review-1", "review-2", "review-3"]
+    },
+    "sidebar-blocks": {
+      "block_template": "system-title-and-content",
+      "title": "{{ messages.panel_sidebar }}",
+      "blocks": ["market-place"]
+    }
+  },
+  "blocks": {
+    "slide-1": {
+      "block_template": "system-promo-slide",
+      "title": "{{ messages.block_slide1 }}",
+      "link": "",
+      "description": "{{ messages.block_slide1 }}",
+      "image": "food.png"
+    },
+    "benefit-1": {
+      "block_template": "system-benefit",
+      "title": "{{ messages.block_benefit1 }}",
+      "description": "{{ messages.block_benefit1 }}",
+      "image": "roket.png"
+    },
+    "benefit-2": {
+      "block_template": "system-benefit",
+      "title": "{{ messages.block_benefit2 }}",
+      "description": "{{ messages.block_benefit2 }}",
+      "image": "lois.png"
+    },
+    "benefit-3": {
+      "block_template": "system-benefit",
+      "title": "{{ messages.block_benefit3 }}",
+      "description": "{{ messages.block_benefit3 }}",
+      "image": "gift.png"
+    },
+    "phone": {
+      "title": "{{ messages.s_phone }}",
+      "content": "+7(999)123-45-67"
+    },
+    "email": {
+      "title": "{{ messages.s_email }}",
+      "content": "sales@company.ru"
+    },
+    "block-top-panel": {
+      "title": "{{ messages.block_top_panel }}",
+      "content": "{{ messages.block_top_panel }}"
+    },
+    "vkontakte": {
+      "block_template": "system-social",
+      "title": "Vkontakte",
+      "link": "http://vk.com/"
+    },
+    "facebook": {
+      "block_template": "system-social",
+      "title": "Facebook",
+      "link": "http://facebook.com/"
+    },
+    "odnoklassniki": {
+      "block_template": "system-social",
+      "title": "Odnoklassniki",
+      "link": "http://ok.ru/"
+    },
+    "instagram": {
+      "block_template": "system-social",
+      "title": "Instagram",
+      "link": "http://instagram.com/"
+    },
+    "youtube": {
+      "block_template": "system-social",
+      "title": "YouTube",
+      "link": "http://youtube.com/"
+    },
+    "twitter": {
+      "block_template": "system-social",
+      "title": "Twitter",
+      "link": "http://twitter.com/"
+    },
+    "google": {
+      "block_template": "system-social",
+      "title": "Google+",
+      "link": "https://plus.google.com/"
+    },
+    "products-1": {
+      "block_template": "system-collection",
+      "title": "{{ messages.collection_frontpage }}",
+      "collection": "frontpage"
+    },
+    "products-2": {
+      "block_template": "system-collection",
+      "title": "{{ messages.collection_popular }}",
+      "collection": "popular"
+    },
+    "feedback-form-1": {
+      "title": "{{ messages.block_feedback_title }}",
+      "submit-text": "{{ messages.button_submit }}",
+      "block_template": "system-widget-feedback"
+    },
+    "review-1": {
+      "block_template": "system-review",
+      "title": "{{ messages.snippet_reviews }}",
+      "name": "{{ messages.review-1-name }}",
+      "content": "{{ messages.review-1-content }}",
+      "image": "avatar.jpeg"
+    },
+    "review-2": {
+      "block_template": "system-review",
+      "title": "{{ messages.snippet_reviews }}",
+      "name": "{{ messages.review-2-name }}",
+      "content": "{{ messages.review-2-content }}",
+      "image": "avatar.jpeg"
+    },
+    "review-3": {
+      "block_template": "system-review",
+      "title": "{{ messages.snippet_reviews }}",
+      "name": "{{ messages.review-3-name }}",
+      "content": "{{ messages.review-3-content }}",
+      "image": "maint.jpg"
+    },
+    "image-text-1": {
+      "block_template": "system-image-and-content",
+      "title": "{{ messages.snippet_image_text }}",
+      "content": "{{ messages.image-text-content }}",
+      "image": "clothes.jpg"
+    },
+    "market-place": {
+      "block_template": "system-title-and-content",
+      "title": "{{ messages.panel_sidebar }}",
+      "content": "{{ messages.panel_sidebar_content }}"
+    },
+    "header_info": {
+      "block_template": "system-title-and-content",
+      "title": "{{ messages.header-info }}",
+      "content": "{{ messages.header-info-content }}"
+    }
+  },
+  "theme_widgets": {
+    "widget_lists": [
+      {
+        "name": "index",
+        "handle": "index-list",
+        "widgets": [
+          {
+            "widget_type": "promo-slider-type",
+            "data_handle": "slider"
+          },
+          {
+            "widget_type": "special-categories-type",
+            "data_handle": "special-categories"
+          },
+
+          {
+            "widget_type": "special-products-type",
+            "data_handle": "special-products"
+          },
+
+          {
+            "widget_type": "widget-feedback-type",
+            "data_handle": "feedback-form"
+          },
+          {
+            "widget_type": "image-text-type",
+            "data_handle": "image-text"
+          },
+          {
+            "widget_type": "reviews-type",
+            "data_handle": "reviews"
+          },
+          {
+            "widget_type": "benefits-type",
+            "data_handle": "benefits"
+          }
+        ]
+      }
+    ],
+    "widget_types": [
+      {
+        "block_template": "system-promo-slide",
+        "name": "{{ messages.snippet_promo_slider }}",
+        "handle": "promo-slider-type",
+        "type": "block_list_widget_type",
+        "snippet":"widget_promo_slider.liquid"
+      },
+      {
+        "block_template": "system-benefit",
+        "name": "{{ messages.snippet_benefits }}",
+        "handle": "benefits-type",
+        "type": "block_list_widget_type",
+        "snippet": "widget_benefits.liquid"
+      },
+      {
+        "block_template": "system-collection",
+        "name": "{{ messages.snippet_title_categories }}",
+        "handle": "special-categories-type",
+        "type": "block_list_widget_type",
+        "snippet": "widget_special_categories.liquid"
+      },
+      {
+        "block_template": "system-collection",
+        "name": "{{ messages.snippet_title_collections }}",
+        "handle": "special-products-type",
+        "type": "block_list_widget_type",
+        "snippet": "widget_special_products.liquid"
+      },
+      {
+        "block_template": "system-widget-feedback",
+        "name": "{{ messages.block_list_feedback }}",
+        "handle": "widget-feedback-type",
+        "type": "block_list_widget_type",
+        "snippet": "widget_feedback.liquid"
+      },
+      {
+        "block_template": "system-image-and-content",
+        "name": "{{ messages.snippet_image_text }}",
+        "handle": "image-text-type",
+        "type": "block_list_widget_type",
+        "snippet": "widget_image_text.liquid"
+      },
+      {
+        "block_template": "system-review",
+        "name": "{{ messages.snippet_reviews }}",
+        "handle": "reviews-type",
+        "type": "block_list_widget_type",
+        "snippet": "widget_reviews.liquid"
+      }
+    ]
+  }
+}

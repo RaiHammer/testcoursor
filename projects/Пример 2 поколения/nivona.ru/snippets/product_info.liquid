@@ -1,0 +1,75 @@
+
+    <div class="info__delivery">
+      <div class="info__available {% if product.available == true %}is-available{% elsif product.properties['is_preorder'].characteristics[0].handle == 'true' %}is-available{% else %}is-notAvailable{% endif %}">
+        {% if product.available == true %}
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.40039 9.62858L9.28928 13.2L13.4004 8.20001" stroke="#59B347" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="#59B347" stroke-width="2"/>
+          </svg>
+          <span>В наличии</span>
+        {% elsif product.properties['is_preorder'].characteristics[0].handle == 'true' %}
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.40039 9.62858L9.28928 13.2L13.4004 8.20001" stroke="#59B347" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="#59B347" stroke-width="2"/>
+          </svg>
+          <span>Ожидается поступление</span>
+        {% else %}
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="#59B347" stroke-width="2"/>
+            <path d="M7 13.2L10.0772 10.1L13.1543 7M7 7L13.1543 13.2" stroke="#59B347" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Нет в наличии</span>
+        {% endif %}
+      </div>
+      <div class="info__delivery__items">
+        <div class="js-delivery-product">
+          <div class="info__delivery__item info__delivery__item__courier">
+            <div class="delivery__left">
+              <div class="delivery__icon">
+                <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg"> 
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M16.6455 12.8816C16.6455 11.3463 17.8842 10.0973 19.4068 10.0973C20.9294 10.0973 22.1681 11.3463 22.1681 12.8816C22.1681 14.4166 20.9296 15.6657 19.4068 15.6657C17.8842 15.6657 16.6455 14.4166 16.6455 12.8816ZM18.1939 12.8814C18.1939 13.5556 18.7379 14.1041 19.4068 14.1041C20.0757 14.1041 20.6197 13.5556 20.6197 12.8814C20.6197 12.2071 20.0757 11.6583 19.4068 11.6583C18.7379 11.6583 18.1939 12.2069 18.1939 12.8814Z" fill="black"></path> 
+                  <path d="M15.4322 0.0266113H0.774188C0.346594 0.0266113 0 0.376096 0 0.807304V12.8293C0 13.2605 0.346594 13.61 0.774188 13.61H3.20002V12.0487H1.54838V1.58795H14.658V12.8293H16.2064V0.807304C16.2065 0.376096 15.8599 0.0266113 15.4322 0.0266113Z" fill="black"></path> 
+                  <rect x="6.99316" y="12.0486" width="10.4258" height="1.56129" fill="black"></rect> 
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M2.32227 12.8816C2.32227 11.3463 3.56098 10.0973 5.08358 10.0973C6.60617 10.0973 7.84484 11.3463 7.84489 12.8816C7.84489 14.4166 6.60617 15.6657 5.08358 15.6657C3.56098 15.6657 2.32227 14.4166 2.32227 12.8816ZM3.87069 12.8814C3.87069 13.5556 4.41467 14.1041 5.08358 14.1041C5.7522 14.1041 6.29647 13.5556 6.29647 12.8814C6.29647 12.2071 5.75248 11.6583 5.08358 11.6583C4.41467 11.6583 3.87069 12.2069 3.87069 12.8814Z" fill="black"></path> 
+                  <path d="M23.2262 6.50604H15.4326V8.06733H22.452V12.0486H21.3423V13.6099H23.2261C23.6537 13.6099 24.0003 13.2607 24.0003 12.8293V7.28669C24.0004 6.85553 23.6538 6.50604 23.2262 6.50604Z" fill="black"></path> <path d="M20.8853 3.26734C20.7493 3.01806 20.4892 2.86298 20.2068 2.86298H15.4326V4.42427H19.749L21.5154 7.66293L22.8723 6.91036L20.8853 3.26734Z" fill="black"></path> 
+                </svg>
+              </div>
+              <div class="delivery__title">Доставка курьером<span class="warning" style="display:none;"> *</span></div>
+            </div>
+            <div class="delivery__right">
+              <div class="delivery__price"></div>
+            </div>
+          </div>
+          <div class="info__delivery__item  info__delivery__item__pickup">
+              <div class="delivery__left">
+                <div class="delivery__icon">
+                  <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22.9646 5.10763C22.9646 4.80315 22.779 4.52881 22.4946 4.41308L11.7875 0.0563145C11.6029 -0.0187715 11.3959 -0.0187715 11.2113 0.0563145L0.504183 4.41308C0.219859 4.52876 0.0341797 4.80315 0.0341797 5.10763V18.8924C0.0341797 19.1968 0.219812 19.4712 0.504183 19.5869L11.2113 23.9437C11.3939 24.018 11.5992 24.0196 11.7865 23.9436C11.787 23.9435 11.7862 23.9438 11.7863 23.9439C11.7864 23.9442 11.8992 23.8983 15.6152 22.3862L15.6241 22.3826L15.6348 22.3783L22.4946 19.5869C22.779 19.4712 22.9646 19.1968 22.9646 18.8924V5.10763ZM11.4994 8.71579L7.55423 7.1105L16.0802 3.42655L20.2892 5.13921L11.4994 8.71579ZM4.9541 7.67599L1.55032 6.29098V18.3891L10.7413 22.1289V10.0308L6.47024 8.29291V11.5835C6.47024 11.9981 6.13081 12.3343 5.71217 12.3343C5.29352 12.3343 4.9541 11.9981 4.9541 11.5835V7.67599ZM11.4994 1.56259L14.1274 2.6319L5.60139 6.31585L2.7096 5.13916L11.4994 1.56259ZM21.4485 6.29098L12.2575 10.0308V22.1289L21.4485 18.3891V6.29098Z" fill="black"></path>
+                  </svg>
+                </div>
+                <div class="delivery__title">
+                  	Забрать самостоятельно<span class="warning" style="display:none;"> *</span>
+                </div>
+              </div>
+              <div class="delivery__right">
+                <div class="delivery__price"></div>
+              </div>
+          </div>
+          <div class="info__delivery__item  info__delivery__item__warning" style="display: none;">
+            * расчет срока, стоимости и способа доставки осуществляется в корзине
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="info__payment">
+      <div class="info__payment__content">
+        <div class="info__payment__title">{{ block_lists.widget-product-payments.name | replace: '[NEW] ', '' }}</div>
+        <div class="info__payment__items">
+          {% for block in block_lists.widget-product-payments.blocks %}
+            <div class="info__payment__item">
+              <img src="{{ block.image }}" title="{{ block.title }}" alt="{{ block.title }}" />
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,200 @@
+{% assign with_tag = blog.tags.first.current? %}
+{% assign show_last = show_last | default: true %}
+
+  <ol class="page-head__breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+
+    <li class="breadcrumb-item home" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+      <a class="breadcrumb-link home-icon" title="{{ home_title }}" href="/" itemprop="item">
+        <span itemprop="name">Главная</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+
+    {% if template contains 'checkout' and show_last %}
+      <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+        <span class="breadcrumb-page" itemprop="name">Оформление заказа</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    	
+
+    {% elsif template contains 'page' and show_last %}
+      <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+        <span class="breadcrumb-page" itemprop="name">{{ page.title }}</span>
+        <meta itemprop="position" content="2" />
+      </li>
+
+    {% elsif template contains "search" and show_last %}
+      <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+        <span class="breadcrumb-page" itemprop="name">
+          {{ messages.search_title }}
+        </span>
+        <meta itemprop="position" content="2" />
+      </li>
+
+    {% elsif template contains "blog" %}
+      {% if with_tag %}
+        <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+          <a href="{{ blog.url }}" class="breadcrumb-link" itemprop="item"><span itemprop="name">{{ blog.title }}</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+
+        <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+          <span class="breadcrumb-page" itemprop="name">{{ blog.tags.first.title }}</span>
+          <meta itemprop="position" content="3" />
+        </li>
+
+      {% elsif show_last %}
+        <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+          <span class="breadcrumb-page" itemprop="name">{{ blog.title }}</span>
+          <meta itemprop="position" content="2" />
+        </li>
+      {% endif %}
+
+    {% elsif template contains 'article' %}
+      <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+        <a class="breadcrumb-link" title="{{ blog.title }}" href="{{ blog.url }}" itemprop="item"><span itemprop="name">{{ blog.title }}</span></a>
+        <meta itemprop="position" content="2" />
+      </li>
+
+      {% if show_last %}
+        <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+          <span class="breadcrumb-page" itemprop="name">{{ article.title }}</span>
+          <meta itemprop="position" content="3" />
+        </li>
+      {% endif %}
+
+    {% elsif template contains 'cart' and show_last %}
+      <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+        <span class="breadcrumb-page" itemprop="name">
+          {{ messages.cart_title }}
+        </span>
+        <meta itemprop="position" content="2" />
+      </li>
+
+    {% elsif template contains 'compare' and show_last %}
+      <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+        <span class="breadcrumb-page" itemprop="name">
+          {{ messages.comparison_title }}
+        </span>
+        <meta itemprop="position" content="2" />
+      </li>
+
+    {% elsif template contains 'account' and show_last %}
+      <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+        <span class="breadcrumb-page" itemprop="name">
+          {{ yititle }}
+        </span>
+        <meta itemprop="position" content="2" />
+      </li>
+
+    {% elsif template contains 'collection' %}
+      {% if current_collections.size == 1 and show_last %}
+      {% if filter %}
+        <li class="breadcrumb-item"  itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+        <a itemprop="item" class="breadcrumb-link" title="{{ collection.title }}" href="{{ collection.url }}"><span itemprop="name">{{ collection.title }}</span></a>
+          <meta itemprop="position" content="2" />
+      </li>
+        <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+          <span class="breadcrumb-page" itemprop="name">{{ filter.title }}</span>
+          <meta itemprop="position" content="3" />
+        </li>
+        {% else %}
+        <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+          <span class="breadcrumb-page" itemprop="name">{{ collection.title }}</span>
+          <meta itemprop="position" content="2" />
+        </li>
+        {% endif %}
+
+      {% elsif current_collections.size > 0 %}
+
+        {% for collection in current_collections %}
+          {% if collection.level > 0 %}
+            {% unless forloop.last %}
+              <li class="breadcrumb-item" data-breadcrumbs="{{ forloop.index }}" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                <a itemprop="item" class="breadcrumb-link" title="{{ collection.title }}" href="{{ collection.url }}"><span itemprop="name">{{ collection.title }}</span></a>
+                <meta itemprop="position" content="2" />
+              </li>
+              {% if forloop.index == 2 and current_collections.size > 3 %}
+                <li class="breadcrumb-item button-breadcrumb" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                  <button class="button is-primary hidden-breadcrumbs js-hidden-bread" > - </button>
+                </li>
+              {% endif %}
+            {% elsif show_last %}
+              {% if filter %}
+                <li class="breadcrumb-item"  itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                  <a itemprop="item" class="breadcrumb-link" title="{{ collection.title }}" href="{{ collection.url }}"><span itemprop="name">{{ collection.title }}</span></a>
+                  <meta itemprop="position" content="2" />
+                </li>
+                <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                  <span class="breadcrumb-page" itemprop="name">{{ filter.title }}</span>
+                  <meta itemprop="position" content="3" />
+                </li>
+              {% else %}
+                <li class="breadcrumb-item" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+                  <span class="breadcrumb-page" itemprop="name">{{ collection.title }}</span>
+                  <meta itemprop="position" content="2" />
+                </li>
+              {% endif %}
+            {% endunless %}
+          {% endif %}
+        {% endfor %}
+
+      {% endif %}
+
+    {% elsif template contains 'product' %}
+      {% comment %}
+        мы перешли в товар из корня каталога
+      {% endcomment %}
+      {% if current_collections.size == 1 %}
+        {% assign path = current_collections %}
+        {% assign ignor_root = false %}
+
+      {% comment %}
+        мы переходили по сайту - все ок, мы знаем как сюда пришли
+      {% endcomment %}
+      {% elsif current_collections.size > 1 %}
+        {% assign path = current_collections %}
+        {% assign ignor_root = true %}
+
+      {% comment %}
+        мы перешли с внешней ссылки и не знаем, к какой категории относится товар
+      {% endcomment %}
+      {% else %}
+        {% assign root = product.collections | sort: 'level' %}
+        {% assign path = root.last.current_collections %}
+        {% assign ignor_root = true %}
+      {% endif %}
+
+      {% assign show_link = true %}
+      {% for collection in path %}
+        {% if collection.level == 0 and ignor_root %}
+          {% assign show_link = false %}
+        {% endif %}
+
+        {% if show_link %}
+          <li class="breadcrumb-item" data-breadcrumbs="{{ forloop.index }}" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+            <a itemprop="item" class="breadcrumb-link" title="{{ collection.title }}" href="{{ collection.url }}"><span itemprop="name">{{ collection.title }}</span></a>
+            <meta itemprop="position" content="2" />
+          </li>
+          {% if forloop.index == 2 and path.size > 3 %}
+            <li class="breadcrumb-item button-breadcrumb" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+              <button class="button is-primary hidden-breadcrumbs js-hidden-bread" > - </button>
+            </li>
+          {% endif %}
+        {% endif %}
+
+        {% assign show_link = true %}
+      {% endfor %}
+
+      <li class="breadcrumb-item" data-breadcrumbs="" itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+		<span class="breadcrumb-link" itemprop="name">{{ product.title }}</span>
+        <meta itemprop="position" content="3" />
+      </li>
+
+    {% endif %}
+
+  </ol>
+
+{% assign show_link = null %}
+{% assign path = null %}
+{% assign with_tag = null %}

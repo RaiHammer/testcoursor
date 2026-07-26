@@ -1,0 +1,187 @@
+{
+  "Контент": [
+    {
+      "group_name": "Контент",
+      "items": [
+        {
+          "name": "title",
+          "label": "Заголовок",
+          "value": "Отзывы покупателей",
+          "type": "text",
+          "general": true,
+          "help": "Пусто — заголовок не выводится."
+        },
+        {
+          "name": "title_align",
+          "label": "Выравнивание заголовка",
+          "value": "center",
+          "type": "select",
+          "enable_server_reload": true,
+          "options": [
+            ["Слева", "left"],
+            ["По центру", "center"]
+          ]
+        },
+        {
+          "name": "display_mode",
+          "label": "Макет",
+          "value": "slider",
+          "type": "select",
+          "enable_server_reload": true,
+          "options": [
+            ["Слайдер", "slider"],
+            ["Лента", "list"]
+          ],
+          "help": "Слайдер — Swiper. Лента — вертикальный список карточек."
+        },
+        {
+          "name": "empty_message",
+          "label": "Сообщение, если нет отзывов",
+          "value": "Отзывы скоро появятся",
+          "type": "text",
+          "help": "Показывается, если сниппет danforge_reviews_yandex пуст или не загружен."
+        }
+      ]
+    },
+    {
+      "group_name": "Фильтр и лимиты",
+      "items": [
+        {
+          "name": "min_rating",
+          "label": "Минимальный рейтинг",
+          "value": "0",
+          "type": "button-group",
+          "enable_server_reload": true,
+          "options": [
+            { "value": "0", "title": "Все", "icon": "mdi-star-outline" },
+            { "value": "4", "title": "4+", "icon": "mdi-star-half-full" },
+            { "value": "5", "title": "5", "icon": "mdi-star" }
+          ],
+          "help": "Фильтр на клиенте. Для Yandex также задайте min_rating в CLI при генерации."
+        },
+        {
+          "name": "slider_limit",
+          "label": "Лимит в слайдере",
+          "value": 10,
+          "type": "range",
+          "min": 3,
+          "max": 30,
+          "step": 1,
+          "enable_server_reload": true
+        },
+        {
+          "name": "list_limit",
+          "label": "Лимит в ленте",
+          "value": 10,
+          "type": "range",
+          "min": 3,
+          "max": 30,
+          "step": 1,
+          "enable_server_reload": true
+        },
+        {
+          "name": "text_lines",
+          "label": "Строк текста до «Читать полностью»",
+          "value": 5,
+          "type": "range",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "enable_server_reload": true
+        },
+        {
+          "name": "hide_date",
+          "label": "Скрыть дату",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true
+        },
+        {
+          "name": "hide_source",
+          "label": "Скрыть подпись «Яндекс»",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true
+        }
+      ]
+    }
+  ],
+  "Дизайн": [
+    {
+      "group_name": "Слайдер",
+      "items": [
+        {
+          "name": "accent_color",
+          "label": "Акцентный цвет",
+          "value": "#f5a623",
+          "type": "color",
+          "enable_server_reload": true
+        },
+        {
+          "name": "autoplay",
+          "label": "Автопрокрутка",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true
+        },
+        {
+          "name": "autoplay_delay",
+          "label": "Задержка автопрокрутки (мс)",
+          "value": 5000,
+          "type": "range",
+          "min": 2000,
+          "max": 10000,
+          "step": 500,
+          "enable_server_reload": true
+        },
+        {
+          "name": "show_arrows",
+          "label": "Стрелки навигации",
+          "value": true,
+          "type": "checkbox",
+          "enable_server_reload": true
+        },
+        {
+          "name": "speed",
+          "label": "Скорость анимации (мс)",
+          "value": 400,
+          "type": "range",
+          "min": 200,
+          "max": 1000,
+          "step": 50,
+          "enable_server_reload": true
+        },
+        {
+          "name": "slides_mobile",
+          "label": "Слайдов на телефоне",
+          "value": 1,
+          "type": "range",
+          "min": 1,
+          "max": 2,
+          "step": 1,
+          "enable_server_reload": true
+        },
+        {
+          "name": "slides_tablet",
+          "label": "Слайдов на планшете",
+          "value": 2,
+          "type": "range",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "enable_server_reload": true
+        },
+        {
+          "name": "slides_per_view",
+          "label": "Слайдов на десктопе",
+          "value": 3,
+          "type": "range",
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "enable_server_reload": true
+        }
+      ]
+    }
+  ]
+}

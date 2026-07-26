@@ -1,0 +1,17 @@
+{% if block_lists.widget-about.blocks.size > 0 %}
+	<section class="section white-bg">
+		<div class="container">
+			<div class="row">
+                {% for block in block_lists.widget-about.blocks %}
+                    <div class="{{ block.description }}">
+                        <a href="{{ block.link }}" class="masonry lazyCss" data-bg="">
+                            {% comment %}{{ block.image | webp_picture_tag: 652, class: 'lazy' }}{% endcomment %}
+                            <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-original="{{ block.image }}" alt="{{ block.title }}">
+                            <span class="masonry__title masonry__title--border">{{ block.title }}</span>
+                        </a>
+                    </div>
+                {% endfor %}
+			</div>
+		</div>
+	</section>
+{% endif %}

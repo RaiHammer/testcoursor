@@ -1,0 +1,40 @@
+{
+  "content": [
+    {
+      "group_name":"Корзина",
+      "items": [
+        {
+          "name": "cart-title",
+          "label": "Заголовок",
+          "value": null,
+          "type": "text"
+        },
+        {
+          "name": "cart-add-message",
+          "label": "Заголовок при добавлении товара в корзину",
+          "value": null,
+          "type": "text"
+        },
+        {
+          "name": "cart-btn",
+          "label": "Текст кнопки",
+          "value": null,
+          "type": "text"
+        },
+        {
+          "name": "cart-copirite",
+          "label": "Копирайт",
+          "value": "<p style=\"text-align:center;font-size:12px;color:#999;\">Корзина · <a href=\"https://danforge.ru\" target=\"_blank\" rel=\"noopener\">DanForge</a></p>",
+          "type": "rich-text"
+        },
+        {
+          "name": "cart-message",
+          "label": "Сообщение над кнопкой оформления",
+          "value": null,
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "design": []
+}

@@ -1,0 +1,29 @@
+<div class="products-list">
+
+  {% if search.performed? and search.results != empty %}
+    <div class="products-items products-items_grid">
+      <div class="row">
+        {% for product in search.results %}
+          <div class="col-xs-6 col-sm-4 col-md-3">
+            {% include 'product_card' %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  {% elsif search.performed? and search.results == empty %}
+    <div class="cell-12">
+      <div class="notice is-info">
+        {{ messages.search_is_fail }}
+      </div>
+    </div>
+
+  {% else %}
+    <div class="cell-12">
+      <div class="notice is-info">
+        {{ messages.search_is_empty }}
+      </div>
+    </div>
+
+  {% endif %}
+</div>

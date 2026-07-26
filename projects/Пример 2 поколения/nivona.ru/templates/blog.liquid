@@ -1,0 +1,29 @@
+<div class="content-wrapper">
+  {% include "page_header" %}
+  
+  {% paginate articles by 6 %}
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+        <div class="articles-list blog-acticle">
+          <div class="blog-acticle__items">
+            {% for article in articles %}
+              {% include "article_preview", truncate_words: 40 %}
+            {% endfor %}
+          </div>
+        </div>
+
+        {% if paginate.parts.size > 1 %}
+          <div class="blog-toolbar toolbar at-bottom">
+            <div class="toolbar-inner">
+              <div class="pagination-wrapper">
+                {% include "pagination" %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endpaginate %}
+</div>

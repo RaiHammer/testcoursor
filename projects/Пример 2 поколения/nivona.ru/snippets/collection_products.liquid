@@ -1,0 +1,50 @@
+{% assign display_filter = false %}
+
+<div class="products-list is-collection" data-ajax>
+  
+    {% if products.size > 0 %}
+      <div class="products-items products-items_list">
+        <div class="row">
+          {% for product in collection.products %}
+            <div class="col-xs-12 col-sm-12 col-md-12">
+              {% include 'product_card_list' %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="products-items products-items_grid">
+        <div class="row">
+          {% for product in collection.products %}
+            <div class="col-xs-12 col-sm-6 col-md-4">
+              {% include 'product_card' %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% elsif filter_selected %}
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="collection_is_empty">
+            <div class="notice is-warning">
+              {{ messages.collection_filters_is_empty }}
+            </div>
+            <br>
+            <a href="{{ collection.url }}" class="button is-bordered filter-empty">
+              {{ messages.button_reset_filters }}
+            </a>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="collection_is_empty">
+            <div class="notice is-info">
+              {{ messages.collection_is_empty }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>

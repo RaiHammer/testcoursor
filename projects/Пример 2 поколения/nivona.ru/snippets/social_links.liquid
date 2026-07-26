@@ -1,0 +1,45 @@
+{% assign social_groups = block_lists.with_template['system-social'].social.blocks %}
+
+{% if social_groups.size > 0 %}
+  <ul class="social-menu">
+    {% for group in social_groups %}
+
+      {% assign icon_name = false %}
+
+      {% if group.link contains 'vk.com' %}
+        {% assign icon_name = 'vk' %}
+      {% endif %}
+
+      {% if group.link contains 'facebook.com' %}
+        {% assign icon_name = 'facebook' %}
+      {% endif %}
+
+      {% if group.link contains 'ok.ru' %}
+        {% assign icon_name = 'odnoklassniki' %}
+      {% endif %}
+
+      {% if group.link contains 'twitter.com' %}
+        {% assign icon_name = 'twitter' %}
+      {% endif %}
+
+      {% if group.link contains 'youtube.com' %}
+        {% assign icon_name = 'youtube' %}
+      {% endif %}
+
+      {% if group.link contains 'instagram.com' %}
+        {% assign icon_name = 'instagram' %}
+      {% endif %}
+
+
+
+      {% if icon_name %}
+        <li class="social-menu-item">
+          <a target="blank" title='{{ group.title }}' href="{{ group.link }}" class="social-menu-link">
+            <div class="fa fa-{{ icon_name }} fa-lg"></div>
+          </a>
+        </li>
+      {% endif %}
+
+    {% endfor %}
+  </ul>
+{% endif %}

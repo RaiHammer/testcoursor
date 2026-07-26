@@ -1,0 +1,24 @@
+{
+  "layout-wide-bg": false,
+  "layout-wide-content": false,
+  "layout-pt": 2,
+  "layout-pb": 2,
+  "layout-mt": 1,
+  "layout-mb": 1,
+  "hide-mobile": false,
+  "hide-desktop": false,
+  "layout-content-max-width": 1408,
+  "grid-list-min-width": 400,
+  "grid-list-row-gap": 0.5,
+  "grid-list-column-gap": 2,
+  "title": {
+    "ru": "Отзывы",
+    "en": "Customer",
+    "ua": "Відгуки",
+    "es": "Reseñas"
+  },
+  "manager-photo": "14147288",
+  "img-border-radius": 6,
+  "rating-color": "#FF0000",
+  "reviews_limit": 20
+}

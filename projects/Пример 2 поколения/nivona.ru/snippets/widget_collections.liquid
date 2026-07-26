@@ -1,0 +1,22 @@
+{% if block_lists.widget-collections.blocks.size > 0 %}
+	<section class="section white-bg">
+		<div class="container">
+			<div class="row">
+                {% for block in block_lists.widget-collections.blocks %}
+                    <div class="col-xs-12 col-sm-4">
+                        <a href="{{ block.collection.url }}" class="product-section">
+                            <span class="product-section__title">{{ block.collection.title }}</span>
+
+                            <span class="product-section__img">
+                                <picture>
+                                  <source srcset="{{ block.collection.image | image_url: 276, format: 'webp' }}" type="image/webp">
+                                  <img src="{{ block.collection.image | image_url: 276 }}" alt="{{ block.collection.title }}" width="276" height="276" loading="lazy">
+                                </picture>
+                            </span>
+                        </a>
+                    </div>
+                {% endfor %}
+			</div>
+		</div>
+	</section>
+{% endif %}

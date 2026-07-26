@@ -1,0 +1,28 @@
+{% if data.blocks.size > 0 %}
+  <div class="image-text-wrapper">
+    <div class="image-text-blocks ">
+      {% for block in data.blocks %}
+        {% assign horizontal_position = block.horizontal_position  | default: 'left' %}
+        {% assign vertical_position = block.vertical_position  | default: 'top' %}
+
+        <div class="image-text">
+          {% unless block.hide_image %}
+            <div class="image-text-container is-{{ horizontal_position }} is-{{ vertical_position }}">
+              <div class="image-container">
+                <img src="{{ block.image }}" title="{{ data.name }}" alt="{{ data.name }}" class="image-text__image" loading="lazy">
+              </div>
+            </div>
+          {% endunless %}
+          {% unless block.content == '' %}
+            <div class="image-text__content ">
+              <div class=" editor">
+              {{ block.content | editable }}
+              </div>
+            </div>
+          {% endunless %}
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+{% endif %}

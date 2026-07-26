@@ -1,0 +1,68 @@
+{% if block_lists.index-widget-slider-new.blocks.size > 0 %}
+    <div class="slider">
+		<div class="owl-carousel">
+            {% for block in block_lists.index-widget-slider-new.blocks %}
+          		{% if block.hide != true %}
+                  <div class="slider__item slide-{{ block.handle }} {% if block.image-375.size > 0 %} is-mobile-375{% endif %}" style="{% if block.bg-linear-gradient.size > 0 %}background: {{ block.bg-linear-gradient }};{% else %}{% if block.bg-color.size > 0 %}background-color: {{ block.bg-color }};{% endif %}{% if block.bg-image.size > 0 %}background-image: url({{ block.bg-image }});{% endif %}{% endif %}">
+                      <div class="slider__content">
+                        <a href="{{ block.link }}">
+                              {% if block.image.size > 0 %}
+                                  <div class="slider__img is-desktop" data-bg="">
+                                      <picture>
+                                        {% if block.image-375.size > 0 %}
+                                          <source media="(max-width: 480px)" srcset="{{ block.image-375 | image_url: 480, format: 'webp', resizing_type: 'fit_width', quality: 90 }}" type="image/webp">
+                                          <source media="(max-width: 480px)" srcset="{{ block.image-375 | image_url: 480, resizing_type: 'fit_width', quality: 90 }}">
+                                        {% else %}
+                                          <source media="(max-width: 480px)" srcset="{{ block.image | image_url: 600, format: 'webp', resizing_type: 'fit_width', quality: 90 }}" type="image/webp">
+                                          <source media="(max-width: 480px)" srcset="{{ block.image | image_url: 600, resizing_type: 'fit_width', quality: 90 }}">
+                                        {% endif %}
+                                        <source srcset="{{ block.image | image_url: 1980, format: 'webp', resizing_type: 'fit_width', quality: 90 }}" type="image/webp">
+                                        {% if forloop.first %}
+                                          <img src="{{ block.image | image_url: 1980, resizing_type: 'fit_width', quality: 90 }}" class="slider__img-image is-desktop" fetchpriority="high" alt="{{ block.maintitle }}">
+                                        {% else %}
+                                          <img src="{{ block.image | image_url: 1980, resizing_type: 'fit_width', quality: 90 }}" class="slider__img-image is-desktop" loading="lazy" alt="{{ block.maintitle }}">
+                                        {% endif %}
+                                      </picture>
+                                  </div>
+                              {% endif %}
+
+                              <div class="slider__cell">
+                                <div class="slider__cell__content">
+                                  <div class="slider__title {% if block.maintitle_mob != blank %}slider__title_desk{% endif %}">{{ block.maintitle }}</div>
+                                  <p class="slider__text {% if block.description_mob != blank %}slider__text_desk{% endif %}">{{ block.description }}</p>
+                                  {% if block.maintitle_mob != blank %}
+                                    <div class="slider__title slider__title_mob">{{ block.maintitle_mob }}</div>
+                                  {% endif %}
+                                  {% if block.description_mob != blank %}
+                                    <p class="slider__text slider__text_mob">{{ block.description_mob }}</p>
+                                  {% endif %}
+
+                                  {% unless block.button-hide %}
+                                    <div class="read_more">
+                                        <a href="{{ block.link }}" class="slider__more button">{{ block.button-text }}</a>
+                                    </div>
+                                  {% endunless %}
+                                </div>
+                              </div>
+                        </a>
+                      </div>
+                  </div>
+          		{% endif %}
+            {% endfor %}
+		</div>
+
+		<ul class="slider__nav">
+			<li class="prev">
+                <svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.3" d="M1.08574 16.5C0.725256 16.1395 0.697526 15.5723 1.00255 15.18L1.08574 15.0858L7.37785 8.79291L1.08574 2.50001C0.725256 2.13953 0.697526 1.5723 1.00255 1.18001L1.08574 1.0858C1.44622 0.725317 2.01345 0.697587 2.40575 1.00261L2.49995 1.0858L10.2071 8.79291L2.49995 16.5C2.10943 16.8905 1.47626 16.8905 1.08574 16.5Z" fill="white"/>
+                </svg>
+            </li>
+			<li class="next">
+                <svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.3" d="M1.08574 16.5C0.725256 16.1395 0.697526 15.5723 1.00255 15.18L1.08574 15.0858L7.37785 8.79291L1.08574 2.50001C0.725256 2.13953 0.697526 1.5723 1.00255 1.18001L1.08574 1.0858C1.44622 0.725317 2.01345 0.697587 2.40575 1.00261L2.49995 1.0858L10.2071 8.79291L2.49995 16.5C2.10943 16.8905 1.47626 16.8905 1.08574 16.5Z" fill="white"/>
+                </svg>
+            </li>
+		</ul>
+	</div>
+    <div class="slider_line"></div>
+{% endif %}

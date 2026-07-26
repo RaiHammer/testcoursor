@@ -1,0 +1,32 @@
+{% assign product_price = product.price | money  %}
+
+<meta name="keywords" content=""/>
+
+{% include "seo_title" %}
+
+{% if template contains 'cart' %}
+  {% assign page_description = messages.cart_description %}
+
+{% elsif template contains 'search' %}
+  {% assign page_description = messages.search_description %}
+
+{% elsif template contains 'compare' %}
+  {% assign page_description = messages.compare_description %}
+
+{% endif %}
+
+{% unless current_page == null  %}
+  {% assign count_page =  messages.title_page  | append: current_page %}
+{% endunless %}
+
+{% if page_description %}
+
+  <meta name="description" content="{{ page_description | replace: '<i class="fa fa-rub priceCurrency"></i>', "руб." }}{{ count_page }}"/>
+{% else %}
+  <meta name="description" content="{{ description | replace: '<i class="fa fa-rub priceCurrency"></i>', "руб." }}{{ count_page }}"/>
+
+{% endif %}
+
+{% assign count_page = null %}
+{% assign page_description= null %}
+{% assign product_price = null  %}

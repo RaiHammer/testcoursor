@@ -1,0 +1,176 @@
+<fieldset>
+  <legend>Быстрый поиск DanForge</legend>
+  <table>
+    <tr>
+      <td colspan="2">
+        <h2>Основные</h2>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_enabled">Включить быстрый поиск</label></td>
+      <td><input name="df_qs_enabled" id="df_qs_enabled" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_placeholder">Подсказка в поле поиска</label></td>
+      <td><input name="df_qs_placeholder" id="df_qs_placeholder" type="text" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_popular_queries">Популярные запросы</label>
+        <br /><small>Через запятую. Показываются при пустом поле рядом с недавними.</small>
+      </td>
+      <td><input name="df_qs_popular_queries" id="df_qs_popular_queries" type="text" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_trigger_selectors">Селекторы открытия поиска</label>
+        <br /><small>CSS через запятую. По клику откроется полноэкранный поиск.</small>
+      </td>
+      <td><input name="df_qs_trigger_selectors" id="df_qs_trigger_selectors" type="text" style="width:100%;min-width:28rem;" /></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>Выдача товаров</h2>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_show_photos">Показывать фото товаров</label></td>
+      <td><input name="df_qs_show_photos" id="df_qs_show_photos" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_hover_second_image">Второе фото при наведении</label>
+        <br /><small>На десктопе при hover — второе фото товара (если есть). Только при включённых фото. По умолчанию вкл.</small>
+      </td>
+      <td><input name="df_qs_hover_second_image" id="df_qs_hover_second_image" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_show_out_of_stock_badge">Показывать «Нет в наличии» на карточке</label>
+        <br /><small>Бейдж поверх фото, если все варианты недоступны. Только при включённых фото.</small>
+      </td>
+      <td><input name="df_qs_show_out_of_stock_badge" id="df_qs_show_out_of_stock_badge" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_show_prices">Показывать цены товаров</label></td>
+      <td><input name="df_qs_show_prices" id="df_qs_show_prices" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_show_product_sort">Сортировка товаров в выдаче</label>
+        <br /><small>По цене и популярности. Сортируется только уже загруженный список.</small>
+      </td>
+      <td><input name="df_qs_show_product_sort" id="df_qs_show_product_sort" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_show_all_results">Ссылка «Все результаты»</label>
+        <br /><small>Кнопка под сеткой на /search?q=…</small>
+      </td>
+      <td><input name="df_qs_show_all_results" id="df_qs_show_all_results" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_show_categories">Показывать категории</label></td>
+      <td><input name="df_qs_show_categories" id="df_qs_show_categories" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_hide_zero_price">Не показывать товары с нулевой ценой</label></td>
+      <td><input name="df_qs_hide_zero_price" id="df_qs_hide_zero_price" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_results_limit">Количество товаров в выдаче</label>
+        <br /><small>Первая порция и шаг «Показать ещё» (1–200).</small>
+      </td>
+      <td><input name="df_qs_results_limit" id="df_qs_results_limit" type="number" min="1" max="200" /></td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_image_ratio">Формат фото товаров</label></td>
+      <td>
+        <select name="df_qs_image_ratio" id="df_qs_image_ratio">
+          <option value="square">Квадрат (1:1)</option>
+          <option value="portrait">Портрет (2:3)</option>
+          <option value="portrait-34">Портрет (3:4)</option>
+          <option value="landscape">Пейзаж (4:3)</option>
+          <option value="natural">Оригинальный</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_cols_mobile">Товаров в ряд (мобильные, до 767px)</label></td>
+      <td>
+        <select name="df_qs_cols_mobile" id="df_qs_cols_mobile">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_cols_tablet">Товаров в ряд (планшет, 768–1199px)</label></td>
+      <td>
+        <select name="df_qs_cols_tablet" id="df_qs_cols_tablet">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_cols_desktop">Товаров в ряд (десктоп, от 1200px)</label></td>
+      <td>
+        <select name="df_qs_cols_desktop" id="df_qs_cols_desktop">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>Статьи блога</h2>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_show_articles">Показывать статьи блога в результатах</label>
+        <br /><small>Поиск по заголовку, тегам и связанным товарам. По умолчанию выкл.</small>
+      </td>
+      <td><input name="df_qs_show_articles" id="df_qs_show_articles" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_articles_lazy_load">Отложенная загрузка индекса статей</label>
+        <br /><small>JSON парсится при первом открытии/поиске; дальше localStorage 24ч.</small>
+      </td>
+      <td><input name="df_qs_articles_lazy_load" id="df_qs_articles_lazy_load" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_article_blog_handles">Handles блогов для поиска статей</label>
+        <br /><small>Через запятую, например: blog, shop-reviews.</small>
+      </td>
+      <td><input name="df_qs_article_blog_handles" id="df_qs_article_blog_handles" type="text" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_articles_display_limit">Статей в первой порции</label>
+        <br /><small>1–100. Остальные — по кнопке «Показать ещё».</small>
+      </td>
+      <td><input name="df_qs_articles_display_limit" id="df_qs_articles_display_limit" type="number" min="1" max="100" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_articles_blog_url">Ссылка на страницу блога</label>
+        <br /><small>Кнопка «Все статьи →». По умолчанию /blog.</small>
+      </td>
+      <td><input name="df_qs_articles_blog_url" id="df_qs_articles_blog_url" type="text" /></td>
+    </tr>
+  </table>
+</fieldset>

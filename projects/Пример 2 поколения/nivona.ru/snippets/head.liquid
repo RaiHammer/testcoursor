@@ -1,0 +1,92 @@
+<!-- meta -->
+<meta charset="UTF-8" />
+
+<!-- preconnect to external domains -->
+<link rel="preconnect" href="https://static-eu.insales.ru" crossorigin>
+<link rel="preconnect" href="https://static.insales-cdn.com" crossorigin>
+<link rel="preconnect" href="https://api-maps.yandex.ru">
+<link rel="preconnect" href="https://points.boxberry.de">
+
+{% include "seo_descrition" %}
+
+<meta name="robots" content="index,follow" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+<meta name="cmsmagazine" content="9e109d5d33e59ba6af120009bd8da3bc" />
+
+
+
+<!-- canonical url-->
+{% if template contains "index" %}
+<link rel="canonical" href="{{ account.url }}"/>
+{% endif %}
+{% if template contains "collection" %}
+  {% assign canon =  null %}
+  {% if filter %}
+    {% assign canon =  filter.handle %}
+  {% endif %}
+  <link rel="canonical" href="{{ account.url }}{{ collection.url }}{%- if canon %}/{{- canon -}}{%- endif -%}"/>
+{% elsif template contains "product" %}
+  <link rel="canonical" href="{{ account.url }}{{ product.canonical_url }}"/>
+{% endif %}
+
+<!-- rss feed-->
+{% if template == "blog" %}
+  <link rel="alternate" type="application/rss+xml" title="{{ blog.title }}" href="{{ account.url }}{{ blog.url }}.atom" />
+{% endif %}
+
+{% include "op_graph" %}
+
+<!-- icons-->
+<link rel="apple-touch-icon" sizes="57x57" href="https://static-eu.insales.ru/files/1/5624/9770488/original/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://static-eu.insales.ru/files/1/5625/9770489/original/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://static-eu.insales.ru/files/1/5627/9770491/original/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://static-eu.insales.ru/files/1/5626/9770490/original/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://static-eu.insales.ru/files/1/5623/9770487/original/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://static-eu.insales.ru/files/1/5628/9770492/original/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://static-eu.insales.ru/files/1/5632/9770496/original/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://static-eu.insales.ru/files/1/5630/9770494/original/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://static-eu.insales.ru/files/1/5631/9770495/original/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="https://static-eu.insales.ru/files/1/5621/9770485/original/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://static-eu.insales.ru/files/1/5634/9770498/original/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://static-eu.insales.ru/files/1/5638/9770502/original/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://static-eu.insales.ru/files/1/5629/9770493/original/favicon-16x16.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/https://static-eu.insales.ru/files/1/5639/9770503/original/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+{% assign canon =  null %}
+
+{% comment %} <meta name="facebook-domain-verification" content="v7vkci5bfeytqu8fcdmn7y4a1wi208" /> {% endcomment %}
+
+{% unless template == 'checkout' %}
+  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+  {% if template == 'product' %}
+    {% if product.images.size > 0 %}
+      <link rel="preload" as="image" href="{{ product.images.first | image_url: 800, format: 'webp' }}" fetchpriority="high">
+    {% endif %}
+  {% endif %}
+  {% if template == 'collection' %}
+    {% if collection.products.size > 0 %}
+      {% if collection.products.first.first_image %}
+        <link rel="preload" as="image" href="{{ collection.products.first.first_image | image_url: 350, format: 'webp' }}" fetchpriority="high">
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if template == 'index' %}
+    {% for block in block_lists.index-widget-slider-new.blocks limit: 1 %}
+      {% unless block.hide %}
+        {% if block.image-375.size > 0 %}
+          <link rel="preload" as="image" href="{{ block.image-375 | image_url: 480, format: 'webp', resizing_type: 'fit_width', quality: 90 }}" media="(max-width: 480px)" fetchpriority="high">
+        {% elsif block.image.size > 0 %}
+          <link rel="preload" as="image" href="{{ block.image | image_url: 600, format: 'webp', resizing_type: 'fit_width', quality: 90 }}" media="(max-width: 480px)" fetchpriority="high">
+        {% endif %}
+        <link rel="preload" as="image" href="{{ block.image | image_url: 1980, format: 'webp', resizing_type: 'fit_width', quality: 90 }}" media="(min-width: 481px)" fetchpriority="high">
+      {% endunless %}
+    {% endfor %}
+  {% endif %}
+  <script src="{{ 'jquery-2.2.4.min.js' | asset_url }}"></script>
+  {% include_insales_scripts "common-js@v2" %}
+{% endunless %}
+

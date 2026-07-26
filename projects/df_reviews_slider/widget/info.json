@@ -1,0 +1,23 @@
+{
+  "type": "SimpleWidgetType",
+  "handle": "danforge_reviews_slider",
+  "page_kinds": ["all"],
+  "widget_list_kinds": [
+    "content",
+    "before_content",
+    "after_content",
+    "footer",
+    "top_panel",
+    "bottom_panel",
+    "sidebar"
+  ],
+  "generation": 4,
+  "name": {
+    "ru": "Отзывы DanForge (multi-layout)"
+  },
+  "description": {
+    "ru": "Отзывы inSales и Яндекс: слайдер, masonry, сетка, лента, spotlight, бегущая строка. Фото, попап и lightbox."
+  },
+  "widget_category_handle": "drugie",
+  "libraries": ["swiper"]
+}

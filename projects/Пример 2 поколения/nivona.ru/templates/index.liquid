@@ -1,0 +1,18 @@
+{% include "widget_slider" %}
+
+{% include "widget_special_products" %}
+
+{% include "widget_news" %}
+
+{% include "widget_products" %}
+
+<section class="section-main-content">
+	<div class="container">
+	    <h1 class="decorated-title">
+	      {{ page.title | editable }}
+	    </h1>
+		<div class="editor">
+		    {{ page.content | editable }}
+	    </div>
+	</div>
+</section>

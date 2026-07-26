@@ -1,0 +1,20 @@
+<form class="search-widget {{ widget_class }}" action="/search" method="get">
+  <input type="text"
+          name="q"
+          class="search-widget-field"
+          value="{{ search.query | escape }}"
+          placeholder="{{ messages.search_title }}"
+  >
+
+</input>
+<button type="submit" class="search-widget-button button is-widget-submit">
+  <svg width="20" height="19"><use xmlns:xlink="//www.w3.org/1999/xlink" xlink:href="#search" fill="#b51f1f"></use></svg>
+</button>
+
+  {% if language.not_default? %}
+    <input type="hidden" name="lang" value="{{ language.locale }}">
+  {% endif %}
+
+</form>
+
+{% assign widget_class = null %}

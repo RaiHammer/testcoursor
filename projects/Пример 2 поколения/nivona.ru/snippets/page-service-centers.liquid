@@ -1,0 +1,168 @@
+<style>
+.sc-search-clear {
+  position: absolute;
+  top: 0;
+  right: clamp(1.8rem, calc(1.4667rem + 1.6667vw), 2.8rem);
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.25s;
+  display: none;
+}
+.sc-search-clear svg{
+  width: clamp(0.96rem, calc(0.8800rem + 0.4000vw), 1.2rem);
+}
+</style>
+
+{% assign arrow_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9" fill="none"> <path d="M1 1L8 7L15 1" stroke="#13002D" stroke-width="2" stroke-linecap="round"/> </svg>' %}
+
+{% if blocks.servisnye-tsentry.image %}
+  {% comment %}
+    <div class="sc-search-block">
+      <div class="sc-search-block-select js-select-block" data-active="false">
+        <div class="sc-search-select js-search-field">все города</div>
+        <div class="sc-search-select__arrow">
+          {{arrow_icon}}
+        </div>
+        <ul class="sc-search-select-list js-select-list"></ul>
+      </div>
+      <div class="sc-search-button js-search-button">Найти центры</div>
+    </div>
+  {% endcomment %}
+
+  <div class="sc-search-block">
+
+    <div class="sc-search-block-select js-select js-select-block" data-active="false" data-limit="12">
+      <input type="text" class="sc-search-select js-search-field" id="sc_search_input" placeholder="поиск по городам">
+      <div class="sc-search-clear" id="sc-search-clear"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none"> <g opacity="0.5"> <rect x="23.6067" y="25.0208" width="32" height="2" rx="1" transform="rotate(-135 23.6067 25.0208)" fill="#C5B0A2"/> <rect x="0.979248" y="23.6066" width="32" height="2" rx="1" transform="rotate(-45 0.979248 23.6066)" fill="#C5B0A2"/> </g> </svg></div>
+      <div class="sc-search-select__arrow js-search-arrow">
+        {{arrow_icon}}
+      </div>
+      <ul class="sc-search-select-list js-select-list" id="sc-menu"></ul>
+    </div>
+
+    <div class="sc-search-button js-search-button" id="sc-search-btn">Найти центры</div>
+  </div>
+
+  <div class="sc-wrapper js-sc-wrapper" id="sc-block"></div>
+  <ul class="sc-pagination js-sc-pagination">
+  </ul>
+
+{% endif %}
+
+{% comment %}fixme  {% endcomment %}
+{% comment %} <div  class="popup-modal services-feedback" data-attr="#services_feedback" style="margin: 30px 0;cursor: help;">Форма заявки CЦ</div> {% endcomment %}
+
+ {% comment %}fixme {% endcomment %}
+{% comment %} <button class="sc-feedback" popup-button popup-content="form">feedback</button> {% endcomment %}
+
+<script>
+  {% if blocks.servisnye-tsentry.image != '' %}
+    const _sc_file = {{ blocks.servisnye-tsentry.image | json }};
+  {% endif %}
+</script>
+
+  <div class="popup-wrapper" popup-wrapper>
+    <div class="popup">
+      <div popup-content="form" hidden>
+        <form class="feedback-form" name="feedback-form" id="feedback-form">
+          <div class="feedback-form-group">
+
+            <div class="feedback-form-group__field">
+              <label for="name">Ваше имя <span>*</span></label>
+              <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="feedback-form-group__field">
+              <label for="surname">Ваша фамилия <span>*</span></label>
+              <input type="text" id="surname" name="surname" required>
+            </div>
+
+            <div class="feedback-form-group__field">
+              <label for="phone">Телефон <span>*</span></label>
+              <input type="text" id="phone" name="phone" required>
+            </div>
+
+            <div class="feedback-form-group__field">
+              <label for="email">Email <span>*</span></label>
+              <input type="text" id="email" name="email" required>
+            </div>
+
+            <div class="feedback-form-group__field">
+              <label for="city">Город <span>*</span></label>
+              <input type="text" id="city" name="city" required>
+            </div>
+
+            <div class="feedback-form-group__field form-field">
+              <label class="focus" for="photo-sn">Фото серийного номера </label>
+              <div class="form-field-file">
+                <div class="form-field-file-text" form-field-file>+&nbsp;Выбрать&nbsp;файл</div>
+                <input type="file" accept="image/jpg,image/png,image/jpeg,application/pdf" multiple id="photo-sn" name="photo-sn" hidden>
+              </div>
+              <div class="form-field-downloaded" form-field-downloaded></div>
+            </div>
+
+            <div class="feedback-form-group__field">
+              <label class="focus" for="date">Дата покупки <span>*</span></label>
+              <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="feedback-form-group__field">
+              <label for="seller">Информация о продавце <span>*</span></label>
+              <input type="text" id="seller" name="seller" required>
+            </div>
+
+            <div class="feedback-form-group__field form-field">
+              <label class="focus" for="photo-receipt">Фото чека о покупке</label>
+              <div class="form-field-file">
+                <div class="form-field-file-text" form-field-file>+ Выбрать файл</div>
+                <input type="file" accept="image/jpg,image/png,image/jpeg,application/pdf" multiple id="photo-sale" name="photo-receipt" hidden>
+              </div>
+              <div class="form-field-downloaded" form-field-downloaded></div>
+            </div>
+
+            <div class="feedback-form-group__field select">
+              <label for="problem">В чем заключается проблема? <span>*</span></label>
+              <!-- <input type="text" id="problem" name="problem"> -->
+              <select name="problem" id="problem" class="form-field-select" required>
+                <option disabled selected></option>
+                <option value="1">Проблема 1</option>
+                <option value="2">Проблема 2</option>
+                <option value="3">Проблема 3</option>
+                <option value="4">Проблема 4</option>
+                <option value="5">Проблема 5</option>
+              </select>
+            </div>
+
+            <div class="feedback-form-group__field textarea">
+              <label for="message">Опишите подробнее причину обращения <span>*</span></label>
+              <textarea rows="4" id="message" name="message" form-textarea required></textarea>
+            </div>
+
+            <div class="feedback-form-group__field">
+              <label for="serial">Серийный номер</label>
+              <input type="text" id="serial" name="serial">
+            </div>
+
+          </div>
+
+          <div class="form-info">
+            <label for="policy">
+              <input type="checkbox" name="policy" id="policy" required>
+              <div class="form-info-text">Заполняя эту форму, вы&nbsp;соглашаетесь с&nbsp;<a href="/page/policy">Политикой конфиденциальности</a></div>
+            </label>
+          </div>
+
+          <div>
+            <button class="form-submit-button" type="submit">Отправить</button>
+          </div>
+        </form>
+      </div>
+      <button class="popup-close-button" popup-close></button>
+      <div id="loader" class="hidden">Отправляем...</div>
+    </div>
+  </div>

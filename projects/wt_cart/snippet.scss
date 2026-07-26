@@ -1,0 +1,572 @@
+// DanForge Dynamic Cart — виджет inSales
+// Автор: DanForge · https://danforge.ru
+// Handle: danforge_dynamic_cart
+
+.cart {
+  height: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  //border-top: 1px solid #e9e9e9;
+
+
+  &__pay-info-list {
+    max-width: 100%;
+  }
+
+  &__modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100vh;
+
+    &.hide {
+      pointer-events: none;
+      visibility: hidden;
+      opacity: 0;
+      & .cart {
+        &__modal-content {
+          right: -600px;
+        }
+        &__overlay {
+          opacity: 0;
+          pointer-events: none;
+        }
+      } 
+    }
+  }
+
+  &__overlay {
+    background-color: rgba(0,0,0,0.5);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+
+    position: absolute;
+
+    transition: .5s;
+  }
+
+  &__modal-content {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: #ffffff;
+    z-index: 302;
+    max-width: 385px;
+    width: 100%;
+    height: calc(100vh - 1rem - 50px);
+    transition: .5s;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    border-radius: 5px;
+    //overflow: auto;
+  }
+
+  &__header {
+    height: 1.5rem;
+    position: relative;
+    margin-top: 1.5rem;
+  }
+
+  &__title {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  &__title-add-item {
+    
+  }
+  &__close {
+    cursor: pointer;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+  }
+
+  &__body {
+    // max-height: calc(100% - 170px);
+    // overflow: auto;
+    margin-top: 1.5rem;
+  }
+
+  &__line{
+    //border-bottom: 1px solid #e9e9e9;
+    //margin-bottom: .5rem;
+    //padding-bottom: 1rem;
+    overflow: auto;
+    max-height: 500px;
+    scrollbar-width: none;
+  }
+
+
+  &__item {
+    display: flex;
+    border-bottom: 1px solid #e9e9e9;
+    margin-bottom: .5rem;
+    padding-bottom: 1rem;
+  }
+  &__item-link{
+    width: 120px;
+    min-height: 100%;
+    height: auto;
+    cursor: pointer;
+  }
+  &__item-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    padding-left: 9pt;
+
+    & input[type="text"] {
+      width: 24px;
+      font-size: 14px;
+      text-align: center;
+      border: none;
+      padding: 0;
+      pointer-events: none;
+    }
+  }
+  &__item-data-bottom {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  &__item-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 3/4;
+    display: block;
+    -o-object-fit: contain;
+    object-fit: contain;
+    -o-object-position: center;
+    object-position: center;
+  }
+  &__item-price {
+    margin-top: 18.5px;
+    font-size: 9pt;
+    line-height: 18px;
+    font-weight: 500;
+  }
+  &__item-title {
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+  }
+
+  &__item-option{
+    font-size: 9pt;
+    line-height: 1pc;
+    text-transform: capitalize;
+    padding-top: .25rem;
+  }
+
+  .c-form__row{
+    font-size: 9pt;
+    line-height: 1pc;
+    text-transform: capitalize;
+    padding-top: .25rem;
+  }
+
+  .c-lineitem__removebtn{
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1pc;
+    position: relative;
+    text-decoration: none!important;
+
+    
+  }
+
+
+
+  &__footer {
+    padding: 1.5rem 0.75rem;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+  }
+  &__button {
+    color: #ffffff;
+    background: #000000;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    -webkit-transition-duration: .15s;
+    transition-duration: .15s;
+    -webkit-transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    -webkit-transition-timing-function: 
+cubic-bezier(.4, 0, .2, 1);
+    transition-timing-function: 
+cubic-bezier(.4, 0, .2, 1);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 15px;
+    border-radius: .375rem;
+
+    &:hover{
+      background: #4b4b4b;
+    }
+  }
+  &__message {
+    font-size: 12px;
+    letter-spacing: .12px;
+    text-align: center;
+    color: #767676;
+    margin: 12px auto 0;
+    display: block;
+  }
+
+
+
+
+  & [data-quantity-change] {
+    cursor: pointer;
+  }
+
+
+  &__coupon {
+    &.active {
+      & .cart {
+        &__coupon-body {
+          display: block;
+        }
+        &__coupon-header {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &__coupon-body {
+    display: none;  
+  }
+  &__coupon-body-header {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  &__coupon-body-content {
+    display: flex;
+
+    
+    & input[type="text"] {
+      border: 1px solid #000000;
+      border-radius: 0.25rem;
+      flex-grow: 1;
+      padding: 0 20px;
+      height: 30px;
+    }
+    & input[type="button"] {
+      border: 1px solid #000000;
+      background-color: #ffffff;
+      color: #000000;
+      border-radius: 0.25rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 100px;
+      margin-left: 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      cursor: pointer;
+      height: 30px;
+    }
+  }
+  &__coupon-header {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1pc;
+    position: relative;
+    text-decoration: none!important;
+    width: max-content;
+
+    
+  }
+
+
+
+  &__prices {
+    margin-top: 16px;
+  }
+  & .insales-ui-discounts {
+    width: 100%;
+  }
+  & .insales-ui-discount-error {
+    font-size: 14px;
+    color: #be0303;
+  }
+  &__prices-item, .insales-ui-discount-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+  &__prices-item-value, .insales-ui-discount-amount {
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+
+ 
+  &__box-elem {
+    padding: 1.87rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  &__box-title {
+    font-size: 14px;
+    letter-spacing: 0.12px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  &__suport-info-text, &__delivery-info-text {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  &__copi {
+    display: block;
+    margin: 20px auto 0;
+    text-align: center;
+    color: #4e555a;
+    font-size: 10px;
+    line-height: 14px;
+  }
+  &__suport-info-button {
+    font-size: 14px;
+    text-transform: uppercase;
+    text-decoration: none;
+    height: 40px;
+    margin-top: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000000;
+    border-radius: 4px;
+  }
+}
+
+
+
+@media(max-width: 800px) {
+
+  .cart {
+    &__modal-content {
+      max-width: 100%;
+    }
+    &__modal {
+
+      &.hide {
+        pointer-events: none;
+        & .cart {
+          &__modal-content {
+            right: -100%;
+          }
+        } 
+      }
+    }
+  }
+  
+}
+
+
+
+
+
+
+
+
+//Отдельные правки
+.cart__modal {
+  height: calc(100vh - 1rem - 50px);
+}
+.cart__modal-content {
+  height: calc(100vh - 1rem - 50px);
+}
+.cart{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.footer{
+  padding: 1.5rem 0;
+}
+.cart__modal-content {
+  overflow: auto;
+  scrollbar-width: none;
+}
+.cart__prices-item{
+  padding-bottom: 0;
+}
+.cart__prices-item-title{
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+}
+.cart__prices-item-value{
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+}
+.cart__footer {
+  padding: 0;
+  border-top: 0;
+  border-bottom: 0;
+}
+p{
+  margin-bottom: 0;
+}
+
+
+
+.cart__box:has(.cart__prices-item .insales-ui-discounts){
+  .cart__coupon{
+    display: none;
+  }
+}
+
+@media screen and (max-width:767px) {
+  .cart {
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cart__header{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .footer{
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .cart__modal {
+    height: 100vh;
+    z-index: 9999;
+    top: 0;
+  }
+  .cart__modal-content {
+    height: max-content;
+    top: auto;
+    bottom: 0;
+  }
+  .cart__line {
+    width: 100%;
+    display: flex;
+    padding-bottom: 1rem;
+    padding-left: 1.5rem;
+    border-bottom: 1px solid #e9e9e9;
+  }
+  .cart__item {
+    min-width: 320px;
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .cart__close {
+    right: 1rem;
+  }
+
+  .cart__modal .cart__modal-content {
+    right: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  .cart__modal.hide .cart__modal-content {
+    right: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+
+
+
+
+
+
+
+@media screen and (max-width:767px) {
+  .cart__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .cart__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .cart__modal-content {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    height: auto;
+    max-height: 85%;
+    background: white;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .cart__modal.hide .cart__modal-content {
+    transform: translateY(100%);
+  }
+  
+  .top {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .footer {
+    flex-shrink: 0;
+  }
+}
+
+
+@media screen and (max-width:767px) {
+  .cart__item-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 0.75;
+    display: block;
+    -o-object-fit: contain;
+    object-fit: contain;
+    -o-object-position: center;
+    object-position: center;
+  }
+}

@@ -1,0 +1,112 @@
+{% comment %}
+  DanForge Reviews Yandex — виджет inSales gen-2
+  Автор: DanForge · https://danforge.ru
+  Handle: danforge_reviews_slider_g2
+  Yandex-only: {% include 'danforge_reviews_yandex' %}
+{% endcomment %}
+
+{% assign _layout_raw = widget_settings.display_mode | default: 'slider' | append: '' | strip | downcase %}
+{% assign df_layout = 'slider' %}
+{% if _layout_raw == 'list' or _layout_raw contains 'list' or _layout_raw contains 'лент' %}
+  {% assign df_layout = 'list' %}
+{% endif %}
+
+{% assign _title_align_raw = widget_settings.title_align | default: 'center' | append: '' | strip | downcase %}
+{% assign title_align = 'center' %}
+{% if _title_align_raw == 'left' or _title_align_raw contains 'left' or _title_align_raw contains 'лев' %}
+  {% assign title_align = 'left' %}
+{% endif %}
+
+{% assign accent = widget_settings.accent_color | default: '#f5a623' %}
+{% assign df_text_lines = widget_settings.text_lines | default: 5 | plus: 0 %}
+{% assign df_slider_limit = widget_settings.slider_limit | default: 10 | plus: 0 %}
+{% assign df_list_limit = widget_settings.list_limit | default: 10 | plus: 0 %}
+{% assign df_min_rating = widget_settings.min_rating | default: '0' | append: '' | strip %}
+
+{% assign df_hide_date = 'false' %}
+{% if widget_settings.hide_date == true or widget_settings.hide_date == 'true' %}
+  {% assign df_hide_date = 'true' %}
+{% endif %}
+
+{% assign df_hide_source = 'false' %}
+{% if widget_settings.hide_source == true or widget_settings.hide_source == 'true' %}
+  {% assign df_hide_source = 'true' %}
+{% endif %}
+
+{% assign df_autoplay = 'false' %}
+{% if widget_settings.autoplay == true or widget_settings.autoplay == 'true' %}
+  {% assign df_autoplay = 'true' %}
+{% endif %}
+
+{% assign df_show_arrows = 'true' %}
+{% if widget_settings.show_arrows == false or widget_settings.show_arrows == 'false' %}
+  {% assign df_show_arrows = 'false' %}
+{% endif %}
+
+{% capture df_yandex_markup %}{% include 'danforge_reviews_yandex' %}{% endcapture %}
+{% assign df_yandex_trimmed = df_yandex_markup | strip %}
+{% assign df_has_slides = false %}
+{% if df_yandex_trimmed != blank %}
+  {% assign df_has_slides = true %}
+{% endif %}
+
+{% comment %}
+  Обёртка .section-df-reviews — опционально в theme patch (см. docs/nivona-install.md).
+  Виджет не добавляет section сам: padding для Bootstrap-сетки — в snippet.scss.
+{% endcomment %}
+<div
+  class="df-reviews df-reviews--layout-{{ df_layout }} df-reviews--title-{{ title_align }}{% if df_hide_date == 'true' %} df-reviews--hide-date{% endif %}{% if df_hide_source == 'true' %} df-reviews--hide-source{% endif %}"
+  data-danforge-widget="danforge_reviews_slider_g2"
+  data-df-layout="{{ df_layout }}"
+  data-df-title-align="{{ title_align }}"
+  style="--df-reviews-text-lines: {{ df_text_lines }}; --df-reviews-accent: {{ accent }};"
+>
+  {% if widget_settings.title != blank %}
+    <h2 class="df-reviews__title">{{ widget_settings.title }}</h2>
+  {% endif %}
+
+  <div
+    class="df-reviews__viewport{% if df_layout == 'slider' %} df-reviews__slider swiper-container swiper{% endif %}"
+    data-df-reviews-root
+    data-layout="{{ df_layout }}"
+    data-autoplay="{{ df_autoplay }}"
+    data-autoplay-delay="{{ widget_settings.autoplay_delay | default: 5000 }}"
+    data-slides-mobile="{{ widget_settings.slides_mobile | default: 1 }}"
+    data-slides-tablet="{{ widget_settings.slides_tablet | default: 2 }}"
+    data-slides-desktop="{{ widget_settings.slides_per_view | default: 3 }}"
+    data-speed="{{ widget_settings.speed | default: 400 }}"
+    data-min-rating="{{ df_min_rating }}"
+    data-hide-date="{{ df_hide_date }}"
+    data-hide-source="{{ df_hide_source }}"
+    data-show-arrows="{{ df_show_arrows }}"
+    data-slider-limit="{{ df_slider_limit }}"
+    data-list-limit="{{ df_list_limit }}"
+  >
+    {% if df_layout == 'slider' %}
+      <div class="swiper-button-prev df-reviews__arrow df-reviews__arrow--prev" aria-label="Предыдущий отзыв"></div>
+    {% endif %}
+
+    <div class="{% if df_layout == 'slider' %}swiper-wrapper{% else %}df-reviews__grid{% endif %}" data-df-reviews-wrapper>
+      {% if df_has_slides %}
+        {{ df_yandex_markup }}
+      {% else %}
+        <div class="swiper-slide df-reviews__slide df-reviews__slide--empty">
+          <p class="df-reviews__empty">{{ widget_settings.empty_message | default: 'Отзывы скоро появятся' }}</p>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if df_layout == 'slider' %}
+      <div class="swiper-button-next df-reviews__arrow df-reviews__arrow--next" aria-label="Следующий отзыв"></div>
+      <div class="swiper-pagination df-reviews__pagination"></div>
+    {% endif %}
+  </div>
+
+  <div class="df-reviews__modal" data-df-reviews-modal hidden>
+    <div class="df-reviews__modal-backdrop" data-df-modal-close></div>
+    <div class="df-reviews__modal-dialog" role="dialog" aria-modal="true" aria-label="Отзыв">
+      <button type="button" class="df-reviews__modal-close" data-df-modal-close aria-label="Закрыть">×</button>
+      <div class="df-reviews__modal-body" data-df-modal-body></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,141 @@
+{% if cart.items.size > 0 %}
+	{% include "page_header" %}
+  
+  <div class="container cart-items-page">
+		<div class="row">
+        <div id="custom_form" class="col-xs-12 col-sm-12 col-md-9">
+          <div class="content-item--no-padd" id="basket">
+            <div class="basket-product-list">
+              <form class="checkout" action="/cart_items" method="post" data-cart-form>
+                {% for item in cart.items %}
+                    {% include 'cart-item' %}
+                {% endfor %}
+              </form>
+              <div class="basket-product-list-load"></div>
+            </div>
+            <div class="basket-total basket-total--show-mb">
+              <div class="basket-total__title">Итого:</div>
+              <div class="basket-total__price"></div>
+            </div>
+          </div>
+        </div>
+
+        <section id="checkout-sidebar" class="checkout-sidebar col-xs-12 col-sm-12 col-md-3">
+          <div class="checkout-sidebar-wrapper">
+            <div class="checkout-sidebar-block">
+              <div class="order-title">
+                Сумма заказа
+              </div>
+              <div class="order-items" id="order_complete">
+                {% if cart.enable_coupon? %}
+                        <div class="formPromo" id="coupon">
+                            <div class="order-item formPromo__field fieldInput" id="js-coupon-wrapper">
+                              <input class="formPromo__input discount-input" type="text" placeholder="Промокод" name="cart[coupon]" value="{{ cart.coupon }}">
+                              <button type="submit" class="formPromo__submit discount-button button" {% if cart.coupon.size > 0 %} style="display: none;"{% endif %} data-coupon-submit>Применить</button>
+                              <button type="button" class="formPromo__remove discount-button button" {% if cart.coupon.size > 0 %} style="display: block;"{% endif %} data-coupon-remove>Очистить</button>
+                            </div>
+                            <div class="formPromo__title-error">Промокод не верный</div>
+                        </div>
+                {% endif %}
+                
+                {% comment %}
+                <div class="co-basket_subtotal order-item order-item--bold itemsQuantity">
+                  <div class="co-basket_subtotal-title">Товаров</div>
+                  <div class="co-basket_subtotal-price order-item__number" id="items_quantity">
+                    <span class="js-cart-items-count active">{{ cart.items_count }}</span>&nbsp;шт.
+                  </div>
+                </div>
+                {% endcomment %}
+                
+                <div class="co-basket_discount order-item">
+                  <div class="co-basket_discount-title">Скидки по товарам</div>
+                  <div class="co-basket_discount-prices">
+                    <div class="co-basket_discount-price co-price--current order-item__number js-cart-items-discount-price"></div>
+                    <div class="co-basket_discount-price-percent co-price-percent--current order-item__number js-cart-items-discount-percent"></div>
+                  </div>
+                </div>
+
+                <div class="co-basket_subtotal order-item">
+                  <div class="co-basket_subtotal-title">Товары</div>
+                  <div class="co-basket_subtotal-price co-price--current order-item__number js-cart-items-price">{{ cart.items_price | money }}</div>
+                </div>
+
+                {% include 'cart_discount' %}
+
+                <div class="co-basket_total order-item">
+                  <div class="co-basket_total-title">К оплате:</div>
+                  <div class="co-basket_total-price co-price--current order-item__number js-cart-total-price">{{ cart.total_price | money }}</div>
+                </div>
+
+                <div class="order-item checkout-sidebar-button">
+                  <a href="/new_order" class="button is-primary complate-checkout">Оформить заказ</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="checkout-sidebar-block block-sale">
+              <div class="sale-title">
+                <div class="sale-title__icon">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.76513 0.998648C8.04647 0.684442 8.39091 0.433097 8.77596 0.261019C9.16101 0.0889416 9.57803 0 9.99978 0C10.4215 0 10.8385 0.0889416 11.2236 0.261019C11.6087 0.433097 11.9531 0.684442 12.2344 0.998648L12.9343 1.78052C13.0343 1.89241 13.1583 1.98035 13.2969 2.03781C13.4355 2.09528 13.5853 2.12079 13.7352 2.11247L14.785 2.05448C15.206 2.03136 15.6271 2.09725 16.0209 2.24785C16.4147 2.39845 16.7724 2.63038 17.0705 2.92851C17.3686 3.22664 17.6005 3.58427 17.7512 3.97807C17.9018 4.37187 17.9676 4.793 17.9445 5.21398L17.8865 6.26381C17.8784 6.4135 17.9039 6.5631 17.9614 6.70155C18.0189 6.84001 18.1067 6.96377 18.2185 7.06369L19.0014 7.76358C19.3157 8.04492 19.5672 8.38941 19.7394 8.77456C19.9116 9.15971 20.0006 9.57684 20.0006 9.99872C20.0006 10.4206 19.9116 10.8377 19.7394 11.2229C19.5672 11.608 19.3157 11.9525 19.0014 12.2339L18.2185 12.9338C18.1066 13.0338 18.0187 13.1577 17.9612 13.2963C17.9037 13.435 17.8782 13.5848 17.8865 13.7346L17.9445 14.7845C17.9676 15.2054 17.9018 15.6266 17.7512 16.0204C17.6005 16.4142 17.3686 16.7718 17.0705 17.0699C16.7724 17.3681 16.4147 17.6 16.0209 17.7506C15.6271 17.9012 15.206 17.9671 14.785 17.944L13.7352 17.886C13.5855 17.8778 13.4359 17.9034 13.2974 17.9608C13.159 18.0183 13.0352 18.1062 12.9353 18.2179L12.2354 19.0008C11.9541 19.3152 11.6096 19.5667 11.2244 19.7388C10.8393 19.911 10.4222 20 10.0003 20C9.5784 20 9.16126 19.911 8.77612 19.7388C8.39097 19.5667 8.04648 19.3152 7.76513 19.0008L7.06524 18.2179C6.96522 18.106 6.8413 18.0181 6.70266 17.9606C6.56402 17.9032 6.41422 17.8776 6.26437 17.886L5.21454 17.944C4.79356 17.9671 4.37243 17.9012 3.97863 17.7506C3.58482 17.6 3.22719 17.3681 2.92907 17.0699C2.63094 16.7718 2.39901 16.4142 2.24841 16.0204C2.09781 15.6266 2.03192 15.2054 2.05504 14.7845L2.11303 13.7346C2.1212 13.5849 2.09561 13.4353 2.03815 13.2969C1.98069 13.1584 1.89284 13.0347 1.78108 12.9348L0.999207 12.2349C0.684836 11.9535 0.433349 11.609 0.261172 11.2239C0.0889947 10.8387 0 10.4216 0 9.99972C0 9.57784 0.0889947 9.16071 0.261172 8.77556C0.433349 8.39041 0.684836 8.04592 0.999207 7.76458L1.78108 7.06469C1.89297 6.96467 1.98091 6.84074 2.03837 6.7021C2.09584 6.56346 2.12135 6.41366 2.11303 6.26381L2.05504 5.21398C2.03192 4.793 2.09781 4.37187 2.24841 3.97807C2.39901 3.58427 2.63094 3.22664 2.92907 2.92851C3.22719 2.63038 3.58482 2.39845 3.97863 2.24785C4.37243 2.09725 4.79356 2.03136 5.21454 2.05448L6.26437 2.11247C6.41405 2.12064 6.56366 2.09505 6.70211 2.03759C6.84057 1.98013 6.96433 1.89228 7.06425 1.78052L7.76513 0.998648ZM13.7062 6.29281C13.8936 6.48031 13.9989 6.73457 13.9989 6.9997C13.9989 7.26482 13.8936 7.51909 13.7062 7.70658L7.70714 13.7056C7.51857 13.8878 7.26601 13.9885 7.00385 13.9863C6.7417 13.984 6.49093 13.8788 6.30555 13.6935C6.12017 13.5081 6.01502 13.2573 6.01274 12.9951C6.01046 12.733 6.11124 12.4804 6.29337 12.2919L12.2924 6.29281C12.4799 6.10537 12.7342 6.00007 12.9993 6.00007C13.2644 6.00007 13.5187 6.10537 13.7062 6.29281ZM7.50018 5.99986C7.10241 5.99986 6.72094 6.15787 6.43968 6.43913C6.15842 6.72039 6.00041 7.10186 6.00041 7.49962V7.50962C6.00041 7.90738 6.15842 8.28885 6.43968 8.57011C6.72094 8.85137 7.10241 9.00938 7.50018 9.00938H7.51017C7.90794 9.00938 8.28941 8.85137 8.57067 8.57011C8.85193 8.28885 9.00994 7.90738 9.00994 7.50962V7.49962C9.00994 7.10186 8.85193 6.72039 8.57067 6.43913C8.28941 6.15787 7.90794 5.99986 7.51017 5.99986H7.50018ZM12.4994 10.9991C12.1016 10.9991 11.7201 11.1571 11.4389 11.4383C11.1576 11.7196 10.9996 12.1011 10.9996 12.4988V12.5088C10.9996 12.9066 11.1576 13.2881 11.4389 13.5693C11.7201 13.8506 12.1016 14.0086 12.4994 14.0086H12.5094C12.9071 14.0086 13.2886 13.8506 13.5699 13.5693C13.8511 13.2881 14.0091 12.9066 14.0091 12.5088V12.4988C14.0091 12.1011 13.8511 11.7196 13.5699 11.4383C13.2886 11.1571 12.9071 10.9991 12.5094 10.9991H12.4994Z" fill="#E4032E"/>
+                  </svg>
+                </div>
+                <span class="sale-title__text">Доступные акции</span>
+              </div>
+
+              <div class="sale-items">
+                {% for block in block_lists.block-sale-panel.blocks %}
+                  {% if block.show-sale %}
+                    <span class="sale-item">{{ block.text-sale }}</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="col-xs-12 col-sm-12 col-md-9">
+          <div class="section-related-products js-section_reviews_products">
+            <div class="section-related-products__title">
+              Необходимые товары
+            </div>
+
+            <div class="section-related-products__items products-list">
+              {% assign products_ids_tmp = '' %}
+              {% assign show_related = false %}
+              <div class="products-items products-items_grid active">
+                <div class="products-list is-cart row">
+                  {% for item in cart.items %}
+                    {% for product in item.product.related_products limit: 10 %}
+                      {% unless products_ids_tmp contains product.id or product.available == false %}
+                        {% capture products_ids_tmp %}{{ products_ids_tmp }}|{{ product.id }}|{% endcapture %}
+                        {% assign show_related = true %}
+                        <div class="col-xs-6 col-sm-6 col-md-12">
+                          {% include 'product_card' %}
+                        </div>
+                      {% endunless %}
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% assign product_limit = null %}
+        </div>
+    </div>
+  </div>
+{% else %}
+  <div class="container content-wrapper">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="cart-empty">
+          <div class="cart-empty__title">В вашей корзине пока нет товаров</div>
+          <div class="cart-empty__descr">Акции и предложения, каталог товаров, новости и многое другое вы сможете найти на главной странице</div>
+          <div class="cart-empty__btn">
+            <a href="/" class="button is-primary">На главную</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

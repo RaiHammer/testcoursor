@@ -1,0 +1,42 @@
+<!-- feedback -->
+{% if data.blocks.size > 0 %}
+  <div class="feedback-wrapper">
+    {% for block in data.blocks %}
+      <div class="feedback">
+        {% if block.title != '' %}
+          <div class="feedback-heading">
+            {{ block.title | editable }}
+          </div>
+        {% endif %}
+        <!-- В data-max-send хранится максимальное кол-во отправок формы с одной сессии -->
+        <form class="feedback-form form js-widget-feedback" method="post" data-max-send="5">
+          <input type="hidden" name="from" value="{{ account.email }}">
+          <input type="hidden" name="content" value="{{ messages.title-message-feedback }}">
+
+          <div class="form-row">
+            <input type="text" name="name" value="" class="widget-form-field" placeholder="{{ messages.field_name }}" required>
+          </div>
+
+          <div class="form-row">
+            <input type="text" name="phone"  value="" class="widget-form-field" placeholder="{{ messages.field_phone }}" required>
+          </div>
+
+          <div class="form-row">
+            <button type="submit" name="button" class="button _is-primary button-widget-feedback">
+              <span class="button-text">{{ block.submit-text }}</span>
+            </button>
+
+          </div>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<script type="text/javascript">
+// Функция посылает сообщение о превышении кол-ва отправок формы в index.js
+function maxSendError() {
+  alertify.error('{{ messages.max_send_form }}');
+};
+</script>
+<!-- /feedback -->

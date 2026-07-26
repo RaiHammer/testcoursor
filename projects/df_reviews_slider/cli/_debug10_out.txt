@@ -1,0 +1,25 @@
+CTX: earchAspectId":"","searchAspectTag":"","searchUtmSource":"","isNps":false,"hideReactions":true,"longAspectsName":false,"fetchedReviewsCount":25,"showAuthorLevel":false,"hasNewDesign":false,"hasRatingTen":false,"myReview":{"object":{"id":""},"author":{"name":"└эюэшьэ√щ яюы№чютрЄхы№","avatarId":"0/0-0
+---
+CTX: e.categoryAspectStats,t.exp1AspectsEnabled);let o;return n&&(o={items:z(n,t.longAspectsName)}),o}function O({response:e,fetchedReviewsCount:t=0,state:n}){var s,r,a,u,l,d,c,v,m,h,g,w,p,f,R,y;const b=null==e||null===(c=e.reviews)||void 0===c?void 0:c.count,k=0===b&&n.reviews.count>0?n.reviews.count:b|
+---
+CTX: ull!==(s=null===(y=e.reviews)||void 0===y||null===(R=y.items)||void 0===R?void 0:R.length)&&void 0!==s?s:0)>0,aspects:L,fetchedReviewsCount:t,reviewsSummary:U,zeroSuggestForSearch:null!==(r=e.zeroSuggestForSearch)&&void 0!==r?r:n.zeroSuggestForSearch,ratingStats:e.ratingStats||n.ratingStats,ratingCo
+---
+CTX: bjectId,appId:e.appId,otype:e.otype,emptyKind:"no-reviews-field"},project:d.V.ugc}),N({type:"successLoading",response:t,fetchedReviewsCount:s}),null==k||k(t)}),[k,e.objectId,e.appId,e.otype]);(0,r.useEffect)((()=>{!t&&j&&(null==C||C(L||"reviews-empty-init-data","╬ЄёєёЄтє■Є фрээ√х ё apphost, яЁюшчтюф
+---
+CTX: ce,E,v,D,f,A,S]),W=(0,r.useCallback)(((e={})=>{if("loading"===Q.status||"error"===Q.status||!Q.hasMore)return;const t=Q.fetchedReviewsCount;J(t,e)}),[J,Q]),Y=(0,r.useCallback)(((e,t={})=>{if(e===M.current)return;if("loading"===Q.status||"initialLoading"===Q.status)return;"finish"===Q.status&&q.curre
+---
+CTX: ar s;(t.forceReload||t&&t.ranking!==Q.ranking)&&O(null!==(s=t.ranking)&&void 0!==s?s:Q.ranking);e.limit&&e.initLimit&&Q.fetchedReviewsCount>e.initLimit?t.limit=Math.max(e.limit,e.initLimit):K(!1);const{forceReload:a}=t,r=(0,c._)(t,["forceReload"]);J(0,r)}),[J,Q,O,e,m]),z=(0,r.useCallback)(((e={})=>{
+---
+CTX: ,searchQuery:o,searchAspectId:u,searchAspectTag:d,searchUtmSource:p,isNps:e,hideReactions:t,longAspectsName:m,baseUrl:s,fetchedReviewsCount:0,exp1AspectsEnabled:a,requestParams:l,showAuthorLevel:g,hasNewDesign:h,hasRatingTen:I,withRelNofollow:v}),n=(e,t)=>{switch(t.type){case"startLoading":{const t=
+---
+CTX: y:n,ranking:o})}case"changeObjectId":return(0,a._)({},e,{status:"objectLoading",reviews:{count:0,totalCount:0,items:[]},fetchedReviewsCount:0,hasMore:!0,aspectId:"",aspectKey:"",searchQuery:"",searchAspectId:"",searchAspectTag:"",searchUtmSource:""});case"successLoading":{const{response:s,fetchedRev
+---
+PAT ["\'](https://reviews\.yandex\.ru/ugcpub 2
+  https://reviews.yandex.ru/ugcpub/object/shop/armedf.ru?lr=225&pers_suggest=0&text=site%3Aarmedf.ru&utm_source=share_button
+  https://reviews.yandex.ru/ugcpub/object/shop/armedf.ru?lr=225&pers_suggest=0&text=site%3Aarmedf.ru&ncrnd=14408
+chunks 0
+all js refs 4
+//yastatic.net/s3/reefstatic/_/v2/modifiable-main.5ec6f530af000af6b.js
+//yastatic.net/s3/reefstatic/_/v2/main-chunk.7ce46f95d3dbc454f.js
+//yastatic.net/s3/reefstatic/_/v2/static/chunks/main-vanilla@desktop.3dd186dbc156b52ff.js
+//yastatic.net/react/19.2.4/react-with-dom.min.js

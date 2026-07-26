@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "hooks": {
+    "subagentStop": [
+      {
+        "type": "prompt",
+        "prompt": "Subagent completed. If this was programmer subagent and code was written, remind Jarvis to run code-reviewer review gate before marking task complete. Save review to artifacts/{task-id}/reviews/code-review.md with APPROVED or NEEDS_REVISION verdict.",
+        "matcher": "programmer",
+        "loop_limit": 1
+      }
+    ],
+    "stop": [
+      {
+        "type": "prompt",
+        "prompt": "Agent session ending. If operational task artifacts were created in artifacts/, confirm they are saved. If strategic decisions were made, confirm knowledge/strategy/ was updated.",
+        "loop_limit": 1
+      }
+    ]
+  }
+}

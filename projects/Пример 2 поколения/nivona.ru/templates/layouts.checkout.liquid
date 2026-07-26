@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html class='' lang='ru' xml:lang='ru' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  {% include "head" %}
+
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+  <meta content='noindex, nofollow' name='robots'>
+  <meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  {{ 'checkout2.core' | global_stylesheet_tag }}
+  <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+
+  {% capture yititle %}{% yield 'title' %}{% endcapture %}
+
+  {% if template.size > 0 %}{% else %}
+    {% assign template = 'account' %}
+  {% endif %}
+
+  {% if yititle contains 'Вход в кабинет покупателя' %}
+    {% assign account_template = 'profile_login' %}
+  {% elsif yititle contains 'Регистрация' %}
+    {% assign account_template = 'profile_register' %}
+  {% endif %}
+</head>
+<body class='adaptive fhg-body' data-template="{{ template }}">
+    {% include 'preloader' %}
+
+    {% include "no_js_alert" %}
+    {% include "header" %}
+
+    {% include "page_header" %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-12">
+          <div class="account_content form--cabinet {{ account_template }}">
+            {% yield %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include 'svg' %}
+    {% include "footer" %}
+    {% include "modals" %}
+    {% include "scripts" %}
+  	{% include "analytics" %}
+  	{% if template == 'order' %}{% include 'credit_modal' %}{% endif %}
+
+    <script>
+      $('[type="checkbox"]').each(function(){
+        $(this).closest('.field').addClass('is-checkbox')
+        $(this).closest('.field').attr('for', $(this).attr('name'))
+        $(this).closest('.field-content').find('span').remove('span')
+        $(this).closest('.field-content').append('<span></span>')
+      })
+      $('[name="client[change_password]"]').on('change', function(){
+        if($(this).is(':checked')){
+          $('#change_password_fields').show();
+        }else{
+          $('#change_password_fields').hide();
+        }
+      })
+    </script>
+</body>
+</html>

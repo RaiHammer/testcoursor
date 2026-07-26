@@ -1,0 +1,101 @@
+<div class="popup-wrapper" popup-wrapper>
+  <div class="popup">
+    <div popup-content="form" hidden>
+      <form class="feedback-form" name="feedback-form" id="feedback-form">
+        <div class="feedback-form-group">
+
+          <div class="feedback-form-group__field">
+            <label for="name">Ваше имя <span>*</span></label>
+            <input type="text" id="name" name="clientName" required>
+          </div>
+          {% comment %} 
+          <div class="feedback-form-group__field">
+            <label for="surname">Ваша фамилия <span>*</span></label>
+            <input type="text" id="surname" name="surname" required>
+          </div> {% endcomment %}
+
+          <div class="feedback-form-group__field">
+            <label for="phone">Телефон <span>*</span></label>
+            <input type="text" id="phone" name="clientPhone" required>
+          </div>
+
+          <div class="feedback-form-group__field">
+            <label for="email">Email <span>*</span></label>
+            <input type="text" id="email" name="clientEmail" required>
+          </div>
+
+          <div class="feedback-form-group__field">
+            <label for="city">Город <span>*</span></label>
+            <input type="text" id="city" name="clientAddress" required>
+          </div>
+
+          <div class="feedback-form-group__field">
+            <label for="serial">Серийный номер</label>
+            <input type="text" id="serial" name="serialNumber" title="Серийный номер (15 или 17 символов)">
+          </div>
+
+          <div class="feedback-form-group__field form-field"> 
+            <label class="focus" for="photo-sn">Фото чека </label>
+            <div class="form-field-file">
+              <div class="form-field-file-text" form-field-file>+&nbsp;Выбрать&nbsp;файл</div>
+              <input type="file" accept="image/jpg,image/png,image/jpeg,application/pdf" id="photo-sn" name="checkImageBase64" hidden>
+            </div>
+            <div class="form-field-downloaded" form-field-downloaded></div>
+          </div>
+
+          <div class="feedback-form-group__field">
+            <label class="focus" for="date">Дата покупки <span>*</span></label>
+            <input type="date" id="date" name="datePurchase" required>
+          </div>
+
+          {% comment %} <div class="feedback-form-group__field">
+            <label for="seller">Информация о продавце <span>*</span></label>
+            <input type="text" id="seller" name="seller" required>
+          </div> {% endcomment %}
+
+          {% comment %} <div class="feedback-form-group__field form-field">
+            <label class="focus" for="photo-receipt">Фото чека о покупке</label>
+            <div class="form-field-file">
+              <div class="form-field-file-text" form-field-file>+ Выбрать файл</div>
+              <input type="file" accept="image/jpg,image/png,image/jpeg,application/pdf" multiple id="photo-sale" name="photo-receipt" hidden>
+            </div>
+            <div class="form-field-downloaded" form-field-downloaded></div>
+          </div> {% endcomment %}
+
+          {% comment %} <div class="feedback-form-group__field select">
+            <label for="problem">В чем заключается проблема? <span>*</span></label>
+            <!-- <input type="text" id="problem" name="problem"> -->
+            <select name="problem" id="problem" class="form-field-select" required>
+              <option disabled selected></option>
+              <option value="1">Проблема 1</option>
+              <option value="2">Проблема 2</option>
+              <option value="3">Проблема 3</option>
+              <option value="4">Проблема 4</option>
+              <option value="5">Проблема 5</option>
+            </select>
+          </div> {% endcomment %}
+
+          {% comment %} <div class="feedback-form-group__field textarea">
+            <label for="message">Опишите подробнее причину обращения <span>*</span></label>
+            <textarea rows="4" id="message" name="message" form-textarea required></textarea>
+          </div> {% endcomment %}
+
+
+        </div>
+
+        <div class="form-info">
+          <label for="policy">
+            <input type="checkbox" name="policy" id="policy" required>
+            <div class="form-info-text">Заполняя эту форму, вы&nbsp;соглашаетесь с&nbsp;<a href="/page/policy">Политикой конфиденциальности</a></div>
+          </label>
+        </div>
+
+        <div>
+          <button class="form-submit-button" type="submit">Отправить</button>
+        </div>
+      </form>
+    </div>
+    <button class="popup-close-button" popup-close></button>
+    <div id="loader" class="hidden">Отправляем...</div>
+  </div>
+</div>

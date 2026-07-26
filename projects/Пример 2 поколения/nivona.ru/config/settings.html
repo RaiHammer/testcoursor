@@ -1,0 +1,694 @@
+<fieldset>
+  <legend>{{ messages.s_heading_colors_and_fonts }}</legend>
+  <table>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_primary_colors }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="color_background_primary">{{ messages.s_color_background_primary }}</label> </td>
+      <td> <input class="color" id="color_background_primary" name="color_background_primary" value="#ffffff" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="color_text_primary">{{ messages.s_color_text_primary }}</label> </td>
+      <td> <input class="color" id="color_text_primary" name="color_text_primary" value="#ffffff" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="color_link_primary">{{ messages.s_color_active_elements_primary }}</label> </td>
+      <td> <input class="color" id="color_link_primary" name="color_link_primary" value="#ffffff" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="color_link_primary_hover">{{ messages.s_color_active_elements_primary_hover }}</label> </td>
+      <td> <input class="color" id="color_link_primary_hover" name="color_link_primary_hover" value="#ffffff" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="color_border_primary">{{ messages.s_color_border_primary }}</label> </td>
+      <td> <input class="color" id="color_border_primary" name="color_border_primary" value="#ffffff" /> </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_adjective_colors }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="color_background_secondary">{{ messages.s_color_background_secondary }}</label> </td>
+      <td> <input class="color" id="color_background_secondary" name="color_background_secondary" value="#ffffff" />
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="color_text_secondary">{{ messages.s_color_text_secondary }}</label> </td>
+      <td> <input class="color" id="color_text_secondary" name="color_text_secondary" value="#ffffff" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="color_link_secondary">{{ messages.s_color_active_elements_secondary }}</label> </td>
+      <td> <input class="color" id="color_link_secondary" name="color_link_secondary" value="#ffffff" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="color_link_secondary_hover">{{ messages.s_color_active_elements_secondary_hover }}</label> </td>
+      <td> <input class="color" id="color_link_secondary_hover" name="color_link_secondary_hover" value="#FFFFFF" />
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="color_border_secondary">{{ messages.s_color_border_secondary }}</label> </td>
+      <td> <input class="color" id="color_border_secondary" name="color_border_secondary" value="#ffffff" /> </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_background_substrate }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="body_background_color">{{ messages.s_body_background_color }}</label> </td>
+      <td> <input class="color" id="body_background_color" name="body_background_color" value="#ffffff" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="body_background_use">{{ messages.s_body_background_use }}</label> </td>
+      <td> <input name="body_background_use" id="body_background_use" type="checkbox" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="body_background_type">{{ messages.s_body_background_type }}</label> </td>
+      <td> <select name="body_background_type" id="body_background_type">
+          <option value="default">{{ messages.default }}</option>
+          <option value="tile">{{ messages.tile }}</option>
+          <option value="stretch">{{ messages.stretch }}</option>
+        </select> </td>
+    </tr>
+    <tr>
+      <td> <label for="body_background_image.jpg">{{ messages.s_body_background_image }}</label> </td>
+      <td> <input name="body_background_image.jpg" id="body_background_image.jpg" type="file" data-max-width="1600"
+          data-max-height="1000" /> </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_fonts }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="font_family_primary">{{ messages.s_font_family_primary }}</label> </td>
+      <td> <select name="font_family_primary" id="font_family_primary">
+          <option value="google:Istok+Web">Istok Web</option>
+          <option value="google:OpenSans">OpenSans</option>
+          <option value="google:Roboto">Roboto</option>
+          <option value="google:Ubuntu">Ubuntu</option>
+        </select> </td>
+    </tr>
+    <tr>
+      <td> <label for="font_size_primary">{{ messages.s_font_size_primary }}</label> </td>
+      <td> <select name="font_size_primary" id="font_size_primary">
+          <option value="12px">12 px</option>
+          <option value="14px">14 px</option>
+          <option value="16px">16 px</option>
+        </select> </td>
+    </tr>
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>{{ messages.s_heading_logotype }}</legend>
+  <table>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_logotype }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="logotype_type">{{ messages.s_logotype_type }}</label> </td>
+      <td> <select name="logotype_type" id="logotype_type">
+          <option value="image">{{ messages.image }}</option>
+          <option value="text">{{ messages.site_name }}</option>
+        </select> </td>
+    </tr>
+    <tr>
+      <td> <label for="logotype-image">{{ messages.s_logotype_image }}</label> </td>
+      <td> <input name="logotype.jpg" id="logotype-image" type="file" data-max-width="400" data-max-height="120" />
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="logotype_font_family">{{ messages.s_logotype_font_family }}</label> </td>
+      <td> <select name="logotype_font_family" id="logotype_font_family">
+          <!-- <option value="google:Jura">Jura</option>
+            <option value="google:Istok+Web">Istok Web</option>
+            <option value="google:Marmelad">Marmelad</option>
+            <option value="google:Kurale">Kurale</option>
+            <option value="google:Kelly Slab">Kelly Slab</option> -->
+          <option value="google:Cuprum">Cuprum</option>
+          <!-- <option value="google:Lobster">Lobster</option>
+            <option value="google:Exo+2">Exo 2</option>
+            <option value="google:Bad+Script">Bad Script</option> -->
+          <option value="google:OpenSans">OpenSans</option>
+          <!-- <option value="google:OpenSansCondensed">OpenSansCondensed</option> -->
+          <option value="google:Roboto">Roboto</option>
+          <!-- <option value="google:RobotoSlab">RobotoSlab</option> -->
+          <option value="google:Ubuntu">Ubuntu</option>
+        </select> </td>
+    </tr>
+    <tr>
+      <td> <label for="logotype_font_size">{{ messages.s_logotype_font_size }}</label> </td>
+      <td> <select name="logotype_font_size" id="logotype_font_size">
+          <option value="20px">20 px</option>
+          <option value="25px">25 px</option>
+          <option value="30px">30 px</option>
+          <option value="35px">35 px</option>
+          <option value="40px">40 px</option>
+        </select> </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_favicon }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="favicon.ico">{{ messages.s_favicon }}</label> </td>
+      <td> <input name="favicon.ico" id="favicon.ico" type="file" data-max-width="16" data-max-height="16" /> </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>Новогоднее оформление</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="ny_show">Включить новогоднее оформление</label> </td>
+      <td> <input name="ny_show" id="ny_show" type="checkbox" /> </td>
+    </tr>
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>{{ messages.s_heading_contacts }}</legend>
+  <table>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_contacts }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="phone">{{ messages.s_phone }}</label> </td>
+      <td> <select name="phone" id="phone">
+          <option value="from_settings">{{ messages.from_settings }}</option>
+          <option value="edited_block">{{ messages.edited_block }}</option>
+          <option value="hidden">{{ messages.hide }}</option>
+        </select> </td>
+    </tr>
+    <tr>
+      <td> <label for="email">{{ messages.s_email }}</label> </td>
+      <td> <select name="email" id="email">
+          <option value="from_settings">{{ messages.from_settings }}</option>
+          <option value="edited_block">{{ messages.edited_block }}</option>
+          <option value="hidden">{{ messages.hide }}</option>
+        </select> </td>
+    </tr>
+    <tr>
+      <td> <label for="phone_hide">Скрыть номер телефона</label> </td>
+      <td> <input name="phone_hide" id="phone_hide" type="checkbox" /> </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_socials }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="social_media_hide">{{ messages.s_social_media_hide }}</label> </td>
+      <td> <input name="social_media_hide" id="social_media_hide" type="checkbox" /> </td>
+    </tr>
+
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>{{ messages.s_heading_frontpage }}</legend>
+  <table>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_slider }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="promo_slider_auto">{{ messages.s_promo_slider_auto }}</label> </td>
+      <td> <input name="promo_slider_auto" id="promo_slider_auto" type="checkbox" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="promo_slider_auto_time">{{ messages.s_promo_slider_auto_time }}</label> </td>
+      <td> <input name="promo_slider_auto_time" id="promo_slider_auto_time" type="text" /> </td>
+    </tr>
+  </table>
+</fieldset>
+<fieldset>
+  <legend>{{ messages.s_heading_collection }}</legend>
+  <table>
+    <tr>
+      <td><label for="cards_sale_off">Скрыть ярлык скидки</label></td>
+      <td><input name="cards_sale_off" id="cards_sale_off" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="cards_crop_off">{{ messages.s_cards_crop_off }}</label></td>
+      <td><input name="cards_crop_off" id="cards_crop_off" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td> <label for="category_description_position">{{ messages.s_category_description_position }}</label> </td>
+      <td> <select name="category_description_position" id="category_description_position">
+          <option value="after_products">{{ messages.after_products }}</option>
+          <option value="before_products">{{ messages.before_products }}</option>
+          <!-- <option value="hidden">{{ messages.hide }}</option> -->
+        </select> </td>
+    </tr>
+    <tr>
+      <td><label for="category_image_hidden">{{ messages.s_category_image_hidden }}</label></td>
+      <td><input name="category_image_hidden" id="category_image_hidden" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="category_subcollections_hidden">{{ messages.s_category_subcollections_hidden }}</label></td>
+      <td><input name="category_subcollections_hidden" id="category_subcollections_hidden" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="category_filter_hidden">{{ messages.s_category_filter_hidden }}</label></td>
+      <td><input name="category_filter_hidden" id="category_filter_hidden" type="checkbox" /></td>
+    </tr>
+  </table>
+</fieldset>
+<fieldset>
+  <legend>{{ messages.s_heading_product }}</legend>
+  <table>
+    <tr>
+      <td><label for="found-cheaper_hidden">Скрыть "Нашли дешевле?"</label></td>
+      <td><input name="found-cheaper_hidden" id="found-cheaper_hidden" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="btn-rassrochka_hidden">Скрыть "Купить в рассрочку"</label></td>
+      <td><input name="btn-rassrochka_hidden" id="btn-rassrochka_hidden" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_buy_button }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="prod_sale_off">Скрыть ярлык скидки</label></td>
+      <td><input name="prod_sale_off" id="prod_sale_off" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td> <label for="product_not_available">{{ messages.s_product_not_available }}</label> </td>
+      <td> <select name="product_not_available" id="product_not_available">
+          <option value="shown">{{ messages.show }}</option>
+          <option value="hidden">{{ messages.hide }}</option>
+          <option value="preorder">{{ messages.preorder }}</option>
+        </select> </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>{{ messages.s_subheading_adjective_settings }}</h2>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="product_order_text">Текст кнопки заявки</label></td>
+      <td><input name="product_order_text" id="product_order_text"></td>
+    </tr>
+    <tr>
+      <td><label for="product_order_type">Вариант вывода отсутствующего товара</label></td>
+      <td>
+        <select name="product_order_type" id="product_order_type">
+          <option value="visible_price">Показывать цену и остаток</option>
+          <option value="hidden_price">Скрыть цену и остаток</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="product_order_target">Заявка от покупателя приходит</label></td>
+      <td>
+        <select name="product_order_target" id="product_order_target">
+          <option value="mail">Письмо на почту</option>
+          <option value="ordes">Как новый заказ</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="product_share_hide">{{ messages.s_product_share_hide }}</label> </td>
+      <td> <input name="product_share_hide" id="product_share_hide" type="checkbox" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="product_compare_hide">{{ messages.s_product_compare_hide }}</label> </td>
+      <td> <input name="product_compare_hide" id="product_compare_hide" type="checkbox" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="product_nivona_hide">Скрыть виджет Nivona</label> </td>
+      <td> <input name="product_nivona_hide" id="product_nivona_hide" type="checkbox" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="product_boxberry_hide">Скрыть виджет Boxberry</label> </td>
+      <td> <input name="product_boxberry_hide" id="product_boxberry_hide" type="checkbox" /> </td>
+    </tr>
+    <tr>
+      <td><label for="product_main_params">Пермалинки основных параметров (разделяем ||)</label></td>
+      <td><input name="product_main_params" id="product_main_params" type="text" /></td>
+    </tr>
+  </table>
+</fieldset>
+<fieldset>
+  <legend>{{ messages.s_heading_blog }}</legend>
+  <table>
+    <tr>
+      <td> <label for="article_author_hide">{{ messages.s_article_author_hide }}</label> </td>
+      <td> <input name="article_author_hide" id="article_author_hide" type="checkbox" /> </td>
+    </tr>
+    <tr>
+      <td> <label for="article_image_hide">{{ messages.s_article_image_hide }}</label> </td>
+      <td> <input name="article_image_hide" id="article_image_hide" type="checkbox" /> </td>
+    </tr>
+  </table>
+</fieldset>
+<fieldset>
+  <legend>Акции</legend>
+  <table>
+    <tr>
+      <td colspan="2">
+        <h2>Акция "комплект с подарком" (подмена позиции)</h2>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="actions_bundle_change_position_enable">Включить акцию</label></td>
+      <td><input name="actions_bundle_change_position_enable" id="actions_bundle_change_position_enable"
+          type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="actions_bundle_change_position_field_handle">Пермалинк поля товара, где указываются товар для
+          подмены</label></td>
+      <td><input name="actions_bundle_change_position_field_handle" id="actions_bundle_change_position_field_handle"
+          type="text"></td>
+    </tr>
+  </table>
+</fieldset>
+<fieldset>
+  <legend>Настройки корзины</legend>
+  <table>
+    <tr>
+      <td colspan="2">
+        <h2>Подарочные позиции</h2>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="cart_enable_gift">Добавлять в корзину подарочные позиции</label></td>
+      <td><input name="cart_enable_gift" id="cart_enable_gift" type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="cart_is_gift_handle">Пермалинк параметра "Это подарок"</label></td>
+      <td><input name="cart_is_gift_handle" id="cart_is_gift_handle" type="text"></td>
+    </tr>
+    <tr>
+      <td><label for="cart_gift_handle">Пермалинк параметра "Подарочная позиция"</label></td>
+      <td><input name="cart_gift_handle" id="cart_gift_handle" type="text"></td>
+    </tr>
+    <tr>
+      <td><label for="cart_move_gift_down">Перемещать подарочные позиции в конец списка</label></td>
+      <td><input name="cart_move_gift_down" id="cart_move_gift_down" type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="cart_gift_lock_change">Запретить менять кол-во у подарочных позиций</label></td>
+      <td><input name="cart_gift_lock_change" id="cart_gift_lock_change" type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="cart_gift_lock_delete">Запретить удалять подарочные позиции</label></td>
+      <td><input name="cart_gift_lock_delete" id="cart_gift_lock_delete" type="checkbox"></td>
+    </tr>
+  </table>
+</fieldset>
+<fieldset>
+	<legend>Настройки кредита Тинькова</legend>
+	<table>
+        <tr>
+			<td><label for="tinkov_pay">Название спооба оплаты в InSales</label></td>
+			<td><input name="tinkov_pay" id="tinkov_pay"></td>
+		</tr>
+        <tr>
+			<td><label for="tinkov_url">url формы заявки на кредит</label></td>
+			<td><input name="tinkov_url" id="tinkov_url"></td>
+		</tr>      
+        <tr>
+			<td><label for="tinkov_identifikator">Идентификатор магазина/партнёра (shopId)</label></td>
+			<td><input name="tinkov_identifikator" id="tinkov_identifikator"></td>
+		</tr>
+        <tr>
+			<td><label for="tinkov_showcaseid">Идентификатор сайта (showcaseId)</label></td>
+			<td><input name="tinkov_showcaseid" id="tinkov_showcaseid"></td>
+		</tr>
+        <tr>
+			<td><label for="tinkov_promocode">Промокод акции (promoCode)</label></td>
+			<td><input name="tinkov_promocode" id="tinkov_promocode"></td>
+		</tr>
+	</table>
+</fieldset>
+<fieldset>
+  <legend>Настройки Чекаута</legend>
+  <fieldset>
+    <legend>Скрытие вариантов доставки в регионы, брак, уценка</legend>
+    <table>
+      <tr>
+        <td><label for="co_enable_hidding_pickup_private_person">Скрывать варианты доставки для ФИЗ.ЛИЦ</label></td>
+        <td><input name="co_enable_hidding_pickup_private_person" id="co_enable_hidding_pickup_private_person"
+            type="checkbox"></td>
+      </tr>
+      <tr>
+        <td><label for="co_enable_hidding_pickup_private_person_ids">ID скрываемых способов доставки (через
+            "||")</label></td>
+        <td><input name="co_enable_hidding_pickup_private_person_ids" id="co_enable_hidding_pickup_private_person_ids"
+            type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_enable_hidding_yd_legal_entities">Скрывать варианты доставки для ЮР.ЛИЦ</label></td>
+        <td><input name="co_enable_hidding_yd_legal_entities" id="co_enable_hidding_yd_legal_entities" type="checkbox">
+        </td>
+      </tr>
+      <tr>
+        <td><label for="co_enable_hidding_yd_legal_entities_ids">ID скрываемых способов доставки (через "||")</label>
+        </td>
+        <td><input name="co_enable_hidding_yd_legal_entities_ids" id="co_enable_hidding_yd_legal_entities_ids"
+            type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_enable_hidding_regions_for_markdown">Скрыть доставку в регионы (везде, кроме МСК и СПБ) для
+            брака и уценки</label></td>
+        <td><input name="co_enable_hidding_regions_for_markdown" id="co_enable_hidding_regions_for_markdown"
+            type="checkbox"></td>
+      </tr>
+      <tr>
+        <td><label for="co_enable_hidding_buyCredit_for_markdown">Скрыть покупку в кредит для брака и уценки</label>
+        </td>
+        <td><input name="co_enable_hidding_buyCredit_for_markdown" id="co_enable_hidding_buyCredit_for_markdown"
+            type="checkbox"></td>
+      </tr>
+      <tr>
+        <td><label for="co_sku_mark_for_markdown">Маркировка товаров с уценкой (по артикулу)</label></td>
+        <td><input name="co_sku_mark_for_markdown" id="co_sku_mark_for_markdown" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_sku_mark_for_defective">Маркировка товаров с браком (по артикулу)</label></td>
+        <td><input name="co_sku_mark_for_defective" id="co_sku_mark_for_defective" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_hidding_payments_for_markdown">ID скрываемх способов оплаты для уценки/брак (через "||")</label></td>
+        <td><input name="co_hidding_payments_for_markdown" id="co_hidding_payments_for_markdown" type="text"></td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset>
+    <legend>Скрытие вариантов доставки - Группа #1 (сотрудники)</legend>
+    <table>
+      <tr>
+        <td><label for="co_availableDelivery_idsGroups_1_enable">Включить модуль</label></td>
+        <td><input name="co_availableDelivery_idsGroups_1_enable" id="co_availableDelivery_idsGroups_1_enable"
+            type="checkbox"></td>
+      </tr>
+      <tr>
+        <td><label for="co_availableDelivery_idsGroups_1">ID групп (разделяя ||)</label></td>
+        <td><input name="co_availableDelivery_idsGroups_1" id="co_availableDelivery_idsGroups_1" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_availableDelivery_hideAnotherIdsDelivery_1">Скрываем варианты доставки для других групп (разделяя ||)</label></td>
+        <td><input name="co_availableDelivery_hideAnotherIdsDelivery_1" id="co_availableDelivery_hideAnotherIdsDelivery_1"
+            type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_availableDelivery_hideIdsDelivery_1">Скрываем варианты доставки для выбранных групп (разделяя ||)</label></td>
+        <td><input name="co_availableDelivery_hideIdsDelivery_1" id="co_availableDelivery_hideIdsDelivery_1"
+            type="text"></td>
+    </table>
+  </fieldset>
+  <fieldset>
+    <legend>Подъем на этаж</legend>
+    <table>
+      <tr>
+        <td><label for="co_usluga_etaj_enable">Включить "Подъем на этаж"</label></td>
+        <td><input name="co_usluga_etaj_enable" id="co_usluga_etaj_enable" type="checkbox"></td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_only_stairs">Только лестница</label></td>
+        <td><input name="co_usluga_etaj_only_stairs" id="co_usluga_etaj_only_stairs" type="checkbox"></td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_delivery_ids">ID способов доставки, для которых включен подъем на этаж (разделяя ||)</label></td>
+        <td><input name="co_usluga_etaj_delivery_ids" id="co_usluga_etaj_delivery_ids" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_field_id">ID чекбокса включения функции "Подъем на этаж"</label></td>
+        <td><input name="co_usluga_etaj_field_id" id="co_usluga_etaj_field_id" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_id_price">ID доп. поля для цены услуги</label></td>
+        <td><input name="co_usluga_etaj_id_price" id="co_usluga_etaj_id_price" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_id_type">ID доп. поля для типа поднятия</label></td>
+        <td><input name="co_usluga_etaj_id_type" id="co_usluga_etaj_id_type" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_id_floor_num">ID доп. поля для номера этажа</label></td>
+        <td><input name="co_usluga_etaj_id_floor_num" id="co_usluga_etaj_id_floor_num" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_price_weight_elevator">Диапазон цен для подъема с помощью лифта. Формат:
+            "%МАКСИМАЛЬНЫЙ_ВЕС%=%ЦЕНА%". Разделяем "||", от большего веса к меньшему. Например:
+            "130=360||80=220||50=140||30=0"</label></td>
+        <td><input name="co_usluga_etaj_price_weight_elevator" id="co_usluga_etaj_price_weight_elevator" type="text">
+        </td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_price_weight_stairs">Диапазон цен для подъема с помощью лестницы. Формат:
+            "%МАКСИМАЛЬНЫЙ_ВЕС%=%ЦЕНА%". Разделяем "||", от большего веса к меньшему. Например:
+            "130=360||80=220||50=140||30=0"</label></td>
+        <td><input name="co_usluga_etaj_price_weight_stairs" id="co_usluga_etaj_price_weight_stairs" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_items_weight">Минимальный вес позиций, для включение услуги "Подъем на этаж"
+            (кг)</label></td>
+        <td><input name="co_usluga_etaj_items_weight" id="co_usluga_etaj_items_weight" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_usluga_etaj_items_max_weight">Максимальный вес позиций, для включение услуги "Подъем на этаж"
+            (кг)</label></td>
+        <td><input name="co_usluga_etaj_items_max_weight" id="co_usluga_etaj_items_max_weight" type="text"></td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset>
+    <legend>Указать получателя</legend>
+    <table>
+      <tr>
+        <td><label for="co_recipient_enable">Включить?</label></td>
+        <td><input name="co_recipient_enable" id="co_recipient_enable" type="checkbox"></td>
+      </tr>
+      <tr>
+        <td><label for="co_field_recipient_checkbox_id">ID чекбока "Указать получателя"</label></td>
+        <td><input name="co_field_recipient_checkbox_id" id="co_field_recipient_checkbox_id" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_field_recipient_name_id">ID поля "Имя получателя"</label></td>
+        <td><input name="co_field_recipient_name_id" id="co_field_recipient_name_id" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_field_recipient_phone_id">ID поля "Телефон получателя"</label></td>
+        <td><input name="co_field_recipient_phone_id" id="co_field_recipient_phone_id" type="text"></td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset>
+    <legend>Доп. настройки</legend>
+    <table>
+      <tr>
+        <td colspan="2">
+          <h2>Доп. параметры</h2>
+        </td>
+      </tr>
+      <tr>
+		<td><label for="co_hide_delivery_cost_ids">ID способов доставки где нужно скрыть стоимость доставки (через "||")</label></td>
+		<td><input name="co_hide_delivery_cost_ids" id="co_hide_delivery_cost_ids" type="text"></td>
+	  </tr>
+      <tr>
+        <td><label for="co_important_products_ids">ID вариантов особых товаров (скрываются из корзины, выводятся
+            отдельными услугами)</label></td>
+        <td><input name="co_important_products_ids" id="co_important_products_ids" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="co_id_payment_credit">ID способа оплаты "Кредит"</label></td>
+        <td><input name="co_id_payment_credit" id="co_id_payment_credit" type="text"></td>
+      </tr>
+      <tr>
+		<td><label for="co_enable_residue_control">Включить динамический контроль остатков?</label></td>
+		<td><input name="co_enable_residue_control" id="co_enable_residue_control" type="checkbox"></td>
+	  </tr>
+      <tr>
+        <td><label for="co_enable_omni_dates">Влючить интервалы доставки OMNI?</label></td>
+        <td><input name="co_enable_omni_dates" id="co_enable_omni_dates" type="checkbox"></td>
+      </tr>
+    </table>
+  </fieldset>
+</fieldset>
+
+
+<fieldset>
+  <legend>Политика конфиденциальности</legend>
+  <table>
+    <tr>
+      <td><label for="privacy_active">Включить</label></td>
+      <td><input name="privacy_active" id="privacy_active" type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="privacy_checkbox_checked">Чекбокс сразу отмечен</label></td>
+      <td><input name="privacy_checkbox_checked" id="privacy_checkbox_checked" type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="privacy_forms">Заявки и комментарии</label></td>
+      <td><input name="privacy_forms" id="privacy_forms" type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="privacy_popup">Всплывающее окно</label></td>
+      <td><input name="privacy_popup" id="privacy_popup" type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="privacy_popup_delay">Всплывающее окно: задержка (сек)</label></td>
+      <td><input name="privacy_popup_delay" id="privacy_popup_delay"></td>
+    </tr>
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>Включить ReCAPTCHA?</legend>
+  <table>
+    <tr>
+      <td>
+        ReCAPTCHA
+      </td>
+    </tr>
+    <tr>
+      <td> <label for="feedback_captcha_enabled">На странице Обратной связи</label> </td>
+      <td> <input name="feedback_captcha_enabled" id="feedback_captcha_enabled" type="checkbox" /> </td>
+    </tr>
+  </table>
+</fieldset>
+
+<fieldset>
+  <legend>ГЕО модуль</legend>
+  <table>
+    <tr>
+      <td><label for="geo_active">Включить</label></td>
+      <td><input name="geo_active" id="geo_active" type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="header_geo">Показывать в шапке</label></td>
+      <td><input name="header_geo" id="header_geo" type="checkbox"></td>
+    </tr>
+    <tr>
+      <td><label for="header_geo_popup">Спрашивать при первом заходе правильно ли определен город</label></td>
+      <td><input name="header_geo_popup" id="header_geo_popup" type="checkbox"></td>
+    </tr>
+    {% comment %}
+    <tr>
+      <td><label for="product_geo">Показывать в карточке товара</label></td>
+      <td><input name="product_geo" id="product_geo" type="checkbox"></td>
+    </tr>
+    {% endcomment %}
+    <tr>
+      <td><label for="geo_url">URL страницы доставки</label></td>
+      <td><input name="geo_url" id="geo_url"></td>
+    </tr>
+  </table>
+</fieldset>

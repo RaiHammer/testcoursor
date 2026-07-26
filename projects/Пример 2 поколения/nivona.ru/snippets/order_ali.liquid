@@ -1,0 +1,352 @@
+{% comment %}
+
+Шаблон для заказа Али
+
+{% endcomment %}
+
+<h3>Отслеживание отправлений</h3>
+<hr />
+<div id="omni_tracking_form" style="text-align: center;">Номер трекинга: <input id="omni_tracking_input" style="width: 300px; height: 38px; font-size: 14px; margin: 20px;" type="input" value="{{order.key}}" /> <input id="omni_tracking_button" style="color: #fff; background: #dd202e; border: #dd202e 1px solid;" type="button" value="Проверить" /></div>
+<hr style="display: flex;" />
+<div id="omni_tracking_loader" style="display: none;">omni_tracking_loader</div>
+<div id="omni_tracking_error_massage" style="display: none;">Трекинг-номер не найден.</div>
+<div id="omni_tracking_info" style="display: none;">
+<div class="checkout-v1-wrapper">
+<h3 style="display: none;">№ заказа: <span id="omni_tracking_order_number"></span></h3>
+<div class="set-title">Статус заказа</div>
+<div class="set-block">
+<div class="field fc">
+<div id="omni_tracking_order_status" class="field-label"></div>
+<div class="field-content"></div>
+</div>
+</div>
+<div class="set-title">Информация о доставке</div>
+<div class="set-block">
+<div class="field fc">
+<div class="field-label">Регион доставки:</div>
+<div id="omni_tracking_delivery_region" class="field-content"></div>
+</div>
+<div class="field fc">
+<div class="field-label">Способ доставки:</div>
+<div id="omni_tracking_delivery_type" class="field-content"></div>
+</div>
+<div class="field fc">
+<div class="field-label">Служба доставки / транспортная компания:</div>
+<div id="omni_tracking_delivery_provider" class="field-content"></div>
+</div>
+<div class="field fc">
+<div class="field-label">Город (населённый пункт):</div>
+<div id="omni_tracking_delivery_city" class="field-content"></div>
+</div>
+<div class="field fc">
+<div class="field-label">Адрес доставки:</div>
+<div id="omni_tracking_order_address" class="field-content"></div>
+</div>
+{% if order.client.type == 'juridical' %}
+  <div class='field fc'>
+  <div class='field-label'>Дата доставки:</div>
+  <div class='field-content'>Дата и время доставки согласуются после оплаты счёта.</div>
+  </div>
+{% else %}
+  <div class="field fc">
+  <div id="omni_tracking_order_date_label" class="field-label">Дата доставки:</div>
+  <div id="omni_tracking_order_date" class="field-content"></div>
+  </div>
+{% endif %}
+<div class="field fc">
+<div class="field-label">Номер заказа в службе доставки:</div>
+<div id="omni_tracking_order_delivery_provider_number" class="field-content"></div>
+</div>
+
+</div>
+
+<div class="set-block" id="omni_tracking_order_msw" style="overflow: -webkit-paged-x;">
+Чтобы отследить путь посылки введите номер заказа в службе доставки в поле ниже и нажмите кнопку "Узнать статус".
+<meta name="ydWidgetData" id="baf9024728a84eaec28c764c0a387b11" content="" data-sender_id="44552" data-weight="0" data-cost="0" data-height="0" data-length="0" data-width="0" data-city_from="Москва" data-geo_id_from="213" data-css_name="tracking_tpl" data-tpl_name="tracking_tpl" data-container_tag_id="fd692e4ab0e921e3b8c649ec0d033" data-resource_id="44433" data-resource_key="6147285fdbcfe238bc0ec3042f6a9eb8" data-tracking_method_key="e40bbf8c83805b96b2acc67cc70b9dcb" data-autocomplete_method_key="343f22a8a92bd0c4dc710e554c8e6b87"></meta><!--[if lt IE 9]><script>document.createElement("msw");</script><![endif]-->
+<script src="https://delivery.yandex.ru/widget/widgetJsLoader?dataTagID=baf9024728a84eaec28c764c0a387b11" charset="utf-8"></script>
+<div id="msw_data"><msw id="fd692e4ab0e921e3b8c649ec0d033" class="yd-widget-container"></msw></div>
+</div>
+
+</div>
+</div>
+<p>
+<script>
+ 
+   $(document).ready(function() {  // выполняем операции после загрузки страницы
+
+     /*var track_number=decodeURIComponent(window.location.hash.replace("#",""));
+     if ( track_number.length > 0 ) {
+         $("#omni_tracking_input").val(track_number)  // заполнить в поле 
+         check_omni_track(track_number) ;  // сделать поиск
+     };
+     */
+    $( "#omni_tracking_button" ).click(function() {
+          console.log("Handler for .click() called." );
+          var track_number = $("#omni_tracking_input").val(); //  тут берем значение из поля
+          //window.location.hash = track_number;
+          //check_omni_track(track_number);
+          //window.location.href = 'https://shop.candy.ru/orders/f434d7ea1490c762dea4d94cdfdc60a5';
+          window.location.href = '{{account.url}}/orders/'+track_number;
+    });
+     
+     check_omni_track("{{ order.all_fields['omni_id'].value }}");
+   
+   });
+
+   function check_omni_track(track_number) {
+   
+   console.log("check_omni_track()");
+    // скрыть ошибку и инфо
+    $("#omni_tracking_info").hide();
+    $("#omni_tracking_error_massage").hide();
+    // показать лоадер
+    $("#omni_tracking_loader").show();
+
+    // получить данные
+    var omni_tracking_url= "https://is.omnicrm.ru/insales-proxy/get-track-info/tmall-brands/?track_number="+track_number;
+     // ="https://is-dev.omnicrm.ru/insales-proxy/get-track-info/tmall/?track_number="+track_number;
+    // omni_tracking_url='https://static-eu.insales.ru/files/1/851/8717139/original/test-order1.json';
+    //if (track_number == '123') omni_tracking_url="https://static-ru.insales.ru/files/1/851/8717139/original/test-order1.json_no";
+    // если ошибка Ajax
+    // если ошибка Omni
+    // если не ошибка Omni
+    // распарсить данные
+    $.ajax({
+        url: omni_tracking_url,
+        success : function(data) {
+                //console.log(data);
+                var extended_fields=omniOrderPars(data);
+                console.log(extended_fields);
+
+                    $("#omni_tracking_order_number").text(data.result.id);
+                    $("#omni_tracking_delivery_region").text(region_map[extended_fields['deliveryRegion']]);  // тут должен быть меппинг region_map
+                    $("#omni_tracking_delivery_city").text(extended_fields['deliveryCityName']); 
+                    $("#omni_tracking_order_address").text(data.result.delivery.address.street +
+                        ( (data.result.delivery.address.house != '') ? ( ', д. ' + data.result.delivery.address.house ) : '' ) +
+                        ( (data.result.delivery.address.structure != '') ? ( ', корп. ' + data.result.delivery.address.structure ) : '' ) +
+                        ( (data.result.delivery.address.building != '') ? ( ', стр. ' + data.result.delivery.address.building ) : '' ) +
+                        ( (data.result.delivery.address.flat != '') ? ( ', кв. ' + data.result.delivery.address.flat ) : '' ) 
+                    );
+
+                    var delivery_date= new Date(data.result.delivery.date);
+                    delivery_date.setHours(0);
+                    var delivery_info=getInfoForDeliveryType(extended_fields['deliveryVariant']);
+
+                    $("#omni_tracking_order_date").text(delivery_date.toLocaleString("ru",  {  year: 'numeric', month: 'numeric', day: 'numeric',} ) ); // тут надо перевернуть дату
+                        //' (c' + data.result.delivery.time.from + ' до ' + data.result.delivery.time.till + ')';
+                    $("#omni_tracking_delivery_type").text(delivery_info.type);
+                    $("#omni_tracking_delivery_provider").text(delivery_info.provider);		                    
+                    if( delivery_info.provider_code == 'yado' ) {
+                         if(status_canceld[data.result.externalStateId] === undefined && (delivery_date<=Date.now()) ) {
+                            $("#omni_tracking_order_status").text("Пердан в доставку");
+                            $("#omni_tracking_order_date_label").text('Дата передачи заказа с службу доставки');
+                            $("#omni_tracking_order_delivery_provider_number").text(extended_fields['strizhOrderId']);
+                            $("#omni_tracking_order_delivery_provider_number").parent().show();
+                           
+                         } else {
+                            $("#omni_tracking_order_status").text( (status_map[data.result.externalStateId] === undefined )?("В обработке"):status_map[data.result.externalStateId]  ); // тут должен быть меппинг
+                            $("#omni_tracking_order_date_label").text('Планируемая дата передачи заказа с службу доставки');
+                            $("#omni_tracking_order_delivery_provider_number").parent().hide();
+                            $("#omni_tracking_order_msw").show();
+                         }
+                    } else {
+                        $("#omni_tracking_order_date_label").text('Дата доставки');
+                        $("#omni_tracking_order_status").text( ( ( extended_fields['strizhStatusID'] === undefined ) || (extended_fields['strizhStatusID'] < 211) ) ? ((status_map[data.result.externalStateId] === undefined )?("В обработке"):status_map[data.result.externalStateId] ): ( (extended_fields['strizhStatusID'] < 219 ) ? ("Передан в доставку") :  ( "Передан в доставку (" + extended_fields['strizhStatusName'] + ")") ) ); // тут должен быть меппинг
+                        $("#omni_tracking_order_delivery_provider_number").parent().hide();
+                        $("#omni_tracking_order_msw").hide();
+                   }
+
+                        //data.result.externalProviderId
+                        //extended_fields['deliveryVariant']
+
+                $("#omni_tracking_loader").hide();
+                $("#omni_tracking_info").show();	
+        },
+    	error: function(data) {
+             	console.log("check_omni_track: error");     	
+                $("#omni_tracking_loader").hide();
+                $("#omni_tracking_error_massage").show();	
+        }
+     });
+  }
+
+   function omniOrderPars(data) {
+       var extended_fields={};
+       console.log(data);
+       data.result.propertyValues.forEach(function(item, i, arr) {
+        if ( !(item.externalPropertyId === undefined) )  {
+            if ( !(item.referenceValue === undefined) )  extended_fields[item.externalPropertyId] = item.externalReferenceValue;
+            if ( !(item.stringValue === undefined) )     extended_fields[item.externalPropertyId] = item.stringValue;
+            if ( !(item.dateValue === undefined) )       extended_fields[item.externalPropertyId] = item.dateValue;
+            if ( !(item.booleanValue === undefined) )    extended_fields[item.externalPropertyId] = item.booleanValue;  
+            if ( !(item.dateTimeValue === undefined) )   extended_fields[item.externalPropertyId] = item.dateTimeValue; 
+            if ( !(item.numberValue === undefined) )     extended_fields[item.externalPropertyId] = item.NumberValue; 
+        }
+       });
+
+       return extended_fields;
+  };
+  function getInfoForDeliveryType(delivery_type) {
+   
+    var delivery_info = {
+      type: '',
+      provider: '',
+      provider_code: null
+    };
+ 	var delivery_type_map = {
+   		'strizh':  {
+     			type: 'courer',
+        		provider: 'strizh'
+   		},
+   		'strizh_pvz': {
+     			type: 'pvz',
+        		provider: 'strizh'
+   		},
+   		'yandex_delivery': {
+     			type: 'courer',
+        		provider: 'yado'
+   		},
+   		'yandex_delivery_pvz': {
+     			type: 'pvz',
+        		provider: 'yado'
+   		},
+        'dellin' : {
+     			type: 'courer',
+        		provider: 'dellin'
+   		}
+ 	};
+ 	var delivery_provider_name = {
+  		'strizh' : 'СД "Стриж"',
+  		'yado':  'Яндекс.Доставка',
+  		'dellin' : 'Деловые линии'
+ 	};
+ 	var delivery_type_name = {
+  		'pvz' : 'Доставка в пункт выдачи заказов',
+  		'courer':  'Доставка курьером по адресу'
+ 	};
+    if (delivery_type != undefined && delivery_type_map[delivery_type] != undefined) {
+      	if (delivery_type_map[delivery_type].type != undefined && delivery_type_name[delivery_type_map[delivery_type].type] != undefined)  delivery_info.type=delivery_type_name[delivery_type_map[delivery_type].type];
+      	if (delivery_type_map[delivery_type].provider != undefined) {
+        	delivery_info.provider_code=delivery_type_map[delivery_type].provider;
+        	if(delivery_provider_name[delivery_type_map[delivery_type].provider] != undefined)  delivery_info.provider=delivery_provider_name[delivery_type_map[delivery_type].provider];
+      	}
+    }
+    return delivery_info;
+ }
+
+ var status_map = {  
+    'new': "Принят",
+    canceled: "Отменён клиентом",
+    agreed: "В обработке",
+    checked: "В обработке",
+    checked_error: "В обработке",
+    strizh_sent: "В обработке",
+    strizh_input_error: "В обработке",
+    reservation: "Подготовка к отгрузке",
+    partially_confirmed: "Подготовка к отгрузке",
+    partially_agreed: "Подготовка к отгрузке",
+    rejected: "Подготовка к отгрузке",
+    confirmed: "Готов к отгрузке",
+    to_cancel_reservation: "Отменён клиентом",
+    reservation_cannot_be_canceled: "Отменён клиентом",
+    reservation_canceled: "Отменён клиентом",
+    client_notified: "Отменён",
+    сompleted: ""
+ };
+ var status_canceld = {
+    to_cancel_reservation: "Отменён клиентом",
+    reservation_cannot_be_canceled: "Отменён клиентом",
+    reservation_canceled: "Отменён клиентом",
+    client_notified: "Отменён",
+ };
+   var region_map = {
+    "1":"Республика Адыгея (Адыгея)",
+    "2":"Республика Башкортостан",
+    "3":"Республика Бурятия",
+    "4":"Республика Алтай",
+    "5":"Республика Дагестан",
+    "6":"Республика Ингушетия",
+    "7":"Кабардино-Балкарская Республика",
+    "8":"Республика Калмыкия",
+    "9":"Карачаево-Черкесская Республика",
+    "10":"Республика Карелия",
+    "11":"Республика Коми",
+    "12":"Республика Марий Эл",
+    "13":"Республика Мордовия",
+    "14":"Республика Саха (Якутия)",
+    "15":"Республика Северная Осетия - Алания",
+    "16":"Республика Татарстан (Татарстан)",
+    "17":"Республика Тыва",
+    "18":"Удмуртская Республика",
+    "19":"Республика Хакасия",
+    "20":"Чеченская Республика",
+    "21":"Чувашская Республика - Чувашия",
+    "22":"Алтайский край",
+    "23":"Краснодарский край",
+    "24":"Красноярский край",
+    "25":"Приморский край",
+    "26":"Ставропольский край",
+    "27":"Хабаровский край",
+    "28":"Амурская область",
+    "29":"Архангельская область",
+    "30":"Астраханская область",
+    "31":"Белгородская область",
+    "32":"Брянская область",
+    "33":"Владимирская область",
+    "34":"Волгоградская область",
+    "35":"Вологодская область",
+    "36":"Воронежская область",
+    "37":"Ивановская область",
+    "38":"Иркутская область",
+    "39":"Калининградская область",
+    "40":"Калужская область",
+    "41":"Камчатский край",
+    "42":"Кемеровская область",
+    "43":"Кировская область",
+    "44":"Костромская область",
+    "45":"Курганская область",
+    "46":"Курская область",
+    "47":"Ленинградская область",
+    "48":"Липецкая область",
+    "49":"Магаданская область",
+    "50":"Московская область",
+    "51":"Мурманская область",
+    "52":"Нижегородская область",
+    "53":"Новгородская область",
+    "54":"Новосибирская область",
+    "55":"Омская область",
+    "56":"Оренбургская область",
+    "57":"Орловская область",
+    "58":"Пензенская область",
+    "59":"Пермский край",
+    "60":"Псковская область",
+    "61":"Ростовская область",
+    "62":"Рязанская область",
+    "63":"Самарская область",
+    "64":"Саратовская область",
+    "65":"Сахалинская область",
+    "66":"Свердловская область",
+    "67":"Смоленская область",
+    "68":"Тамбовская область",
+    "69":"Тверская область",
+    "70":"Томская область",
+    "71":"Тульская область",
+    "72":"Тюменская область",
+    "73":"Ульяновская область",
+    "74":"Челябинская область",
+    "75":"Забайкальский край",
+    "76":"Ярославская область",
+    "77":"г. Москва",
+    "78":"Санкт-Петербург",
+    "79":"Еврейская автономная область",
+    "83":"Ненецкий автономный округ",
+    "86":"Ханты-Мансийский автономный округ - Югра",
+    "87":"Чукотский автономный округ",
+    "89":"Ямало-Ненецкий автономный округ",
+    "91":"Республика Крым",
+    "92":"Севастополь",
+    "99":"Иные территории, включая город и космодром Байконур"
+ };
+
+</script>
+</p>

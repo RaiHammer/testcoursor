@@ -1,0 +1,212 @@
+
+{%- assign show_submit = show_submit | default: true -%}
+
+{%- if hide_options -%}
+  {%- assign show_options = false -%}
+{%- else -%}
+  {%- assign show_options = true -%}
+{%- endif -%}
+
+{%- assign filter_active = false -%}
+
+
+{%- assign display_filter = false -%}
+{%- include "collection_filter_check" -%}
+{%- assign hide_class = display_filter | default: "hidden" | replace: 'true','' -%}
+
+						<form class="filter {{ filter_class }} collection-filter" action="{{ collection.url }}" method="get" data-filter="{{ filter_class }}" >
+              <div class="filter__items">
+                {%- assign filter_active = false -%}
+                {%- assign coll_min = collections[collection.handle].products_price_min | round: 0 -%}
+                {%- assign coll_max = collections[collection.handle].products_price_max | round: 0 -%}
+                {%- if price_max or price_min -%}
+                  {%- assign filter_active = true -%}
+                  {%- assign filters_active = true -%}
+                {%- endif -%}   
+
+                  <div class="filter__item filter__item__block">
+                    <div class="filter__label">{{ messages.label_price }}:</div>
+                        <div class="filter-section" data-filter-section="{{ filter_active }}">
+                          <div class="filter-items-wrapper" data-filter-section-items>
+                            <div class="range-slider-input row">
+                              <div class="col-xs-6">
+                                <input class="input-field input-range js-filter-trigger" name="price_min_visible" placeholder="21360" value="От 21360" data-range-from=""  disabled="">
+                              </div>
+                          
+                              <div class="col-xs-6">
+                                <input class="input-field input-range js-filter-trigger" name="price_max_visible" placeholder="215790" value="До 215790" data-range-to="" disabled="">
+                              </div>
+                            </div>
+                            <div class="filter-items">
+                              <div class="filter-item is-range-slider" data-filter-section-item>
+                                <div
+                                  data-min="{{ coll_min }}"
+                                  data-max="{{ coll_max }}"
+                                  data-from="{{ price_min }}"
+                                  data-to="{{ price_max }}"
+                                  data-range-slider="price">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  {%- if collection.properties.size > 1 -%}
+                    <div class="filter__item filter__item__group filter__item__block">
+                      {%assign _limit = 4%}
+                      {%- for property in collection.properties -%}
+                        {%- assign filter_active = false -%}
+
+                        {%- if property.is_numeric? -%}
+
+                          {%- assign min_val = property.characteristics.first.name | round: 0 -%}
+                          {%- assign max_val = property.characteristics.first.name | round: 0 -%}
+
+                          {%- for characteristic in property.characteristics -%}
+                            {%- assign val = characteristic.name | round: 0 -%}
+                            {%- if val < min_val -%}
+                              {%- assign min_val = val -%}
+                            {%- endif -%}
+
+                            {%- if val > max_val -%}
+                              {%- assign max_val = val -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                        {%- endif -%}
+
+                        {%- if property.current? or property.lt_value or property.gt_value -%}
+                          {%- assign filters_active = true -%}
+                          {%- assign filter_active = true -%}
+                        {%- endif -%}
+
+                        {%- unless property.is_numeric? -%}
+                          {% if property.characteristics.size == 1 and property.characteristics.first.title == 'Есть' %}
+                            <div class="filter__item__one">
+                              {%- for characteristic in property.characteristics -%}
+                                {%- assign is_checked = characteristic.current? | default: '' | replace: 'true', 'checked' -%}
+
+                                <div class="filter__group">
+                                  <input id="{{ characteristic.id }}" type="checkbox" value="{{ characteristic.id }}" {{ is_checked }} name="characteristics[]" class="filter__checkbox-input js-filter-trigger" >
+                                  <label for="{{ characteristic.id }}" class="filter__checkbox-label">{{ property.title }}</label>
+                                </div>
+                              {%- endfor -%}
+                            </div>
+                          {% endif %}
+                        {%- endunless -%}
+                      {%- endfor -%}
+                    </div> 
+                  {%- endif -%}
+                  {%- for property in collection.properties -%}
+                    {%- assign filter_active = false -%}
+
+                    {%- if property.is_numeric? -%}
+
+                      {%- assign min_val = property.characteristics.first.name | round: 0 -%}
+                      {%- assign max_val = property.characteristics.first.name | round: 0 -%}
+
+                      {%- for characteristic in property.characteristics -%}
+                        {%- assign val = characteristic.name | round: 0 -%}
+                        {%- if val < min_val -%}
+                          {%- assign min_val = val -%}
+                        {%- endif -%}
+
+                        {%- if val > max_val -%}
+                          {%- assign max_val = val -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+
+                    {%- if property.current? or property.lt_value or property.gt_value -%}
+                      {%- assign filters_active = true -%}
+                      {%- assign filter_active = true -%}
+                    {%- endif -%}
+
+                    {%- unless property.is_numeric? -%}
+                      {%- if property.characteristics.size > 1 -%}
+                        <div class="filter__item filter__item__block{%if forloop.index > _limit%} _hide{%endif%}">
+                          <div class="filter__label">{{ property.title }}:</div>
+                          {%- for characteristic in property.characteristics -%}
+                            {%- assign is_checked = characteristic.current? | default: '' | replace: 'true', 'checked' -%}
+
+                            <div class="filter__group">
+                              <input id="{{ characteristic.id }}" type="checkbox" value="{{ characteristic.id }}" {{ is_checked }} name="characteristics[]" class="filter__checkbox-input js-filter-trigger" >
+                              <label for="{{ characteristic.id }}" class="filter__checkbox-label">{{ characteristic.title }}</label>
+                            </div>
+                          {%- endfor -%}
+                          </div>
+                      {%- endif -%}
+                    {%- else -%}
+                      <div class="filter__item filter__item__block{%if forloop.index > _limit%} _hide{%endif%}">
+                        <div class="filter__label">{{ property.title }}:</div>
+                        <div class="filter__group">
+                          <div class="filter-item is-range-slider" data-filter-section-item>
+                            <div class="range-slider-input row">
+                              <div class="col-xs-6">
+                                <input class="input-field input-range js-filter-trigger" name="price_min_visible" placeholder="21360" value="От 21360" data-range-from=""  disabled="">
+                              </div>
+                          
+                              <div class="col-xs-6">
+                                <input class="input-field input-range js-filter-trigger" name="price_max_visible" placeholder="215790" value="До 215790" data-range-to="" disabled="">
+                              </div>
+                            </div>
+                            <div
+                              data-min="{{ min_val }}"
+                              data-max="{{ max_val }}"
+                              data-from="{{ property.gt_value }}"
+                              data-to="{{ property.lt_value }}"
+                              data-range-slider="{{ property.id }}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {%- endunless -%}
+                  {%- endfor -%}
+
+ 
+                  {%- if collection.properties.size > 4 -%}
+                      <a href="#" class="show-more button is-primary"><span class="button-text">Показать все фильтры</span></a>
+                  {%- endif -%}
+
+                {%- if show_options -%}
+                  {%- for option in collection.options -%}
+                    {%- assign filter_active = false -%}
+
+                    {%- for value in option.values -%}
+                      {%- if value.selected -%}
+                        {%- assign filters_active = true -%}
+                        {%- assign filter_active = true -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
+                                
+                    {%- assign is_checked = value.selected | default: '' | replace: 'true', 'checked' -%}
+                    <div class="filter__item filter__item__block">
+                      <div class="filter__label">Количество чашек:</div>
+                      {%- for value in option.values -%}
+                        <div class="filter__group">
+                          <input id="{{ option.id }}" name="options[{{ option.id }}][]" class="filter__checkbox-input js-filter-trigger" value="{{ value.id }}" type="checkbox" {{ is_checked }}>
+                          <label for="{{ option.id }}" class="filter__checkbox-label">{{ value.title }}</label>
+                        </div>
+                      {%- endfor -%}
+                    </div>
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+              <div class="filter__bottom">
+                <div class="filter__btns">
+                  <a href="{{ collection.url }}" class="filter__btn filter__btn--grey" data-filter-clear>СБРОСИТЬ</a>
+                  <a href="#" class="filter__btn filter__btn--grey filter__btn__close">ЗАКРЫТЬ</a>
+                </div>
+              </div>
+            </form>
+{%- assign heading = null -%}
+{%- assign show_submit = null -%}
+{%- assign filter_class = null -%}
+
+{%- assign show_options = null -%}
+{%- assign filter_active = null -%}
+
+{%- assign filters_active = null -%}
+
+{%- assign is_checked = null -%}

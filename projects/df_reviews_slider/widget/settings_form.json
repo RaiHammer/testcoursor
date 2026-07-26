@@ -1,0 +1,659 @@
+{
+  "Описание":[
+    { 
+      "label": "Универсальные режимы", 
+      "value": null, 
+      "type": "info", 
+      "text": "Слайдер, Режим фокуса,Бегущая строка, Сетка - универсальные режимы для любой страницы.", 
+      "general": true, 
+      "general_position": 1 
+    },
+    { 
+      "label": "Мансори", 
+      "value": null, 
+      "type": "info", 
+      "text": "Мансори - рекомендуется для страниц на основе блога, или иной с возможностью пагинации.", 
+      "general": true, 
+      "general_position": 1 
+    },
+    { 
+      "label": "Лента", 
+      "value": null, 
+      "type": "info", 
+      "text": "Лента - для сайдбара или только мобильной версии", 
+      "general": true, 
+      "general_position": 1 
+    }
+  ],
+  
+  "Контент": [
+    {
+      "group_name": "Контент",
+      "items": [
+        {
+          "name": "title",
+          "label": "Заголовок",
+          "value": "Отзывы покупателей",
+          "type": "text",
+          "general": true,
+          "help": "Заголовок над блоком отзывов. Оставьте пустым — заголовок не выводится."
+        },
+        {
+          "name": "title-align",
+          "label": "Выравнивание заголовка",
+          "value": "center",
+          "type": "select",
+          "enable_server_reload": true,
+          "options": [
+            ["Слева", "left"],
+            ["По центру", "center"]
+          ],
+          "help": "Горизонтальное выравнивание заголовка виджета."
+        },
+        {
+          "name": "cta-text",
+          "label": "Текст ссылки внизу",
+          "value": "Оставьте свой отзыв",
+          "type": "text",
+          "help": "Подпись кнопки или ссылки «Оставить отзыв»"
+        },
+        {
+          "name": "cta-url",
+          "label": "Ссылка «Оставить отзыв»",
+          "value": "/collection/all",
+          "type": "text",
+          "help": "URL, куда ведёт CTA."
+        },
+        {
+          "name": "hide_write_btn",
+          "label": "Скрыть кнопку «Оставить отзыв»",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true,
+          "help": "Скрывает кнопку открытия формы отзыва (.df-reviews__write-btn). CTA-ссылка внизу остаётся, если задана."
+        },
+        {
+          "name": "empty-message",
+          "label": "Сообщение, если слайды не сгенерированы",
+          "value": "Отзывы скоро появятся",
+          "type": "text",
+          "help": "Показывается, если нет отзывов InSales и не подключён Yandex-сниппет (CLI)."
+        },
+        {
+          "name": "product-empty-message",
+          "label": "Сообщение на странице товара без отзывов",
+          "value": "Пока нет отзывов на этот товар. Станьте первым — поделитесь впечатлениями!",
+          "type": "text",
+          "help": "На странице товара виджет показывает только отзывы этого товара. Если их нет — этот текст и кнопка «Оставить отзыв»."
+        }
+      ]
+    },
+    {
+      "group_name": "Фильтр отображения",
+      "items": [
+        {
+          "name": "min_rating",
+          "label": "Минимальный рейтинг",
+          "value": "0",
+          "type": "button-group",
+          "enable_server_reload": true,
+          "options": [
+            { "value": "0", "title": "Все", "icon": "mdi-star-outline" },
+            { "value": "4", "title": "4+", "icon": "mdi-star-half-full" },
+            { "value": "5", "title": "5", "icon": "mdi-star" }
+          ],
+          "help": "InSales — фильтр в Liquid при рендере. Яндекс — при генерации сниппета через CLI."
+        },
+        {
+          "name": "insales-shop-avatar",
+          "label": "Аватар для отзывов о магазине",
+          "value": null,
+          "type": "file",
+          "help": "Круглая заглушка для отзывов с /product/shop-reviews. Для отзывов о товарах в аватаре — инициалы автора; товар показывается отдельным блоком под рейтингом."
+        },
+        {
+          "name": "hide_insales",
+          "label": "Скрыть отзывы InSales",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true,
+          "help": "Не показывать отзывы из магазина. Останутся только Яндекс (если сниппет загружен)."
+        },
+        {
+          "name": "hide_yandex",
+          "label": "Скрыть отзывы Яндекс",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true,
+          "help": "Не показывать отзывы из danforge_reviews_yandex.liquid (генерируется CLI)."
+        },
+        {
+          "name": "hide_source",
+          "label": "Скрыть метку источника",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true,
+          "help": "Скрывает подпись «InSales» / «Яндекс» на карточке и в попапе."
+        },
+        {
+          "name": "hide_date",
+          "label": "Скрыть дату отзыва",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true,
+          "help": "Не выводить дату публикации на карточках и в модальном окне."
+        }
+      ]
+    }
+  ],
+  "Дизайн": [
+    {
+      "group_name": "Режим отображения",
+      "items": [
+        {
+          "name": "display_mode",
+          "label": "Макет виджета",
+          "value": "slider",
+          "type": "select",
+          "enable_server_reload": true,
+          "options": [
+            ["Слайдер", "slider"],
+            ["Мансори", "masonry"],
+            ["Сетка", "grid"],
+            ["Лента", "list"],
+            ["Режим фокуса", "spotlight"],
+            ["Бегущая строка", "marquee"]
+          ],
+          "help": "Способ показа отзывов. После смены дождитесь перезагрузки превью редактора."
+        }
+      ]
+    },
+    {
+      "group_name": "Лента",
+      "items": [
+        {
+          "class": "range",
+          "name": "list-limit",
+          "label": "Максимум отзывов в ленте",
+          "value": 10,
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Только режим «Лента»: общий лимит InSales + Яндекс. Лишние отзывы не показываются."
+        }
+      ]
+    },
+    {
+      "group_name": "Masonry и сетка",
+      "items": [
+        {
+          "class": "range",
+          "name": "insales-prefetch-limit",
+          "label": "Отзывов на странице (InSales)",
+          "value": 20,
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Только Masonry: количество отзывов с сайта для 1 прогрузки"
+        },
+        {
+          "class": "range",
+          "name": "page-size",
+          "label": "Отзывов на странице (Сетка / Лента)",
+          "value": 12,
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Сетка, Лента и клиентская подгрузка Яндекс"
+        },
+        {
+          "class": "range",
+          "name": "page-size-mobile",
+          "label": "Отзывов на странице — мобильный (Сетка / Лента)",
+          "value": 6,
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "То же для экранов до 639 px. В Masonry с серверной пагинацией InSales не применяется."
+        },
+        {
+          "class": "range",
+          "name": "layout-columns",
+          "label": "Количество колонок (десктоп)",
+          "value": 3,
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Число колонок на широком экране. Только Masonry и Сетка (не Лента)."
+        },
+        {
+          "class": "range",
+          "name": "layout-columns-tablet",
+          "label": "Колонки на планшете",
+          "value": 2,
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Колонки на экранах 640–991 px (Masonry и Сетка)."
+        },
+        {
+          "class": "range",
+          "name": "layout-columns-mobile",
+          "label": "Колонки на телефоне",
+          "value": 1,
+          "min": 1,
+          "max": 2,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Колонки на экранах до 639 px (Masonry и Сетка)."
+        },
+        {
+          "class": "range",
+          "name": "floating-offset",
+          "label": "Отступ плавающих кнопок сверху (rem)",
+          "value": 1.5,
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "type": "range",
+          "help": "Masonry и Сетка: sticky-позиция кнопок «Оставить отзыв», CTA и боковых вкладок. Увеличьте, если перекрывает липкая шапка."
+        }
+      ]
+    },
+    {
+      "group_name": "InSales: подгрузка",
+      "items": [
+        {
+          "name": "insales-ajax-url",
+          "label": "URL для AJAX-подгрузки (дополнительно)",
+          "value": "",
+          "type": "text",
+          "enable_server_reload": true,
+          "help": "Обычно не нужно заполнять. Пусто — авто: /blogs/shop-reviews на главной(или иное) и blog.url на странице отзывов. Не используйте /product/shop-reviews (404). Ручной URL — только для нестандартных путей."
+        }
+      ]
+    },
+    {
+      "group_name": "Бегущая строка (marquee)",
+      "items": [
+        {
+          "class": "range",
+          "name": "marquee-speed",
+          "label": "Длительность цикла (ПК)",
+          "value": 40,
+          "min": 15,
+          "max": 90,
+          "step": 5,
+          "unit": "с",
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Время одного полного прохода строки на десктопе (сек). Меньше — быстрее. На ПК при наведении строка останавливается."
+        },
+        {
+          "class": "range",
+          "name": "marquee-speed-mobile",
+          "label": "Длительность цикла (мобильный)",
+          "value": 55,
+          "min": 15,
+          "max": 90,
+          "step": 5,
+          "unit": "с",
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Длительность цикла на телефоне и планшете (сек)."
+        },
+        {
+          "class": "range",
+          "name": "marquee-limit",
+          "label": "Максимум отзывов в бегущей строке",
+          "value": 20,
+          "min": 2,
+          "max": 50,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Сколько карточек участвует в анимации. Только режим «Бегущая строка»."
+        }
+      ]
+    },
+    {
+      "group_name": "Вкладки по источнику",
+      "items": [
+        {
+          "name": "source-tabs",
+          "label": "Показать вкладки InSales / Яндекс",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true,
+          "help": "Переключатель источников. Счётчики отзывов на вкладках — только в режиме Masonry."
+        }
+      ]
+    },
+    {
+      "group_name": "Слайдер и Spotlight",
+      "items": [
+        {
+          "class": "range",
+          "name": "slider-limit",
+          "label": "Максимум отзывов в слайдере",
+          "value": 10,
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Общее число карточек в карусели. Только режим «Слайдер»."
+        },
+        {
+          "class": "range",
+          "name": "spotlight-limit",
+          "label": "Максимум отзывов в Spotlight",
+          "value": 5,
+          "min": 2,
+          "max": 20,
+          "step": 1,
+          "type": "range",
+          "enable_server_reload": true,
+          "help": "Сколько отзывов в очереди Режим фокуса (по одному на экран). Только Режим фокуса."
+        },
+        {
+          "class": "range",
+          "name": "slides-mobile",
+          "label": "Отзывов на экране (мобильный)",
+          "value": 1,
+          "min": 1,
+          "max": 2,
+          "step": 1,
+          "type": "range",
+          "help": "Слайдер: карточек одновременно на телефоне. Режим фокуса всегда показывает 1."
+        },
+        {
+          "class": "range",
+          "name": "slides-tablet",
+          "label": "Отзывов на экране (планшет)",
+          "value": 2,
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "type": "range",
+          "help": "Слайдер: карточек на экране 640–991 px. Режим фокуса — всегда 1."
+        },
+        {
+          "class": "range",
+          "name": "slides-per-view",
+          "label": "Отзывов на экране (десктоп)",
+          "value": 3,
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "type": "range",
+          "help": "Слайдер: видимых карточек на широком экране. Режим фокуса — 1."
+        },
+        {
+          "class": "range",
+          "name": "speed",
+          "label": "Скорость анимации",
+          "value": 400,
+          "min": 200,
+          "max": 5000,
+          "step": 50,
+          "unit": "мс",
+          "type": "range",
+          "help": "Длительность перехода между слайдами (мс). Слайдер и Режим фокуса."
+        },
+        {
+          "name": "autoplay",
+          "label": "Автопрокрутка",
+          "value": false,
+          "type": "checkbox",
+          "help": "Автоматически листать слайдер. Режим фокуса не использует автопрокрутку Swiper."
+        },
+        {
+          "class": "range",
+          "name": "autoplay-delay",
+          "label": "Задержка автопрокрутки",
+          "value": 5000,
+          "min": 2000,
+          "max": 15000,
+          "step": 500,
+          "unit": "мс",
+          "type": "range",
+          "help": "Пауза между автоматическими переключениями (мс). Работает при включённой автопрокрутке."
+        },
+        {
+          "name": "show-arrows",
+          "label": "Стрелки навигации",
+          "value": true,
+          "type": "checkbox",
+          "enable_server_reload": true,
+          "help": "Показать стрелки «назад / вперёд» в режиме Слайдер."
+        }
+      ]
+    },
+    {
+      "group_name": "Общее оформление",
+      "items": [
+        {
+          "class": "range",
+          "name": "text-lines",
+          "label": "Строк текста до «Читать полностью»",
+          "value": 5,
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "type": "range",
+          "help": "Сколько строк текста видно до кнопки «Читать полностью». Работает во всех режимах, включая «Мансори»."
+        },
+        {
+          "name": "review-text-align",
+          "label": "Выравнивание текста отзыва",
+          "value": "center",
+          "type": "select",
+          "options": [
+            ["Слева", "left"],
+            ["По центру", "center"],
+            ["Справа", "right"]
+          ],
+          "help": "text-align только для текста отзыва (.df-reviews__text). Не влияет на заголовок виджета."
+        },
+        {
+          "name": "hide_avatar",
+          "label": "Скрыть аватар",
+          "value": false,
+          "type": "checkbox",
+          "enable_server_reload": true,
+          "help": "Скрыть круглый аватар слева. Блок товара под рейтингом (InSales) скрывается вместе с аватаром."
+        },
+        {
+          "name": "accent-color",
+          "label": "Цвет акцента (звёзды, точки)",
+          "value": "#f5a623",
+          "type": "color",
+          "help": "Цвет звёзд рейтинга, акцентных элементов и placeholder-аватара."
+        }
+      ]
+    },
+    {
+      "group_name": "Блок товара (InSales)",
+      "items": [
+        {
+          "name": "product-thumb-ratio",
+          "label": "Пропорции миниатюры товара",
+          "value": "1/1",
+          "type": "select",
+          "options": [
+            ["Квадрат 1:1", "1/1"],
+            ["Портрет 3:4", "3/4"],
+            ["Портрет 2:3", "2/3"],
+            ["Альбом 4:3", "4/3"],
+            ["Широкий 16:9", "16/9"],
+            ["Как на сайте (auto)", "auto"]
+          ],
+          "help": "Соотношение сторон фото товара в блоке под рейтингом."
+        },
+        {
+          "name": "product-bg-color",
+          "label": "Фон блока товара",
+          "value": "rgba(0,0,0,0.04)",
+          "type": "color",
+          "help": "Фон ссылки .df-reviews__product под рейтингом."
+        },
+        {
+          "name": "product-text-color",
+          "label": "Цвет текста блока товара",
+          "value": "#333333",
+          "type": "color",
+          "help": "Цвет названия товара в блоке .df-reviews__product."
+        }
+      ]
+    },
+    {
+      "group_name": "Schema.org",
+      "items": [
+        {
+          "name": "schema-markup",
+          "label": "Микроразметка Schema.org Review",
+          "value": true,
+          "type": "checkbox",
+          "help": "JSON-LD / itemprop разметка для поисковиков. Рекомендуется оставить включённой."
+        }
+      ]
+    },
+    {
+      "group_name": "Фон",
+      "items": [
+        {
+          "name": "bg",
+          "label": "Цвет фона виджета",
+          "value": "",
+          "type": "color",
+          "clearable": true,
+          "help": "Заливка фона блока отзывов. Пусто — прозрачный / фон темы."
+        },
+        {
+          "class": "checkbox",
+          "name": "layout-wide-bg",
+          "label": "Фон на всю ширину",
+          "value": null,
+          "type": "checkbox",
+          "help": "Растянуть цвет фона на всю ширину экрана, а не только контентную колонку."
+        }
+      ]
+    },
+    {
+      "group_name": "Отступы",
+      "items": [
+        {
+          "class": "range",
+          "name": "layout-mt",
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "label": "Внешний отступ сверху",
+          "type": "range",
+          "unit": "vw",
+          "help": "Расстояние от предыдущего блока страницы до виджета (vw)."
+        },
+        {
+          "class": "range",
+          "name": "layout-mb",
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "label": "Внешний отступ снизу",
+          "type": "range",
+          "unit": "vw",
+          "help": "Расстояние от виджета до следующего блока (vw)."
+        },
+        {
+          "class": "range",
+          "name": "layout-pt",
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "label": "Внутренний отступ сверху",
+          "type": "range",
+          "unit": "vw",
+          "help": "Внутренний padding сверху внутри виджета (vw)."
+        },
+        {
+          "class": "range",
+          "name": "layout-pb",
+          "min": 0,
+          "max": 10,
+          "step": 0.5,
+          "label": "Внутренний отступ снизу",
+          "type": "range",
+          "unit": "vw",
+          "help": "Внутренний padding снизу внутри виджета (vw)."
+        }
+      ]
+    },
+    {
+      "group_name": "Ширина контента",
+      "items": [
+        {
+          "class": "range",
+          "name": "layout-content-max-width",
+          "min": 980,
+          "max": 2000,
+          "step": 2,
+          "label": "Максимальная ширина контента",
+          "type": "range",
+          "unit": "px",
+          "help": "Ограничение ширины контентной колонки виджета в пикселях."
+        },
+        {
+          "class": "checkbox",
+          "name": "layout-wide-content",
+          "label": "Контент на всю ширину",
+          "value": null,
+          "type": "checkbox",
+          "help": "Игнорировать max-width и растянуть контент на доступную ширину."
+        },
+        {
+          "class": "checkbox",
+          "name": "layout-edge",
+          "label": "Убрать отступы по краям",
+          "value": null,
+          "type": "checkbox",
+          "help": "Убрать боковые отступы контейнера виджета (edge-to-edge)."
+        }
+      ]
+    },
+    {
+      "group_name": "Адаптив",
+      "items": [
+        {
+          "class": "checkbox",
+          "name": "hide-desktop",
+          "label": "Скрыть на десктопе",
+          "value": null,
+          "type": "checkbox",
+          "help": "Не показывать виджет на экранах шире 991 px."
+        },
+        {
+          "class": "checkbox",
+          "name": "hide-mobile",
+          "label": "Скрыть на мобильном",
+          "value": null,
+          "type": "checkbox",
+          "help": "Не показывать виджет на экранах до 639 px."
+        }
+      ]
+    }
+  ]
+}

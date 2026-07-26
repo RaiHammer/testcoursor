@@ -1,0 +1,227 @@
+{
+  "Основные": [
+    {
+      "group_name": "Основные",
+      "items": [
+        {
+          "name": "enabled",
+          "label": "Включить быстрый поиск",
+          "value": true,
+          "type": "checkbox",
+          "general": true,
+          "enable_server_reload": true
+        },
+        {
+          "name": "placeholder",
+          "label": "Подсказка в поле поиска",
+          "value": "Поиск по каталогу",
+          "type": "text",
+          "general": true
+        },
+        {
+          "name": "popular_queries",
+          "label": "Популярные запросы",
+          "value": "",
+          "type": "text",
+          "general": true,
+          "help": "Через запятую. Показываются при пустом поле поиска рядом с недавними."
+        },
+        {
+          "name": "trigger_selectors",
+          "label": "Селекторы открытия поиска",
+          "value": ".header__search, .header__search-form, .header__search-field, .header__search-btn, .js-open-search-panel, .js-show-search",
+          "type": "text",
+          "general": true,
+          "help": "CSS-селекторы через запятую. По клику откроется полноэкранный поиск. Для armedf.ru: .header__search, .header__search-form, .header__search-field, .header__search-btn, .js-open-search-panel, .js-show-search"
+        },
+        {
+          "name": "show_photos",
+          "label": "Показывать фото товаров",
+          "value": true,
+          "type": "checkbox",
+          "general": true
+        },
+        {
+          "name": "hover_second_image",
+          "label": "Второе фото при наведении",
+          "value": true,
+          "type": "checkbox",
+          "general": true,
+          "help": "На десктопе при наведении на карточку плавно показывается второе фото товара (если есть). Только при включённых фото."
+        },
+        {
+          "name": "show_out_of_stock_badge",
+          "label": "Показывать «Нет в наличии» на карточке",
+          "value": true,
+          "type": "checkbox",
+          "general": true,
+          "help": "Бейдж поверх фото товара, если все варианты недоступны. Работает только при включённых фото."
+        },
+        {
+          "name": "show_prices",
+          "label": "Показывать цены товаров",
+          "value": true,
+          "type": "checkbox",
+          "general": true
+        },
+        {
+          "name": "show_product_sort",
+          "label": "Сортировка товаров в выдаче",
+          "value": true,
+          "type": "checkbox",
+          "general": true,
+          "help": "По цене и популярности (если API отдаёт popularity). По умолчанию — порядок поиска. Сортируется только уже загруженный список."
+        },
+        {
+          "name": "show_all_results",
+          "label": "Ссылка «Все результаты»",
+          "value": true,
+          "type": "checkbox",
+          "general": true,
+          "help": "Кнопка-ссылка под сеткой товаров на страницу /search?q=…"
+        },
+        {
+          "name": "show_categories",
+          "label": "Показывать категории",
+          "value": true,
+          "type": "checkbox",
+          "general": true
+        },
+        {
+          "name": "show_articles",
+          "label": "Показывать статьи блога в результатах",
+          "value": false,
+          "type": "checkbox",
+          "general": true,
+          "enable_server_reload": true,
+          "help": "Поиск по заголовку, тегам и связанным товарам. Индекс — все статьи указанных блогов (indexed Liquid). Серверный cache по articles.size + locale."
+        },
+        {
+          "name": "articles_lazy_load",
+          "label": "Отложенная загрузка индекса статей",
+          "value": true,
+          "type": "checkbox",
+          "general": true,
+          "help": "JSON в HTML парсится при первом открытии/поиске; дальше localStorage 24ч. Серверный Liquid cache отдельно снижает нагрузку на render."
+        },
+        {
+          "name": "article_blog_handles",
+          "label": "Handles блогов для поиска статей",
+          "value": "blog",
+          "type": "text",
+          "general": true,
+          "help": "Через запятую, например: blog, shop-reviews. Работает только при включённом «Показывать статьи»."
+        },
+        {
+          "class": "number",
+          "name": "articles_display_limit",
+          "label": "Статей в первой порции",
+          "value": 8,
+          "type": "number",
+          "min": 1,
+          "max": 100,
+          "general": true,
+          "help": "Сколько статей показывать сразу (sidebar и вкладка «Статьи»); остальные — по кнопке «Показать ещё»."
+        },
+        {
+          "name": "articles_blog_url",
+          "label": "Ссылка на страницу блога",
+          "value": "/blog",
+          "type": "text",
+          "general": true,
+          "help": "Когда локальный индекс статей исчерпан — кнопка «Все статьи →». По умолчанию /blog; можно указать другой путь, например /articles."
+        },
+        {
+          "name": "hide_zero_price",
+          "label": "Не показывать товары с нулевой ценой",
+          "value": false,
+          "type": "checkbox",
+          "general": true
+        },
+        {
+          "class": "number",
+          "name": "results_limit",
+          "label": "Количество товаров в выдаче",
+          "value": 24,
+          "type": "number",
+          "min": 1,
+          "max": 200,
+          "general": true,
+          "help": "Первая порция и шаг «Показать ещё». API /search_suggestions обычно отдаёт ~10–12 позиций; при нехватке виджет дополняет из /search.json."
+        },
+        {
+          "name": "image_ratio",
+          "label": "Формат фото товаров",
+          "value": "square",
+          "type": "select",
+          "general": true,
+          "options": [
+            [
+              "Квадрат (1:1)",
+              "square"
+            ],
+            [
+              "Портрет (2:3)",
+              "portrait"
+            ],
+            [
+              "Портрет (3:4)",
+              "portrait-34"
+            ],
+            [
+              "Пейзаж (4:3)",
+              "landscape"
+            ],
+            [
+              "Оригинальный",
+              "natural"
+            ]
+          ]
+        },
+        {
+          "name": "cols_mobile",
+          "label": "Товаров в ряд (мобильные, до 767px)",
+          "value": "2",
+          "type": "select",
+          "general": true,
+          "options": [
+            ["2", "2"],
+            ["3", "3"],
+            ["4", "4"],
+            ["5", "5"],
+            ["6", "6"]
+          ]
+        },
+        {
+          "name": "cols_tablet",
+          "label": "Товаров в ряд (планшет, 768–1199px)",
+          "value": "3",
+          "type": "select",
+          "general": true,
+          "options": [
+            ["2", "2"],
+            ["3", "3"],
+            ["4", "4"],
+            ["5", "5"],
+            ["6", "6"]
+          ]
+        },
+        {
+          "name": "cols_desktop",
+          "label": "Товаров в ряд (десктоп, от 1200px)",
+          "value": "4",
+          "type": "select",
+          "general": true,
+          "options": [
+            ["2", "2"],
+            ["3", "3"],
+            ["4", "4"],
+            ["5", "5"],
+            ["6", "6"]
+          ],
+          "help": "На ultra-wide сетка ограничена max-width, чтобы карточки не раздувались."
+        }
+      ]
+    }
+  ]
+}

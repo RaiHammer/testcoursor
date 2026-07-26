@@ -1,0 +1,22 @@
+{% if blog.tags.size > 0 %}
+  <div class="tags-cloud-wrapper">
+    <ul class="tags-cloud">
+      {% for tag in blog.tags %}
+        {% assign is_current = null %}
+        {% assign link_size = tag.articles_count | divided_by: 5 | round: 0 %}
+
+        {% assign is_current = tag.current? | default: '' | replace: 'true', 'is-current' %}
+
+        <li class="tag {{ is_current }}">
+          <a href="{{ tag.url }}" title="{{ tag.title }}" class="tag-link">
+          <span href="{{ tag.url }}"  class="tag-text ">
+            {{ tag.title }}
+        </span>  <span class="tag-count">{{ tag.articles_count }}</span></a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+{% assign is_current = null %}
+{% assign link_size = null %}
