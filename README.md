@@ -44,6 +44,10 @@ artifacts/          — результаты работы по задачам
 projects/           — кодовые проекты
 ```
 
+
+## Работа с другого ПК
+
+Инструкция: clone private repo + новый чат Cursor — [docs/work-from-laptop.md](docs/work-from-laptop.md).
 ## Особенности danforge.ru
 
 Сайт на **Tilda** — код недоступен. Команда работает в режиме «анализ → рекомендации → ручное внесение в Tilda».
