@@ -5,6 +5,7 @@
   "df_qs_trigger_selectors": ".header__search, .header__search-form, .header__search-field, .header__search-btn, .js-open-search-panel, .js-show-search, .header_search, .header_search form, #header-search, .header_search button",
   "df_qs_show_photos": "1",
   "df_qs_hover_second_image": "1",
+  "df_qs_product_photo_slider": "0",
   "df_qs_show_out_of_stock_badge": "1",
   "df_qs_show_prices": "1",
   "df_qs_show_product_sort": "1",
@@ -18,5 +19,10 @@
   "df_qs_image_ratio": "square",
   "df_qs_cols_mobile": "2",
   "df_qs_cols_tablet": "3",
-  "df_qs_cols_desktop": "4"
+  "df_qs_cols_desktop": "4",
+  "df_qs_panel_bg_color": "#ffffff",
+  "df_qs_text_color": "#111111",
+  "df_qs_card_bg_color": "#f5f5f5",
+  "df_qs_scrollbar_color": "#b0b0b0",
+  "df_qs_input_font_size": "0"
 }

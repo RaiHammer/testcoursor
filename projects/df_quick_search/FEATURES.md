@@ -32,7 +32,8 @@
 - Skeleton / placeholder на фото; body scroll lock (iOS-safe)
 - Подсветка запроса `<mark>` в заголовках
 - Appear-анимация карточек товаров / статей / категорий (CSS; уважает reduced-motion)
-- Desktop hover: второе фото товара (если есть в `images[]` после enrich; настройка `hover_second_image`)
+- `hover_second_image` (on): crossfade 2-го фото на ПК при hover
+- `product_photo_slider` (off): до 4 фото, зоны/свайп; перебивает crossfade. Оба off → 1 фото
 - Zero-results: ссылка на `/search`; категории-подсказки; текст «Ничего не найдено…» **скрыт**, если есть категории
 - «Показать ещё» — «N из M», incremental append, preserve scroll
 - Padding перед scrollbar на desktop scroll-колонках

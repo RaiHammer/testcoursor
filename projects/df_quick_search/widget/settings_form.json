@@ -47,7 +47,15 @@
           "value": true,
           "type": "checkbox",
           "general": true,
-          "help": "На десктопе при наведении на карточку плавно показывается второе фото товара (если есть). Только при включённых фото."
+          "help": "На ПК при наведении — плавный crossfade на 2-е фото. Выключите (и слайдер) — только 1-е фото."
+        },
+        {
+          "name": "product_photo_slider",
+          "label": "Слайдер фото (до 4)",
+          "value": false,
+          "type": "checkbox",
+          "general": true,
+          "help": "Вкл. → до 4 фото: зоны наведения на ПК, свайп на телефоне. Перебивает crossfade 2-го фото."
         },
         {
           "name": "show_out_of_stock_badge",
@@ -220,6 +228,54 @@
             ["6", "6"]
           ],
           "help": "На ultra-wide сетка ограничена max-width, чтобы карточки не раздувались."
+        }
+      ]
+    }
+  ],
+  "Оформление": [
+    {
+      "group_name": "Оформление",
+      "items": [
+        {
+          "name": "panel_bg_color",
+          "label": "Фон панели поиска",
+          "value": "#ffffff",
+          "type": "color",
+          "general": true
+        },
+        {
+          "name": "text_color",
+          "label": "Цвет текста",
+          "value": "#111111",
+          "type": "color",
+          "general": true
+        },
+        {
+          "name": "card_bg_color",
+          "label": "Фон карточек (товары, категории, статьи)",
+          "value": "#f5f5f5",
+          "type": "color",
+          "general": true,
+          "help": "Фон чипов категорий, карточек товаров и строк статей."
+        },
+        {
+          "name": "scrollbar_color",
+          "label": "Цвет полосы прокрутки",
+          "value": "#b0b0b0",
+          "type": "color",
+          "general": true,
+          "help": "Одинаковый тонкий скроллбар на Mac, Windows и мобильных."
+        },
+        {
+          "class": "number",
+          "name": "input_font_size",
+          "label": "Размер текста в поле поиска (px)",
+          "value": 0,
+          "type": "number",
+          "min": 0,
+          "max": 120,
+          "general": true,
+          "help": "0 — автоматически (адаптивно). Иначе фиксированный размер в пикселях."
         }
       ]
     }

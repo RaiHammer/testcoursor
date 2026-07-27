@@ -40,9 +40,16 @@
     <tr>
       <td>
         <label for="df_qs_hover_second_image">Второе фото при наведении</label>
-        <br /><small>На десктопе при hover — второе фото товара (если есть). Только при включённых фото. По умолчанию вкл.</small>
+        <br /><small>На ПК — crossfade на 2-е фото при hover. Выключите (и слайдер) — только 1-е фото.</small>
       </td>
       <td><input name="df_qs_hover_second_image" id="df_qs_hover_second_image" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_product_photo_slider">Слайдер фото (до 4)</label>
+        <br /><small>Вкл. → до 4 фото: зоны на ПК, свайп на телефоне. Перебивает crossfade 2-го фото.</small>
+      </td>
+      <td><input name="df_qs_product_photo_slider" id="df_qs_product_photo_slider" type="checkbox" /></td>
     </tr>
     <tr>
       <td>
@@ -171,6 +178,40 @@
         <br /><small>Кнопка «Все статьи →». По умолчанию /blog.</small>
       </td>
       <td><input name="df_qs_articles_blog_url" id="df_qs_articles_blog_url" type="text" /></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <h2>Оформление</h2>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_panel_bg_color">Фон панели поиска</label></td>
+      <td><input name="df_qs_panel_bg_color" id="df_qs_panel_bg_color" type="color" value="#ffffff" /></td>
+    </tr>
+    <tr>
+      <td><label for="df_qs_text_color">Цвет текста</label></td>
+      <td><input name="df_qs_text_color" id="df_qs_text_color" type="color" value="#111111" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_card_bg_color">Фон карточек</label>
+        <br /><small>Товары, категории, статьи.</small>
+      </td>
+      <td><input name="df_qs_card_bg_color" id="df_qs_card_bg_color" type="color" value="#f5f5f5" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_scrollbar_color">Цвет полосы прокрутки</label>
+        <br /><small>Одинаковый тонкий скроллбар на всех платформах.</small>
+      </td>
+      <td><input name="df_qs_scrollbar_color" id="df_qs_scrollbar_color" type="color" value="#b0b0b0" /></td>
+    </tr>
+    <tr>
+      <td>
+        <label for="df_qs_input_font_size">Размер текста в поле поиска (px)</label>
+        <br /><small>0 — автоматически (адаптивно).</small>
+      </td>
+      <td><input name="df_qs_input_font_size" id="df_qs_input_font_size" type="number" min="0" max="120" value="0" /></td>
     </tr>
   </table>
 </fieldset>

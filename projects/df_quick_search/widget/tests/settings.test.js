@@ -176,10 +176,24 @@ function shouldKeepStorefrontProduct(product, options) {
   return true;
 }
 
-function urlFromImageObject(image) {
+function urlFromImageObject(image, options) {
+  options = options || {};
   if (!image) return '';
   if (typeof image === 'string') return image;
   if (typeof image !== 'object') return '';
+  if (options.preferPreview !== false) {
+    return (
+      image.compact_url ||
+      image.medium_url ||
+      image.thumb_url ||
+      image.small_url ||
+      image.large_url ||
+      image.url ||
+      image.original_url ||
+      image.src ||
+      ''
+    );
+  }
   return (
     image.large_url ||
     image.compact_url ||
@@ -231,9 +245,49 @@ function getProductSecondImageUrl(product) {
   return urlFromImageObject(pickProductSecondImage(product));
 }
 
-function productImageWrapClass(imageSrc, secondImageSrc) {
+function resolveProductPhotoLimit(options) {
+  options = options || {};
+  if (options.photoSlider === true) return 4;
+  if (options.hoverSecondImage !== false) return 2;
+  return 1;
+}
+
+function getHoverZoneSlideIndex(clientX, rect, count) {
+  if (!rect || !rect.width || count < 2) return 0;
+  var ratio = (clientX - rect.left) / rect.width;
+  if (ratio < 0) ratio = 0;
+  if (ratio > 1) ratio = 1;
+  var index = Math.floor(ratio * count);
+  if (index >= count) index = count - 1;
+  return index;
+}
+
+function collectProductImageUrls(product, maxCount) {
+  if (!product || maxCount < 1) return [];
+  var urls = [];
+  var seen = Object.create(null);
+  function pushCandidate(image) {
+    if (urls.length >= maxCount) return;
+    var url = urlFromImageObject(image, { preferPreview: true });
+    if (!url || seen[url]) return;
+    seen[url] = true;
+    urls.push(url);
+  }
+  if (product.first_image) pushCandidate(product.first_image);
+  if (Array.isArray(product.images)) {
+    for (var i = 0; i < product.images.length; i += 1) {
+      pushCandidate(product.images[i]);
+    }
+  }
+  if (product.image) pushCandidate(product.image);
+  if (product.image_url) pushCandidate({ url: product.image_url });
+  return urls;
+}
+
+function productImageWrapClass(imageSrc, secondImageSrc, extraClass) {
   var cls = imageSrc ? 'is-skeleton' : 'is-placeholder';
   if (secondImageSrc) cls += ' has-hover-image';
+  if (extraClass) cls += ' ' + extraClass;
   return cls;
 }
 
@@ -505,12 +559,52 @@ assert.strictEqual(
 // v0.0.25 — images / skeleton class
 assert.strictEqual(getProductImageUrl({ first_image: { large_url: 'https://cdn/a.jpg' } }), 'https://cdn/a.jpg');
 assert.strictEqual(
+  getProductImageUrl({
+    first_image: { large_url: 'https://cdn/large.jpg', compact_url: 'https://cdn/compact.jpg' },
+  }),
+  'https://cdn/compact.jpg',
+  'preview size preferred over large'
+);
+assert.strictEqual(
   getProductImageUrl({ first_image: {}, images: [{ medium_url: 'https://cdn/b.jpg' }] }),
   'https://cdn/b.jpg'
 );
 assert.strictEqual(getProductImageUrl({}), '');
 assert.strictEqual(productImageWrapClass(''), 'is-placeholder');
 assert.strictEqual(productImageWrapClass('https://cdn/a.jpg'), 'is-skeleton');
+
+// v1.2.0 — slider photo collection + max limit
+assert.deepStrictEqual(
+  collectProductImageUrls(
+    {
+      images: [
+        { compact_url: 'https://cdn/1.jpg' },
+        { compact_url: 'https://cdn/2.jpg' },
+        { compact_url: 'https://cdn/3.jpg' },
+        { compact_url: 'https://cdn/4.jpg' },
+        { compact_url: 'https://cdn/5.jpg' },
+      ],
+    },
+    4
+  ),
+  [
+    'https://cdn/1.jpg',
+    'https://cdn/2.jpg',
+    'https://cdn/3.jpg',
+    'https://cdn/4.jpg',
+  ],
+  'max 4 unique preview URLs'
+);
+assert.strictEqual(resolveProductPhotoLimit({ photoSlider: false, hoverSecondImage: true }), 2);
+assert.strictEqual(resolveProductPhotoLimit({ photoSlider: true }), 4);
+assert.strictEqual(resolveProductPhotoLimit({ photoSlider: false, hoverSecondImage: false }), 1);
+assert.strictEqual(getHoverZoneSlideIndex(0, { left: 0, width: 200 }, 2), 0);
+assert.strictEqual(getHoverZoneSlideIndex(199, { left: 0, width: 200 }, 2), 1);
+assert.strictEqual(getHoverZoneSlideIndex(50, { left: 0, width: 200 }, 4), 1);
+assert.strictEqual(
+  productImageWrapClass('https://cdn/a.jpg', '', 'has-slider'),
+  'is-skeleton has-slider'
+);
 
 // v1.0.10 — second image for desktop hover
 assert.strictEqual(
@@ -805,5 +899,15 @@ assert.strictEqual(
   true,
   'ids without map — still show empty-message'
 );
+
+function parseInputFontSize(value) {
+  var num = parsePositiveInt(value, 0, 0, 120);
+  return num;
+}
+
+assert.strictEqual(parseInputFontSize(0), 0);
+assert.strictEqual(parseInputFontSize('48'), 48);
+assert.strictEqual(parseInputFontSize(200), 120);
+assert.strictEqual(parseInputFontSize(-5), 0);
 
 console.log('settings.test.js: all checks passed');

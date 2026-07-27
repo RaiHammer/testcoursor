@@ -37,6 +37,10 @@
 {% if settings.df_qs_hover_second_image == '0' or settings.df_qs_hover_second_image == false or settings.df_qs_hover_second_image == 'false' %}
   {% assign hover_second_image = 'false' %}
 {% endif %}
+{% assign product_photo_slider = 'false' %}
+{% if settings.df_qs_product_photo_slider == '1' or settings.df_qs_product_photo_slider == true or settings.df_qs_product_photo_slider == 'true' %}
+  {% assign product_photo_slider = 'true' %}
+{% endif %}
 {% if settings.df_qs_show_prices == '1' %}{% assign show_prices = 'true' %}{% else %}{% assign show_prices = 'false' %}{% endif %}
 {% if settings.df_qs_show_product_sort == '1' %}{% assign show_product_sort = 'true' %}{% else %}{% assign show_product_sort = 'false' %}{% endif %}
 {% if settings.df_qs_show_all_results == '1' %}{% assign show_all_results = 'true' %}{% else %}{% assign show_all_results = 'false' %}{% endif %}
@@ -80,6 +84,19 @@
   {% assign cols_desktop = '4' %}
 {% endunless %}
 
+{% assign panel_bg_color = settings.df_qs_panel_bg_color | default: '#ffffff' | append: '' | strip %}
+{% if panel_bg_color == '' %}{% assign panel_bg_color = '#ffffff' %}{% endif %}
+{% assign text_color = settings.df_qs_text_color | default: '#111111' | append: '' | strip %}
+{% if text_color == '' %}{% assign text_color = '#111111' %}{% endif %}
+{% assign card_bg_color = settings.df_qs_card_bg_color | default: '#f5f5f5' | append: '' | strip %}
+{% if card_bg_color == '' %}{% assign card_bg_color = '#f5f5f5' %}{% endif %}
+{% assign scrollbar_color = settings.df_qs_scrollbar_color | default: '#b0b0b0' | append: '' | strip %}
+{% if scrollbar_color == '' %}{% assign scrollbar_color = '#b0b0b0' %}{% endif %}
+{% assign input_font_size = settings.df_qs_input_font_size | default: 0 | plus: 0 %}
+{% if input_font_size < 0 or input_font_size > 120 %}
+  {% assign input_font_size = 0 %}
+{% endif %}
+
 {% assign articles_server_total = 0 %}
 {% assign df_qs_articles_cache_key = 'df_qs_articles' %}
 {% if show_articles == 'true' and article_blog_handles != '' %}
@@ -107,6 +124,7 @@
   data-enabled="{{ enabled }}"
   data-show-photos="{{ show_photos }}"
   data-hover-second-image="{{ hover_second_image }}"
+  data-product-photo-slider="{{ product_photo_slider }}"
   data-show-prices="{{ show_prices }}"
   data-show-product-sort="{{ show_product_sort }}"
   data-show-all-results="{{ show_all_results }}"
@@ -125,7 +143,7 @@
   data-cols-mobile="{{ cols_mobile }}"
   data-cols-tablet="{{ cols_tablet }}"
   data-cols-desktop="{{ cols_desktop }}"
-  style="--df-qs-cols-mobile: {{ cols_mobile }}; --df-qs-cols-tablet: {{ cols_tablet }}; --df-qs-cols-desktop: {{ cols_desktop }};"
+  style="--df-qs-cols-mobile: {{ cols_mobile }}; --df-qs-cols-tablet: {{ cols_tablet }}; --df-qs-cols-desktop: {{ cols_desktop }}; --df-qs-panel-bg: {{ panel_bg_color }}; --df-qs-text: {{ text_color }}; --df-qs-text-muted: color-mix(in srgb, {{ text_color }} 58%, transparent); --df-qs-card-bg: {{ card_bg_color }}; --df-qs-scrollbar-thumb: {{ scrollbar_color }}; --df-qs-scrollbar-track: color-mix(in srgb, {{ scrollbar_color }} 22%, transparent);{% if input_font_size > 0 %} --df-qs-input-font-size: {{ input_font_size }}px;{% endif %}"
 >
   <script type="application/json" data-df-quick-search-collections>
     [{% for link in collections.root_category.flatten_branch %}{% unless forloop.first %},{% endunless %}{"id":{{ link.id }},"title":{{ link.title | json }},"url":"{{ link.url }}","level":{{ link.level }}}{% endfor %}]
@@ -184,11 +202,11 @@
       right: 1rem !important;
       height: 90svh !important;
       z-index: 2147483646 !important;
-      background: var(--bg, #fff) !important;
+      background: var(--df-qs-panel-bg, var(--bg, #fff)) !important;
       border-radius: 6px;
       flex-direction: column;
       overflow: hidden;
-      color: var(--color-text, #111);
+      color: var(--df-qs-text, var(--color-text, #111));
     }
 
     .df-quick-search__panel.is-open {
@@ -232,8 +250,8 @@
       width: 100%;
       height: 100px;
       border: none;
-      border-top: 1px solid #eee;
-      font-size: clamp(2rem, 6vw, 5rem);
+      border-top: 1px solid color-mix(in srgb, var(--df-qs-text, #111) 12%, transparent);
+      font-size: var(--df-qs-input-font-size, clamp(2rem, 6vw, 5rem));
       font-style: italic;
       font-weight: 300;
       background: transparent;
@@ -243,7 +261,7 @@
     }
 
     .df-quick-search__input::placeholder {
-      color: var(--color-text-half-shade, #999);
+      color: var(--df-qs-text-muted, var(--color-text-half-shade, #999));
     }
 
     .df-quick-search__recent,

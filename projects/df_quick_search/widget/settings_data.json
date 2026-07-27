@@ -5,6 +5,7 @@
   "trigger_selectors": ".header__search, .header__search-form, .header__search-field, .header__search-btn, .js-open-search-panel, .js-show-search",
   "show_photos": true,
   "hover_second_image": true,
+  "product_photo_slider": false,
   "show_out_of_stock_badge": true,
   "show_prices": true,
   "show_product_sort": true,
@@ -20,5 +21,10 @@
   "image_ratio": "square",
   "cols_mobile": "2",
   "cols_tablet": "3",
-  "cols_desktop": "4"
+  "cols_desktop": "4",
+  "panel_bg_color": "#ffffff",
+  "text_color": "#111111",
+  "card_bg_color": "#f5f5f5",
+  "scrollbar_color": "#b0b0b0",
+  "input_font_size": 0
 }

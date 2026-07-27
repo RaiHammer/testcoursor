@@ -1,5 +1,25 @@
 # CHANGELOG — df_quick_search
 
+## v1.2.0 — слайдер фото + оптимизация превью (2026-07-27)
+
+- **Превью:** `urlFromImageObject` предпочитает `compact_url` → `medium_url` → `thumb_url` (меньше трафика в сетке поиска).
+- **Слайдер:** `hover_second_image` (on) → crossfade 2-го фото на ПК. `product_photo_slider` (off) → до 4 фото, зоны/свайп, перебивает crossfade. Оба off → 1 фото.
+- **UX:** точки-индикаторы; клик по карточке не срабатывает после свайпа.
+- **Re-upload:** `snippet.js`, `snippet.scss`, `snippet.liquid`, `settings_form.json`, `settings_data.json` (+ gen-2)
+
+## v1.1.5 — оформление + единый скроллбар (2026-07-27)
+
+- **Настройки:** фон панели, цвет текста, фон карточек, цвет скроллбара, размер текста в input (px; 0 = авто).
+- **CSS vars:** `--df-qs-panel-bg`, `--df-qs-text`, `--df-qs-card-bg`, `--df-qs-scrollbar-*`, `--df-qs-input-font-size`.
+- **Scrollbar:** единый тонкий 6px на Mac / Windows / Linux (WebKit + `scrollbar-width: thin`).
+- **Re-upload:** `settings_form.json`, `settings_data.json`, `snippet.liquid`, `snippet.scss` (+ gen-2 liquid, fieldset, keys, css)
+
+## v1.1.4 — visible minimal scrollbars on macOS (2026-07-27)
+
+- **UX:** тонкие видимые scrollbar (6px) для колонок товаров, категорий и статей на desktop split-layout; `scrollbar-gutter: stable`.
+- **Причина:** macOS overlay scrollbars скрыты по умолчанию — пользователь не видел, что список прокручивается.
+- **Re-upload:** `snippet.scss` (+ gen-2 `df_quick_search.scss` / `df_quick_search.css`)
+
 ## v1.1.3 — fix hover second image + toggle (2026-07-24)
 
 - **Root cause:** crossfade был за `@media (hover: hover) and (pointer: fine)`. На hybrid/touch ноутбуках primary input часто `hover: none` / `pointer: coarse` даже с мышью → правила hover не применялись, хотя разметка `has-hover-image` + `--hover` была верной. Дополнительно hover-слой имел `z-index: 0` под primary; appear с `animation-fill-mode: both` оставлял opacity/transform на карточке.
