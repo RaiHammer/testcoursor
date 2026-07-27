@@ -39,6 +39,7 @@ alwaysApply: true
 - Два Programmer параллельно на один `projects/*`
 - Правки Tilda (только рекомендации SEO/Designer)
 - Коммит/push без запроса владельца
+- **Commit message не на русском** — см. `knowledge/team/language-policy.md`
 
 ## Отвечать владельцу
 

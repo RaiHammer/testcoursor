@@ -41,6 +41,10 @@
 
 Памятка: [knowledge/owner-playbook.md](knowledge/owner-playbook.md) — как формулировать запросы, зоны ответственности, owner edit protocol.
 
+## Язык
+
+**Русский по умолчанию:** коммиты, PR, артефакты, CHANGELOG, ответы владельцу. Код и API-идентификаторы — English. См. [knowledge/team/language-policy.md](knowledge/team/language-policy.md) и `.cursor/rules/russian-language.mdc`.
+
 ## Skills (workflow)
 
 | Skill | Назначение |

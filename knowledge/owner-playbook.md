@@ -177,6 +177,7 @@ Jarvis запишет в `artifacts/{task-id}/00-owner-decisions.md`.
 - Вердикты **APPROVED** / **NEEDS_REVISION** на этапах review
 - Подпись роли в ответах: **Jarvis:**, **Analyst:** …
 - Эскалация, если блокер или стратегический выбор
+- **Коммиты и документация на русском** (см. [language-policy.md](team/language-policy.md))
 
 ## Чего не ждать
 
@@ -193,3 +194,4 @@ Jarvis запишет в `artifacts/{task-id}/00-owner-decisions.md`.
 - [AGENTS.md](../AGENTS.md) — роли
 - [docs/work-from-laptop.md](../docs/work-from-laptop.md) — работа с ноутбука
 - [knowledge/strategy/roadmap.md](strategy/roadmap.md) — текущий план
+- [knowledge/team/language-policy.md](team/language-policy.md) — русский язык в коммитах и артефактах

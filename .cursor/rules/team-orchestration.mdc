@@ -49,6 +49,10 @@ alwaysApply: true
 
 Ретроспективы: `artifacts/retrospectives/YYYY-MM-retro.md`
 
+## Язык
+
+Коммиты, PR, артефакты, CHANGELOG и ответы владельцу — **русский**. Код и API-идентификаторы — English. Правило: `.cursor/rules/russian-language.mdc`, памятка: `knowledge/team/language-policy.md`.
+
 ## Knowledge base
 
 Обновлять при стратегических сессиях и ретро:
