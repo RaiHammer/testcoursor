@@ -33,6 +33,10 @@
 
 {% if settings.df_qs_enabled == '1' %}{% assign enabled = 'true' %}{% else %}{% assign enabled = 'false' %}{% endif %}
 {% if settings.df_qs_show_photos == '1' %}{% assign show_photos = 'true' %}{% else %}{% assign show_photos = 'false' %}{% endif %}
+{% assign image_url_size = settings.df_qs_image_url_size | default: 'auto' | append: '' | strip | downcase %}
+{% unless image_url_size == 'compact' or image_url_size == 'medium' or image_url_size == 'thumb' or image_url_size == 'small' or image_url_size == 'large' %}
+  {% assign image_url_size = 'auto' %}
+{% endunless %}
 {% assign hover_second_image = 'true' %}
 {% if settings.df_qs_hover_second_image == '0' or settings.df_qs_hover_second_image == false or settings.df_qs_hover_second_image == 'false' %}
   {% assign hover_second_image = 'false' %}
@@ -123,6 +127,7 @@
   data-trigger-selectors="{{ trigger_selectors | escape }}"
   data-enabled="{{ enabled }}"
   data-show-photos="{{ show_photos }}"
+  data-image-url-size="{{ image_url_size }}"
   data-hover-second-image="{{ hover_second_image }}"
   data-product-photo-slider="{{ product_photo_slider }}"
   data-show-prices="{{ show_prices }}"

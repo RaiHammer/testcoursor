@@ -4,6 +4,7 @@
   "df_qs_popular_queries": "",
   "df_qs_trigger_selectors": ".header__search, .header__search-form, .header__search-field, .header__search-btn, .js-open-search-panel, .js-show-search, .header_search, .header_search form, #header-search, .header_search button",
   "df_qs_show_photos": "1",
+  "df_qs_image_url_size": "auto",
   "df_qs_hover_second_image": "1",
   "df_qs_product_photo_slider": "0",
   "df_qs_show_out_of_stock_badge": "1",

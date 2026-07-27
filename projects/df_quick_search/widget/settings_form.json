@@ -42,6 +42,22 @@
           "general": true
         },
         {
+          "name": "image_url_size",
+          "label": "Качество фото в поиске",
+          "value": "auto",
+          "type": "select",
+          "general": true,
+          "options": [
+            ["Авто (рекомендуется)", "auto"],
+            ["Компактное", "compact"],
+            ["Среднее", "medium"],
+            ["Миниатюра", "thumb"],
+            ["Маленькое", "small"],
+            ["Большое (макс.)", "large"]
+          ],
+          "help": "Какой размер URL брать из inSales. Авто — баланс скорости и чёткости для сетки поиска."
+        },
+        {
           "name": "hover_second_image",
           "label": "Второе фото при наведении",
           "value": true,

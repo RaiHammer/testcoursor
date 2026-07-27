@@ -38,6 +38,11 @@
   {% assign show_photos = 'false' %}
 {% endif %}
 
+{% assign image_url_size = widget_settings.image_url_size | default: 'auto' | append: '' | strip | downcase %}
+{% unless image_url_size == 'compact' or image_url_size == 'medium' or image_url_size == 'thumb' or image_url_size == 'small' or image_url_size == 'large' %}
+  {% assign image_url_size = 'auto' %}
+{% endunless %}
+
 {% assign hover_second_image = 'true' %}
 {% if widget_settings.hover_second_image == false or widget_settings.hover_second_image == 'false' %}
   {% assign hover_second_image = 'false' %}
@@ -159,6 +164,7 @@
   data-trigger-selectors="{{ trigger_selectors | escape }}"
   data-enabled="{{ enabled }}"
   data-show-photos="{{ show_photos }}"
+  data-image-url-size="{{ image_url_size }}"
   data-hover-second-image="{{ hover_second_image }}"
   data-product-photo-slider="{{ product_photo_slider }}"
   data-show-prices="{{ show_prices }}"

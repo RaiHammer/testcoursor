@@ -2,7 +2,7 @@
 
 **Handle:** `danforge_quick_search`  
 **Папка:** `projects/df_quick_search/`  
-**Версия:** v1.2.0  
+**Версия:** v1.2.1  
 **Статус:** stable / production-ready
 
 Полноэкранный быстрый поиск для интернет-магазинов inSales: live-выдача с фото, ценами, категориями, опционально статьями блога. Layout B (split desktop / tabs mobile), сортировка, раскладка RU↔EN, popular/recent queries. Совместим с платформенным AjaxSearch.
@@ -158,6 +158,7 @@
 | `popular_queries` | Популярные запросы | text | `""` | CSV через запятую; чипы при пустом поле рядом с недавними (max 12) |
 | `trigger_selectors` | Селекторы открытия поиска | text | `.header__search, …` | CSS через запятую |
 | `show_photos` | Показывать фото товаров | checkbox | `true` | Фото на карточках |
+| `image_url_size` | Качество фото в поиске | select | `auto` | auto / compact / medium / thumb / small / large |
 | `hover_second_image` | Второе фото при наведении | checkbox | `true` | Crossfade 2-го фото на ПК при hover |
 | `product_photo_slider` | Слайдер (до 4 фото) | checkbox | `false` | Зоны на ПК / свайп; перебивает crossfade |
 | `show_out_of_stock_badge` | Показывать «Нет в наличии» на карточке | checkbox | `true` | Overlay на фото; только при `show_photos=true` |
@@ -280,7 +281,7 @@ node widget/tests/categories.test.js
 
 ### Настройки видимости (ON и OFF)
 
-- [ ] `show_photos`, `product_photo_slider`, `hover_second_image`, `show_prices`, `show_categories`, `show_product_sort`, `show_all_results`, `show_out_of_stock_badge`
+- [ ] `show_photos`, `image_url_size`, `product_photo_slider`, `hover_second_image`, `show_prices`, `show_categories`, `show_product_sort`, `show_all_results`, `show_out_of_stock_badge`
 - [ ] `hide_zero_price` ON — товары с ценой 0 скрыты
 - [ ] `enabled` OFF — виджет скрыт
 

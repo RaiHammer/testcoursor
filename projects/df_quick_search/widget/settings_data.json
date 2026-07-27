@@ -4,6 +4,7 @@
   "popular_queries": "",
   "trigger_selectors": ".header__search, .header__search-form, .header__search-field, .header__search-btn, .js-open-search-panel, .js-show-search",
   "show_photos": true,
+  "image_url_size": "auto",
   "hover_second_image": true,
   "product_photo_slider": false,
   "show_out_of_stock_badge": true,

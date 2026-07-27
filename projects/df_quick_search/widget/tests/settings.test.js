@@ -181,30 +181,34 @@ function urlFromImageObject(image, options) {
   if (!image) return '';
   if (typeof image === 'string') return image;
   if (typeof image !== 'object') return '';
-  if (options.preferPreview !== false) {
-    return (
-      image.compact_url ||
-      image.medium_url ||
-      image.thumb_url ||
-      image.small_url ||
-      image.large_url ||
-      image.url ||
-      image.original_url ||
-      image.src ||
-      ''
-    );
+  var order = getImageUrlFieldOrder(options.imageUrlSize);
+  for (var i = 0; i < order.length; i += 1) {
+    var url = image[order[i]];
+    if (url) return url;
   }
-  return (
-    image.large_url ||
-    image.compact_url ||
-    image.medium_url ||
-    image.thumb_url ||
-    image.small_url ||
-    image.url ||
-    image.original_url ||
-    image.src ||
-    ''
-  );
+  return '';
+}
+
+var IMAGE_URL_SIZE_ORDERS = {
+  auto: ['compact_url', 'medium_url', 'thumb_url', 'small_url', 'large_url'],
+  compact: ['compact_url', 'medium_url', 'thumb_url', 'small_url', 'large_url'],
+  medium: ['medium_url', 'compact_url', 'large_url', 'thumb_url', 'small_url'],
+  thumb: ['thumb_url', 'small_url', 'compact_url', 'medium_url', 'large_url'],
+  small: ['small_url', 'thumb_url', 'compact_url', 'medium_url', 'large_url'],
+  large: ['large_url', 'compact_url', 'medium_url', 'thumb_url', 'small_url'],
+};
+var IMAGE_URL_SIZE_FALLBACK = ['url', 'original_url', 'src'];
+
+function parseImageUrlSize(value) {
+  var size = String(value == null ? 'auto' : value)
+    .trim()
+    .toLowerCase();
+  if (IMAGE_URL_SIZE_ORDERS[size]) return size;
+  return 'auto';
+}
+
+function getImageUrlFieldOrder(imageUrlSize) {
+  return IMAGE_URL_SIZE_ORDERS[parseImageUrlSize(imageUrlSize)].concat(IMAGE_URL_SIZE_FALLBACK);
 }
 
 function pickProductImage(product) {
@@ -563,8 +567,18 @@ assert.strictEqual(
     first_image: { large_url: 'https://cdn/large.jpg', compact_url: 'https://cdn/compact.jpg' },
   }),
   'https://cdn/compact.jpg',
-  'preview size preferred over large'
+  'auto prefers compact preview'
 );
+assert.strictEqual(
+  urlFromImageObject(
+    { large_url: 'https://cdn/large.jpg', compact_url: 'https://cdn/compact.jpg' },
+    { imageUrlSize: 'large' }
+  ),
+  'https://cdn/large.jpg',
+  'large setting prefers large_url'
+);
+assert.strictEqual(parseImageUrlSize('bogus'), 'auto');
+assert.strictEqual(parseImageUrlSize('medium'), 'medium');
 assert.strictEqual(
   getProductImageUrl({ first_image: {}, images: [{ medium_url: 'https://cdn/b.jpg' }] }),
   'https://cdn/b.jpg'

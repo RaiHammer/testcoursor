@@ -1,5 +1,11 @@
 # CHANGELOG — df_quick_search
 
+## v1.2.1 — настройка качества фото (2026-07-27)
+
+- **Настройка:** `image_url_size` — auto / compact / medium / thumb / small / large (какой URL брать из inSales API).
+- **По умолчанию:** `auto` (баланс скорости и чёткости для сетки).
+- **Re-upload:** `snippet.js`, `snippet.liquid`, `settings_form.json`, `settings_data.json` (+ gen-2)
+
 ## v1.2.0 — слайдер фото + оптимизация превью (2026-07-27)
 
 - **Превью:** `urlFromImageObject` предпочитает `compact_url` → `medium_url` → `thumb_url` (меньше трафика в сетке поиска).
