@@ -21,6 +21,7 @@ description: Анализирует требования, исследует р�
 3. Проведи анализ: цели, stakeholders, ограничения, риски
 4. Для danforge.ru — учитывай Tilda-ограничения (`knowledge/danforge/site-profile.md`)
 5. Сохрани результат в `artifacts/{task-id}/01-analysis.md`
+6. Задачи **> 4 ч** — также `02-spec.md` по `templates/spec-template.md` → Spec Reviewer
 
 ## Структура 01-analysis.md
 

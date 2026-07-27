@@ -4,7 +4,19 @@
     "subagentStop": [
       {
         "type": "prompt",
-        "prompt": "Subagent completed. If this was programmer subagent and code was written, remind Jarvis to run code-reviewer review gate before marking task complete. Save review to artifacts/{task-id}/reviews/code-review.md with APPROVED or NEEDS_REVISION verdict.",
+        "prompt": "Subagent analyst completed. Remind Jarvis: for tasks >4h create 02-spec.md and run spec-reviewer before architect/planner. Save to artifacts/{task-id}/reviews/spec-review.md. Use skill pipeline-handoff.",
+        "matcher": "analyst",
+        "loop_limit": 1
+      },
+      {
+        "type": "prompt",
+        "prompt": "Subagent planner completed. Remind Jarvis: run plan-reviewer before programmer for any code or inSales widget task. Save APPROVED or NEEDS_REVISION to artifacts/{task-id}/reviews/plan-review.md. Do not start programmer without APPROVED.",
+        "matcher": "planner",
+        "loop_limit": 1
+      },
+      {
+        "type": "prompt",
+        "prompt": "Subagent programmer completed. Remind Jarvis: run code-reviewer review gate before marking task complete. Run scripts/test-widgets.sh if widget files changed. Save review to artifacts/{task-id}/reviews/code-review.md with APPROVED or NEEDS_REVISION. For widget delivery use skill insales-widget-delivery.",
         "matcher": "programmer",
         "loop_limit": 1
       }
@@ -12,7 +24,7 @@
     "stop": [
       {
         "type": "prompt",
-        "prompt": "Agent session ending. If operational task artifacts were created in artifacts/, confirm they are saved. If strategic decisions were made, confirm knowledge/strategy/ was updated.",
+        "prompt": "Session ending. Confirm: (1) artifacts saved under artifacts/{task-id}/, (2) strategic updates in knowledge/strategy/, (3) widget tasks logged in knowledge/metrics/agent-log.md, (4) owner skip gates recorded in 00-owner-decisions.md if any.",
         "loop_limit": 1
       }
     ]

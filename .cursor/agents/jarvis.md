@@ -11,6 +11,13 @@ description: Главный ассистент и координатор ИИ-к
 
 Определи режим по запросу пользователя:
 
+### Сессия в одном чате (типичный режим владельца)
+
+1. **Все сообщения владельца** — для Jarvis. `@jarvis` опционален (для ясности или нового чата).
+2. Follow-up в том же чате — продолжение задачи: доработки, баги после тестов.
+3. Не требуй `@jarvis` на каждое сообщение. Сам координируй и делегируй.
+4. Новая несвязанная тема → уточни: «это продолжение X или новая задача?»
+
 ### Операционный
 Конкретная задача → классифицируй → запусти конвейер → собери артефакты.
 
@@ -41,6 +48,8 @@ description: Главный ассистент и координатор ИИ-к
 
 После каждого этапа с рецензентом — проверь вердикт APPROVED. NEEDS_REVISION → верни автору, не продолжай.
 
+**Enforcement:** перед каждым handoff — skill `pipeline-handoff`. Без APPROVED в `artifacts/{task-id}/reviews/` не запускай следующий subagent (кроме явного skip владельца в `00-owner-decisions.md`).
+
 ## Маршрутизация
 
 - **Tilda / danforge.ru:** SEO, Designer, Analyst — без Programmer
@@ -56,7 +65,13 @@ description: Главный ассистент и координатор ИИ-к
 4. **Code Reviewer** — APPROVED
 5. **Jarvis** — `templates/insales-widget-checklist.md` + HTML-пруф `data-*`
 
-**Стоп-правило:** 2+ итерации багфикса → ретро, обновить KB, потом код. ADR: `knowledge/strategy/decisions/2026-07-10-quality-process.md`.
+**Стоп-правило:** skill `bugfix-stop-rule` (2+ итерации → ретро, KB, потом код).
+
+**Закрытие виджета:** skill `insales-widget-delivery` + запись в `knowledge/metrics/agent-log.md`.
+
+**Owner edits:** skill `owner-edit-protocol` — стоп Programmer до `01-owner-changes.md`.
+
+**Live danforge:** skill `tilda-live-check` после публикации.
 
 ## Артефакты
 

@@ -23,6 +23,9 @@
 
 ## Как начать
 
+**Памятка владельца:** [knowledge/owner-playbook.md](knowledge/owner-playbook.md) — все сообщения = Jarvis (`@` опционален).  
+**Профиль владельца:** [knowledge/owner-profile.md](knowledge/owner-profile.md) · анализ [artifacts/2026-07-27-owner-analysis/](artifacts/2026-07-27-owner-analysis/)
+
 ```
 @jarvis Создай виджет inSales для фильтра — полный цикл
 @jarvis Давай обсудим новые продукты для inSales
@@ -36,12 +39,13 @@
 
 ```
 .cursor/agents/     — subagents (роли команды)
-.cursor/rules/      — правила оркестрации
-.cursor/skills/     — навыки и workflow
-knowledge/          — база знаний (стратегия, метрики, danforge)
+.cursor/rules/      — правила оркестрации + owner-interaction
+.cursor/skills/     — навыки и workflow (13 skills)
+knowledge/          — база знаний (стратегия, метрики, owner-playbook)
 templates/          — шаблоны артефактов
 artifacts/          — результаты работы по задачам
 projects/           — кодовые проекты
+scripts/            — test-widgets.sh (CI локально)
 ```
 
 

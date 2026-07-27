@@ -35,7 +35,29 @@
 
 ## Review gates
 
-Рецензенты выдают вердикт: `APPROVED` или `NEEDS_REVISION`. Без `APPROVED` задача не переходит на следующий этап.
+Рецензенты выдают вердикт: `APPROVED` или `NEEDS_REVISION`. Без `APPROVED` задача не переходит на следующий этап. Пропуск — только явная фраза владельца («пропустить gate: …»). См. `knowledge/owner-playbook.md`.
+
+## Владелец
+
+Памятка: [knowledge/owner-playbook.md](knowledge/owner-playbook.md) — как формулировать запросы, зоны ответственности, owner edit protocol.
+
+## Skills (workflow)
+
+| Skill | Назначение |
+|-------|------------|
+| `pipeline-handoff` | Переход между этапами конвейера |
+| `owner-edit-protocol` | Правки владельца в админке inSales |
+| `insales-widget-delivery` | DoD виджета перед публикацией |
+| `bugfix-stop-rule` | Стоп после 2+ итераций багфикса |
+| `tilda-live-check` | Проверка live danforge/Kwork |
+| `review-gate` | Вердикты рецензентов |
+| `analyze-requirements` | Чеклист аналитика |
+| `decompose-tasks` | Декомпозиция планов |
+| `seo-audit` | SEO-аудит |
+| `strategic-planning` | Стратегические сессии |
+| `retrospective` | Ретроспективы |
+| `expand-team` | Новые роли |
+| `create-spec` | Написание ТЗ |
 
 ## Конвейеры
 

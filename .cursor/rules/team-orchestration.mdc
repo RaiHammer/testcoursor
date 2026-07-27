@@ -21,15 +21,26 @@ alwaysApply: true
 |-----|----------|
 | Код (> 1 ч) | Analyst → Spec Reviewer → Architect → Arch Reviewer → Planner → Plan Reviewer → Programmer → Code Reviewer |
 | Код (< 1 ч) | Analyst → Planner → Programmer → Code Reviewer |
-| **inSales-виджет** | Analyst → Planner → **Plan Reviewer** → Programmer → Code Reviewer → **чеклист** (`templates/insales-widget-checklist.md`) |
+| **inSales-виджет** | Analyst → Planner → **Plan Reviewer** → Programmer → Code Reviewer → **DoD** (skill `insales-widget-delivery`) |
+| **inSales-виджет >4 ч** | + `02-spec.md` → **Spec Reviewer** APPROVED |
 | Tilda / danforge.ru | Analyst → SEO / Designer (без Programmer) |
 | SEO / продвижение | SEO → (Designer при необходимости) |
 | Стратегия | Jarvis + Analyst → `knowledge/strategy/` |
 | Ретро | Jarvis → Analyst → Planner → Plan Reviewer → `roadmap.md` |
 
-## Review gates
+## Review gates (обязательны)
 
-Рецензенты выдают **APPROVED** или **NEEDS_REVISION**. Без APPROVED — не переходить дальше. Шаблон: `templates/review-template.md`, skill: `review-gate`.
+Рецензенты выдают **APPROVED** или **NEEDS_REVISION**. **Без APPROVED — не переходить дальше.** Пропуск только по явной фразе владельца: «пропустить gate: …» → `00-owner-decisions.md`.
+
+Шаблон: `templates/review-template.md`, skill: `review-gate`, handoff: skill `pipeline-handoff`.
+
+### Блокеры Jarvis
+
+- Нет `reviews/plan-review.md` APPROVED → не запускать Programmer (inSales-виджет)
+- Нет `reviews/code-review.md` APPROVED → не закрывать задачу
+- Owner edit без `01-owner-changes.md` → стоп Programmer на `widget/*`
+- 2+ bugfix-итерации → skill `bugfix-stop-rule`, ретро до кода
+- 2 Programmer параллельно на один `projects/*` → запрещено
 
 ## Артефакты
 
@@ -55,3 +66,17 @@ Jarvis предлагает новую роль → вы одобряете → 
 ## Приоритизация
 
 Всё ради дохода: сайт → клиенты → продукты → деньги. См. `knowledge/metrics/kpi-targets.md`.
+
+## Skills (workflow)
+
+| Skill | Когда |
+|-------|-------|
+| `pipeline-handoff` | Переход между этапами |
+| `owner-edit-protocol` | Правки владельца в админке inSales |
+| `insales-widget-delivery` | Закрытие виджета, dist, чеклист |
+| `bugfix-stop-rule` | 2+ итерации багфикса |
+| `tilda-live-check` | Проверка live danforge/Kwork |
+
+## Владелец
+
+Памятка: `knowledge/owner-playbook.md`. Rule: `owner-interaction.mdc`.
